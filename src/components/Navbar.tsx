@@ -28,28 +28,32 @@ export function Navbar() {
 
   return (
     <header 
-      className={`w-full fixed top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-slate-950/80 backdrop-blur-xl border-b border-white/10 py-2" : "bg-transparent py-4"
+      className={`w-full fixed top-0 z-50 transition-all duration-500 ${
+        isScrolled ? "bg-slate-950/90 backdrop-blur-md border-b border-white/5 py-3 shadow-2xl shadow-indigo-500/5" : "bg-transparent py-5"
       }`}
     >
-      {/* Top Bar - Hidden on Mobile */}
-      <div className={`hidden lg:flex bg-slate-900/50 py-2 px-8 justify-between items-center text-xs text-slate-400 mb-2 rounded-full mx-8 border border-white/5 transition-opacity duration-300 ${isScrolled ? "opacity-0 h-0 overflow-hidden py-0 my-0 border-0" : "opacity-100"}`}>
-        <div className="flex gap-4">
-           <span>Support: support@growuphost.com</span>
-           <span className="flex items-center gap-1.5">
-             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-             Live Status: Operational
+      {/* Top Bar - Refined Desktop */}
+      <div className={`hidden lg:flex bg-white/5 backdrop-blur-sm py-1.5 px-6 justify-between items-center text-[11px] font-bold text-slate-400 mb-3 rounded-full mx-auto max-w-6xl border border-white/5 transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-4 h-0 overflow-hidden my-0 border-0 pointer-events-none" : "opacity-100"}`}>
+        <div className="flex gap-6">
+           <span className="flex items-center gap-2">
+             <Globe className="w-3 h-3 text-indigo-400" />
+             Mumbai Data Center
+           </span>
+           <span className="flex items-center gap-2">
+             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+             Status: <span className="text-emerald-400 uppercase tracking-tighter">Operational</span>
            </span>
         </div>
         <div className="flex items-center gap-6">
-            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-400 transition-colors">Login</a>
-            <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-400 transition-colors">Register</a>
+            <a href="mailto:support@growuphost.com" className="hover:text-indigo-400 transition-colors uppercase tracking-widest">Support</a>
+            <div className="w-px h-3 bg-white/10" />
+            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-400 transition-colors uppercase tracking-widest">Client Login</a>
             <Globe className="w-3 h-3" />
-            <span>INR</span>
+            <span className="uppercase tracking-widest">INR</span>
         </div>
       </div>
 
-      <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
         <div className="flex items-center gap-12">
           <Link to="/" className="text-2xl font-black tracking-tighter italic text-white flex items-center gap-2">
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center not-italic">G</div>
