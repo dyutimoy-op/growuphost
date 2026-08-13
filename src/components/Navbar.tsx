@@ -100,15 +100,15 @@ export function Navbar() {
           className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
             isScrolled 
               ? "h-full rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]" 
-              : "h-full bg-slate-950/80 backdrop-blur-md border-b border-white/5"
+              : "h-full bg-slate-950 border-b border-white/5"
           }`}
         />
 
         <nav className="relative max-w-7xl mx-auto px-6 flex items-center justify-between h-16 sm:h-20">
           <div className="flex items-center gap-12">
-            <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group">
+            <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span>{settings?.['company_name'] || 'GROWUPHOST'}</span>
+              <span className="relative z-50">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
 
             <div className="hidden lg:flex items-center gap-8">
@@ -116,12 +116,12 @@ export function Navbar() {
                 <Link 
                   key={category.id} 
                   to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
+                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50"
                 >
                   {category.name}
                 </Link>
               ))}
-              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors">Contact</Link>
+              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
             </div>
           </div>
 
