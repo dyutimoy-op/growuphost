@@ -149,7 +149,7 @@ export function Navbar() {
               <Link 
                 key={category.id} 
                 to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                className={`text-xs font-black uppercase tracking-[0.2em] transition-all relative group ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-indigo-600'}`}
+                className={`text-xs font-black uppercase tracking-[0.2em] transition-all relative group ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-200 hover:text-white'}`}
               >
                 {category.name}
                 <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
