@@ -30,14 +30,14 @@ export function Navbar() {
     <header 
       className={`w-full fixed top-0 z-50 transition-all duration-700 pointer-events-none ${
         isScrolled 
-          ? "py-4 sm:py-6" 
-          : "py-6 sm:py-8"
+          ? "py-2 sm:py-3" 
+          : "py-3 sm:py-4"
       }`}
     >
       <div 
         className={`absolute inset-x-0 top-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-auto ${
           isScrolled 
-            ? "mx-4 sm:mx-8 mt-4 sm:mt-6 h-[4.5rem] sm:h-20 rounded-[2rem] bg-slate-950/70 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
+            ? "mx-4 sm:mx-8 mt-2 sm:mt-3 h-14 sm:h-16 rounded-2xl bg-slate-950/70 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
             : "h-full bg-transparent translate-y-0"
         }`}
       />
@@ -67,37 +67,37 @@ export function Navbar() {
         </div>
       </div>
 
-      <nav className="relative max-w-[95rem] mx-auto px-6 sm:px-12 lg:px-20 flex items-center justify-between pointer-events-auto">
-        <div className="flex items-center gap-12 lg:gap-20">
-          <Link to="/" className="text-2xl sm:text-4xl font-black tracking-tighter italic text-white flex items-center gap-3 sm:gap-4 group">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">G</div>
+      <nav className="relative max-w-[95rem] mx-auto px-6 sm:px-12 lg:px-20 flex items-center justify-between pointer-events-auto h-14 sm:h-16 lg:h-20">
+        <div className="flex items-center gap-10 lg:gap-16">
+          <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 sm:gap-4 group">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 text-base sm:text-lg">G</div>
             <span className="drop-shadow-2xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-12">
+          <div className="hidden lg:flex items-center gap-8">
             {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
               <Link 
                 key={category.id} 
                 to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                className="text-base font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-all relative group"
+                className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-all relative group"
               >
                 {category.name}
-                <span className="absolute -bottom-3 left-0 w-0 h-1 bg-indigo-500 transition-all group-hover:w-full" />
+                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
               </Link>
             ))}
-            <Link to="/contact" className="text-base font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-all">Contact</Link>
+            <Link to="/contact" className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-all">Contact</Link>
           </div>
         </div>
 
-        <div className="relative flex items-center gap-4 sm:gap-8">
-          <div className="hidden lg:flex items-center gap-8">
-            <Search className="w-6 h-6 cursor-pointer text-slate-400 hover:text-white transition-colors" />
-            <div className="flex items-center gap-4">
-              <Button variant="outline" className="border-indigo-500/30 hover:bg-indigo-500/10 text-white rounded-xl sm:rounded-2xl px-8 py-5 sm:px-10 sm:py-6 text-sm sm:text-base font-black uppercase tracking-[0.2em] transition-all hover:border-indigo-500/60" asChild>
+        <div className="relative flex items-center gap-4 sm:gap-6">
+          <div className="hidden lg:flex items-center gap-6">
+            <Search className="w-5 h-5 cursor-pointer text-slate-400 hover:text-white transition-colors" />
+            <div className="flex items-center gap-3">
+              <Button variant="outline" className="border-indigo-500/30 hover:bg-indigo-500/10 text-white rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] transition-all h-10 sm:h-11 hover:border-indigo-500/60" asChild>
                 <a href={settings?.['register_url'] || "/auth"}>Register</a>
               </Button>
-              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-xl sm:rounded-2xl px-8 py-5 sm:px-10 sm:py-6 text-sm sm:text-base font-black uppercase tracking-[0.2em] shadow-2xl shadow-indigo-600/40 transition-all hover:scale-105 active:scale-95" asChild>
+              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] shadow-2xl shadow-indigo-600/40 transition-all h-10 sm:h-11 hover:scale-105 active:scale-95" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Client Portal</a>
               </Button>
             </div>
@@ -108,7 +108,7 @@ export function Navbar() {
             className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </nav>
