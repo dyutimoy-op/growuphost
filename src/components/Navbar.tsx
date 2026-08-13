@@ -48,7 +48,7 @@ export function Navbar() {
         <div className="w-full bg-indigo-600/95 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
           <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 overflow-hidden">
-               <div className="hidden sm:flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
+               <div className="flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
                  <Bell className="w-3 h-3" />
                  {newsAlert.badge_text || "OFFER"}
                </div>
@@ -70,15 +70,15 @@ export function Navbar() {
 
       {/* Info Bar (Top Bar) */}
       {!isScrolled && (
-        <div className="w-full bg-indigo-700 text-white py-2 px-6 border-b border-white/5 hidden md:block">
+        <div className="w-full bg-indigo-700 text-white py-2 px-6 border-b border-white/5">
           <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
-            <div className="flex items-center gap-6">
-              <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors">
-                <Phone className="w-3 h-3" /> +91 72 52 89 0016
+            <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
+              <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
+                <Phone className="w-3 h-3" /> <span className="hidden sm:inline">+91 72 52 89 0016</span>
               </a>
-              <div className="w-px h-3 bg-white/20" />
-              <a href="mailto:support@growuphost.com" className="flex items-center gap-2 hover:text-indigo-200 transition-colors">
-                <Mail className="w-3 h-3" /> support@growuphost.com
+              <div className="w-px h-3 bg-white/20 shrink-0" />
+              <a href="mailto:support@growuphost.com" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
+                <Mail className="w-3 h-3" /> <span className="hidden sm:inline">support@growuphost.com</span>
               </a>
             </div>
             <div className="flex items-center gap-6">
@@ -108,7 +108,7 @@ export function Navbar() {
           <div className="flex items-center gap-12">
             <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span>{settings?.['company_name'] || 'GROWUPHOST'}</span>
+              <span className="hidden xs:block">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
 
             <div className="hidden lg:flex items-center gap-8">
