@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          polish the header and navigation bar little bit larger
+          little bit more larger and and little short the UNMATCHED PERFORMANCE text and header , footer , and navigation bar all set same in all pages have in the project
         </div>
         <ProductGrid />
       </main>
