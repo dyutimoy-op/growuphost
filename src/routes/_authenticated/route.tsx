@@ -28,7 +28,7 @@ export const Route = createFileRoute('/_authenticated')({
 function AdminLayout() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.href = "/";
+    window.location.href = "/auth";
   };
 
   return (
