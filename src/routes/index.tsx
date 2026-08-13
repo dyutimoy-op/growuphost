@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          Verify the header, navigation bar, and Register UI match exactly across all routes and screen sizes. Enhance the 3D floating navbar so it looks consistent and smooth on both desktop and mobile.
+          make little small the navigation bar
         </div>
         <ProductGrid />
       </main>
