@@ -161,9 +161,9 @@ export function Navbar() {
 
         <div className={`relative flex items-center gap-4 sm:gap-6 ${isScrolled ? '' : 'pt-2'}`}>
           <div className="hidden lg:flex items-center gap-6">
-            <Search className={`w-5 h-5 cursor-pointer transition-colors ${isScrolled ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-indigo-600'}`} />
+            <Search className={`w-5 h-5 cursor-pointer transition-colors ${isScrolled ? 'text-slate-400 hover:text-white' : 'text-slate-300 hover:text-white'}`} />
             <div className="flex items-center gap-3">
-              <Button variant="outline" className={`rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] transition-all h-10 sm:h-11 ${isScrolled ? 'border-indigo-500/30 hover:bg-indigo-500/10 text-white hover:border-indigo-500/60' : 'border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-indigo-600'}`} asChild>
+              <Button variant="outline" className={`rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] transition-all h-10 sm:h-11 ${isScrolled ? 'border-indigo-500/30 hover:bg-indigo-500/10 text-white hover:border-indigo-500/60' : 'border-white/20 hover:bg-white/10 text-white hover:border-white/40'}`} asChild>
                 <a href={settings?.['register_url'] || "/auth"}>Register</a>
               </Button>
               <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] shadow-2xl shadow-indigo-600/40 transition-all h-10 sm:h-11 hover:scale-105 active:scale-95" asChild>
