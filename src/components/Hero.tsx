@@ -1,8 +1,12 @@
 import { Play, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSiteSettings } from "@/hooks/use-site-settings";
+
 
 export function Hero() {
+  const { data: settings } = useSiteSettings();
   return (
+
     <section className="relative w-full h-[700px] flex items-center justify-center overflow-hidden bg-slate-900">
       {/* Background Video/GIF Simulation */}
       <div className="absolute inset-0 z-0 opacity-40">
@@ -33,9 +37,10 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="bg-[#5831f7] hover:bg-[#4828d9] text-white px-8 py-7 rounded-2xl text-lg font-bold">
-              Get Started →
+            <Button size="lg" className="bg-[#5831f7] hover:bg-[#4828d9] text-white px-8 py-7 rounded-2xl text-lg font-bold" asChild>
+              <a href={settings?.hero_cta_url || "/"}>Get Started →</a>
             </Button>
+
             <Button size="lg" variant="outline" className="border-slate-700 text-white hover:bg-slate-800 px-8 py-7 rounded-2xl text-lg font-bold gap-2">
               <Play className="w-5 h-5 fill-current" /> View Demo
             </Button>

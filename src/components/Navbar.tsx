@@ -9,8 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteSettings } from "@/hooks/use-site-settings";
+
 
 export function Navbar() {
+  const { data: settings } = useSiteSettings();
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
@@ -20,15 +23,17 @@ export function Navbar() {
     },
   });
 
+
   return (
     <header className="w-full border-b bg-background sticky top-0 z-50">
       {/* Top Bar */}
       <div className="bg-[#5831f7] text-white py-2 px-4 md:px-8 flex justify-end items-center gap-6 text-sm">
-        <Link to="/auth" className="hover:opacity-80 transition-opacity">Login</Link>
+        <a href={settings?.login_url || "/auth"} className="hover:opacity-80 transition-opacity">Login</a>
         <span className="opacity-40">|</span>
-        <Link to="/auth" className="hover:opacity-80 transition-opacity">Register</Link>
+        <a href={settings?.register_url || "/auth"} className="hover:opacity-80 transition-opacity">Register</a>
         <span className="opacity-40">|</span>
-        <Link to="/" className="hover:opacity-80 transition-opacity">Offers</Link>
+        <a href={settings?.offers_url || "/"} className="hover:opacity-80 transition-opacity">Offers</a>
+
         <span className="opacity-40">|</span>
         <Link to="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
           <ShieldCheck className="w-4 h-4" />
@@ -40,9 +45,10 @@ export function Navbar() {
       {/* Main Nav */}
       <nav className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link to="/" className="text-2xl font-bold text-foreground tracking-tight">
-            HOST<span className="text-primary">PRO</span>
+          <Link to="/" className="text-2xl font-black text-foreground tracking-tighter uppercase italic">
+            {settings?.company_name || 'GROWUPHOST'}
           </Link>
+
 
           <div className="hidden md:flex items-center gap-6">
             {categories?.map((category) => (

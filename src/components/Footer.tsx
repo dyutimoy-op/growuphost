@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSiteSettings } from "@/hooks/use-site-settings";
+
 
 interface FooterItem {
   label: string;
@@ -15,6 +17,8 @@ interface FooterSection {
 }
 
 export function Footer() {
+  const { data: settings } = useSiteSettings();
+
   const sections: FooterSection[] = [
     {
       title: "COMPANY STATS",
@@ -85,14 +89,15 @@ export function Footer() {
             ))}
           </ul>
 
-          <Button className="w-full bg-[#5831f7] hover:bg-[#4828d9] text-white py-6 rounded-xl">
-            Join Program →
+          <Button className="w-full bg-[#5831f7] hover:bg-[#4828d9] text-white py-6 rounded-xl" asChild>
+            <a href={settings?.footer_partner_url || "/"}>Join Program →</a>
           </Button>
+
         </div>
       </div>
       
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-xs">
-        <p>© 2026 HostPro Solutions. All rights reserved.</p>
+        <p>© 2026 {settings?.company_name || 'GROWUPHOST'}. All rights reserved.</p>
         <div className="flex gap-6">
           <Link to="/" className="hover:text-primary">Status</Link>
           <Link to="/" className="hover:text-primary">Knowledgebase</Link>
