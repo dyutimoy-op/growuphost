@@ -108,7 +108,7 @@ export function Navbar() {
           <div className="flex items-center gap-12">
             <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span className="hidden xs:block">{settings?.['company_name'] || 'GROWUPHOST'}</span>
+              <span>{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
 
             <div className="hidden lg:flex items-center gap-8">
