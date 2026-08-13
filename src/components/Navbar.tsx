@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X, Globe, ChevronRight } from "lucide-react";
+import { Menu, X, Globe, ChevronRight, Bell, ArrowRight, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -26,61 +26,124 @@ export function Navbar() {
     },
   });
 
+  const { data: newsAlert } = useQuery({
+    queryKey: ["news-alert"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("news_alerts")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+      if (error) return null;
+      return data;
+    },
+  });
+
   return (
-    <header 
-      className={`w-full fixed top-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? "py-2 sm:py-3 px-4 sm:px-8" 
-          : "py-0"
-      }`}
-    >
-      <div 
-        className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
-          isScrolled 
-            ? "h-full rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]" 
-            : "h-full bg-slate-950 border-b border-white/5"
-        }`}
-      />
-
-      <nav className="relative max-w-7xl mx-auto px-6 flex items-center justify-between h-16 sm:h-20">
-        <div className="flex items-center gap-12">
-          <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-            <span>{settings?.['company_name'] || 'GROWUPHOST'}</span>
-          </Link>
-
-          <div className="hidden lg:flex items-center gap-8">
-            {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
-              <Link 
-                key={category.id} 
-                to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors"
+    <header className="w-full fixed top-0 z-50 transition-all duration-500">
+      {/* Promotion Bar (Ticker) */}
+      {!isScrolled && newsAlert && (
+        <div className="w-full bg-indigo-600/95 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
+          <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 overflow-hidden">
+               <div className="hidden sm:flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
+                 <Bell className="w-3 h-3" />
+                 {newsAlert.badge_text || "OFFER"}
+               </div>
+               <div className="text-white text-xs sm:text-sm font-bold tracking-wide truncate">
+                 {newsAlert.content}
+               </div>
+            </div>
+            {newsAlert.link_url && (
+              <a 
+                href={newsAlert.link_url}
+                className="flex items-center gap-2 text-yellow-400 hover:text-white transition-colors text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap"
               >
-                {category.name}
-              </Link>
-            ))}
-            <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors">Contact</Link>
+                Join Waitlist <ArrowRight className="w-3 h-3" />
+              </a>
+            )}
           </div>
         </div>
+      )}
 
-        <div className="flex items-center gap-4 sm:gap-6">
-          <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white hover:bg-white/5 px-6" asChild>
-              <a href={settings?.['login_url'] || "/auth"}>Login</a>
-            </Button>
-            <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[11px] font-bold uppercase tracking-[0.2em] px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
-              <a href={settings?.['register_url'] || "/auth"}>Register</a>
-            </Button>
+      {/* Info Bar (Top Bar) */}
+      {!isScrolled && (
+        <div className="w-full bg-indigo-700 text-white py-2 px-6 border-b border-white/5 hidden md:block">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
+            <div className="flex items-center gap-6">
+              <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors">
+                <Phone className="w-3 h-3" /> +91 72 52 89 0016
+              </a>
+              <div className="w-px h-3 bg-white/20" />
+              <a href="mailto:support@growuphost.com" className="flex items-center gap-2 hover:text-indigo-200 transition-colors">
+                <Mail className="w-3 h-3" /> support@growuphost.com
+              </a>
+            </div>
+            <div className="flex items-center gap-6">
+              <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-200 transition-colors">Login</a>
+              <div className="w-px h-3 bg-white/20" />
+              <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-200 transition-colors">Register</a>
+              <div className="w-px h-3 bg-white/20" />
+              <div className="flex items-center gap-2">
+                <Globe className="w-3 h-3" /> INR
+              </div>
+            </div>
           </div>
-          
-          <button 
-            className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
-      </nav>
+      )}
+
+      {/* Main Navigation */}
+      <div className={`w-full transition-all duration-500 ${isScrolled ? "py-2 sm:py-3 px-4 sm:px-8" : "py-0"}`}>
+        <div 
+          className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
+            isScrolled 
+              ? "h-full rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]" 
+              : "h-full bg-slate-950 border-b border-white/5"
+          }`}
+        />
+
+        <nav className="relative max-w-7xl mx-auto px-6 flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center gap-12">
+            <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
+              <span>{settings?.['company_name'] || 'GROWUPHOST'}</span>
+            </Link>
+
+            <div className="hidden lg:flex items-center gap-8">
+              {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
+                <Link 
+                  key={category.id} 
+                  to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
+                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors"
+                >
+                  {category.name}
+                </Link>
+              ))}
+              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors">Contact</Link>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="hidden lg:flex items-center gap-4">
+              <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white hover:bg-white/5 px-6" asChild>
+                <a href={settings?.['login_url'] || "/auth"}>Login</a>
+              </Button>
+              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[11px] font-bold uppercase tracking-[0.2em] px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
+                <a href={settings?.['register_url'] || "/auth"}>Register</a>
+              </Button>
+            </div>
+            
+            <button 
+              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </nav>
+      </div>
 
       {/* Mobile Menu Overlay */}
       <div 
