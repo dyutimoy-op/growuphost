@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 
-export const Route = createFileRoute('/auth' as any)({
+export const Route = createFileRoute('/auth')({
   component: AuthPage,
 });
 
