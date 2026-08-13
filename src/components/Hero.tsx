@@ -38,8 +38,9 @@ export function Hero() {
 
           <div className="flex flex-wrap gap-4">
             <Button size="lg" className="bg-[#5831f7] hover:bg-[#4828d9] text-white px-8 py-7 rounded-2xl text-lg font-bold" asChild>
-              <a href={settings?.hero_cta_url || "/"}>Get Started →</a>
+              <a href={settings?.['hero_cta_url'] || "/"}>Get Started →</a>
             </Button>
+
 
             <Button size="lg" variant="outline" className="border-slate-700 text-white hover:bg-slate-800 px-8 py-7 rounded-2xl text-lg font-bold gap-2">
               <Play className="w-5 h-5 fill-current" /> View Demo

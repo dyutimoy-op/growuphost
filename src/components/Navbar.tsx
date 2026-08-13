@@ -28,11 +28,12 @@ export function Navbar() {
     <header className="w-full border-b bg-background sticky top-0 z-50">
       {/* Top Bar */}
       <div className="bg-[#5831f7] text-white py-2 px-4 md:px-8 flex justify-end items-center gap-6 text-sm">
-        <a href={settings?.login_url || "/auth"} className="hover:opacity-80 transition-opacity">Login</a>
+        <a href={settings?.['login_url'] || "/auth"} className="hover:opacity-80 transition-opacity">Login</a>
         <span className="opacity-40">|</span>
-        <a href={settings?.register_url || "/auth"} className="hover:opacity-80 transition-opacity">Register</a>
+        <a href={settings?.['register_url'] || "/auth"} className="hover:opacity-80 transition-opacity">Register</a>
         <span className="opacity-40">|</span>
-        <a href={settings?.offers_url || "/"} className="hover:opacity-80 transition-opacity">Offers</a>
+        <a href={settings?.['offers_url'] || "/"} className="hover:opacity-80 transition-opacity">Offers</a>
+
 
         <span className="opacity-40">|</span>
         <Link to="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
@@ -46,8 +47,9 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link to="/" className="text-2xl font-black text-foreground tracking-tighter uppercase italic">
-            {settings?.company_name || 'GROWUPHOST'}
+            {settings?.['company_name'] || 'GROWUPHOST'}
           </Link>
+
 
 
           <div className="hidden md:flex items-center gap-6">
