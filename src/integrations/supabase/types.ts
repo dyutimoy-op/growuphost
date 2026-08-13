@@ -71,6 +71,36 @@ export type Database = {
         }
         Relationships: []
       }
+      news_alerts: {
+        Row: {
+          badge_text: string | null
+          content: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          link_url: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          badge_text?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          link_url?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          badge_text?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          link_url?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           billing_cycle: string
