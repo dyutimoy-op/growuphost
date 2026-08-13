@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "GROWUPHOST | Premium Hosting Solutions" },
+      { name: "description", content: "Experience unmatched performance with GROWUPHOST. We provide high-speed shared hosting, VPS, dedicated servers, and licenses for your digital success." },
+      { name: "author", content: "GROWUPHOST" },
+      { property: "og:title", content: "GROWUPHOST | Premium Hosting Solutions" },
+      { property: "og:description", content: "Experience unmatched performance with GROWUPHOST. We provide high-speed shared hosting, VPS, dedicated servers, and licenses for your digital success." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@growuphost" },
     ],
     links: [
       {
