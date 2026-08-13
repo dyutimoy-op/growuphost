@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          header need this type of fully shettle with page and add best news flot in the header which i add thorugh the admin panel so modify the admin panel and add this feature
+          no no dont add the color as per image have just make like this and color have in my website maintain the color don't change color dark color i have in my webiste its need to maintain
         </div>
         <ProductGrid />
       </main>
