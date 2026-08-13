@@ -82,11 +82,7 @@ export function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-3 sm:gap-6 ml-4">
-              <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-200 transition-colors whitespace-nowrap">Login</a>
-              <div className="w-px h-3 bg-white/20" />
-              <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-200 transition-colors whitespace-nowrap">Register</a>
               <div className="hidden sm:flex items-center gap-6">
-                <div className="w-px h-3 bg-white/20" />
                 <div className="flex items-center gap-2">
                   <Globe className="w-3 h-3" /> INR
                 </div>
