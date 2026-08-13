@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          more reduce and header make same size of have navigation bar size
+          header have a side round shape border i need it in navigation bar
         </div>
         <ProductGrid />
       </main>
