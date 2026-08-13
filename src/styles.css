@@ -143,3 +143,8 @@
     overflow-x: hidden;
   }
 }
+
+/* Hide Lovable badge */
+a[href*="lovable.ai"] {
+  display: none !important;
+}
