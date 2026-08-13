@@ -174,7 +174,7 @@ export function Navbar() {
           
           {/* Mobile Menu Toggle */}
           <button 
-            className={`lg:hidden p-2 rounded-lg transition-colors ${isScrolled ? 'text-white hover:bg-white/5' : 'text-slate-600 hover:bg-slate-100'}`}
+            className={`lg:hidden p-2 rounded-lg transition-colors ${isScrolled ? 'text-white hover:bg-white/5' : 'text-white hover:bg-white/10'}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
