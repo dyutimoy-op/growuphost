@@ -2,8 +2,20 @@ import { Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface FooterItem {
+  label: string;
+  sub: string;
+  status?: string;
+  icon?: string;
+}
+
+interface FooterSection {
+  title: string;
+  items: FooterItem[];
+}
+
 export function Footer() {
-  const sections = [
+  const sections: FooterSection[] = [
     {
       title: "COMPANY STATS",
       items: [
