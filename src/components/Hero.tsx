@@ -28,9 +28,10 @@ export function Hero() {
           <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
             Next Generation <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">
-              Cloud Hosting
+              Web Hosting
             </span>
           </h1>
+
 
           <p className="text-lg text-slate-300 max-w-lg leading-relaxed">
             Deploy your high performance systems optimized for scalability with full root access, bare metal hardware, and isolated resources.
