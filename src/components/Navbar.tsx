@@ -155,7 +155,7 @@ export function Navbar() {
                 <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
               </Link>
             ))}
-            <Link to="/contact" className={`text-xs font-black uppercase tracking-[0.2em] transition-all ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-indigo-600'}`}>Contact</Link>
+            <Link to="/contact" className={`text-xs font-black uppercase tracking-[0.2em] transition-all ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-200 hover:text-white'}`}>Contact</Link>
           </div>
         </div>
 
