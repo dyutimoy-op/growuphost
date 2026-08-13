@@ -25,9 +25,10 @@ function AdminLayout() {
       <div className="flex min-h-screen w-full bg-slate-50">
         <Sidebar className="border-r border-slate-200">
           <SidebarHeader className="p-6 border-b border-slate-200">
-            <Link to="/" className="text-xl font-bold tracking-tight">
-              HOST<span className="text-primary">PRO</span> <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-1 uppercase">Admin</span>
+            <Link to="/" className="text-xl font-black tracking-tighter uppercase italic">
+              GROWUP<span className="text-primary tracking-normal">HOST</span> <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-1 uppercase not-italic">Admin</span>
             </Link>
+
           </SidebarHeader>
           
           <SidebarContent className="p-4">
