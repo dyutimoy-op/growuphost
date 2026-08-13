@@ -129,10 +129,10 @@ export function Navbar() {
 
           <div className="absolute right-6 flex items-center gap-4 sm:gap-6">
             <div className="hidden lg:flex items-center gap-4">
-              <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
+              <Button variant="ghost" className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Login</a>
               </Button>
-              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[11px] font-bold uppercase tracking-[0.2em] px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
+              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
                 <a href={settings?.['register_url'] || "/auth"}>Register</a>
               </Button>
             </div>
