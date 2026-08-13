@@ -48,8 +48,9 @@ export function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {categories?.filter(cat => cat.show_in_nav).map((category) => (
+            {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
               <Link 
+
                 key={category.id} 
                 to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
                 className="text-sm font-medium hover:text-indigo-400 transition-colors"

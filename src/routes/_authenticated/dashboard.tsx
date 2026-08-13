@@ -225,8 +225,9 @@ function AdminDashboard() {
         </CardHeader>
         <CardContent className="px-0 pb-0 pt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categoriesData?.map((category) => (
+            {(categoriesData as any)?.map((category: any) => (
               <div 
+
                 key={category.id}
                 className="flex items-center justify-between p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors"
               >
