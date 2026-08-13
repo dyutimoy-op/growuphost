@@ -121,17 +121,13 @@ export function Navbar() {
                   {category.name}
                 </Link>
               ))}
-              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
             </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-6 ml-auto">
             <div className="hidden lg:flex items-center gap-4">
-              <Button variant="ghost" className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
-                <a href={settings?.['login_url'] || "/auth"}>Login</a>
-              </Button>
-              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
-                <a href={settings?.['register_url'] || "/auth"}>Register</a>
+              <Button className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
+                <Link to="/contact">Contact</Link>
               </Button>
             </div>
             
