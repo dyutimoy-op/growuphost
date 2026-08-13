@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Zap, Shield, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export function ProductGrid() {
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annually'>('monthly');
+
   const { data: products, isLoading } = useQuery({
     queryKey: ["products-featured"],
     queryFn: async () => {
@@ -18,73 +21,118 @@ export function ProductGrid() {
 
   if (isLoading) {
     return (
-      <div className="py-20 text-center text-slate-500">
-        Loading our best plans...
+      <div className="py-20 text-center text-slate-500 bg-slate-950">
+        <div className="animate-pulse flex flex-col items-center gap-4">
+           <div className="w-12 h-12 rounded-full bg-slate-800" />
+           <div className="h-4 w-48 bg-slate-800 rounded" />
+        </div>
       </div>
     );
   }
 
   return (
-    <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
-      <div className="text-center mb-16 space-y-4">
-        <h2 className="text-xs font-bold text-primary tracking-widest uppercase">Pricing Plans</h2>
-        <h3 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
-          Ready to scale your business?
-        </h3>
-        <p className="text-slate-500 max-w-2xl mx-auto">
-          Choose the plan that fits your needs. All plans include 24/7 support and enterprise-grade hardware.
-        </p>
-      </div>
+    <section className="py-32 px-8 bg-slate-950 relative overflow-hidden">
+      {/* Decorative Background */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {products?.map((product) => (
-          <div
-            key={product.id}
-            className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 ${
-              product.is_featured
-                ? "bg-slate-900 border-slate-800 text-white md:scale-105 z-10 shadow-xl"
-                : "bg-white border-slate-100 text-slate-900"
-            }`}
-          >
-            {product.is_featured && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-widest">
-                Most Popular
-              </div>
-            )}
-
-            <div className="mb-8">
-              <div className={`text-xs font-bold uppercase tracking-widest mb-2 ${product.is_featured ? "text-primary" : "text-slate-400"}`}>
-                {product.categories?.name || "Hosting"}
-              </div>
-              <h4 className="text-2xl font-extrabold mb-4">{product.name}</h4>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-black">{product.currency === 'INR' ? '₹' : '$'}{product.price}</span>
-                <span className={`text-sm ${product.is_featured ? "text-slate-400" : "text-slate-500"}`}>/{product.billing_cycle}</span>
-              </div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 text-indigo-400 text-xs font-black tracking-widest uppercase">
+              <Zap className="w-3 h-3 fill-current" /> Scalable Infrastructure
             </div>
-
-            <ul className="space-y-4 mb-10 flex-grow">
-              {(product.features as string[])?.map((feature, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm">
-                  <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${product.is_featured ? "bg-primary/20" : "bg-emerald-50"}`}>
-                    <Check className={`w-3 h-3 ${product.is_featured ? "text-primary" : "text-emerald-500"}`} />
-                  </div>
-                  <span className={product.is_featured ? "text-slate-300" : "text-slate-600"}>{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Button
-              className={`w-full py-6 rounded-2xl font-bold gap-2 ${
-                product.is_featured
-                  ? "bg-primary hover:bg-primary/90 text-white"
-                  : "bg-slate-50 hover:bg-slate-100 text-slate-900 border border-slate-200"
-              }`}
-            >
-              Get Started <ArrowRight className="w-4 h-4" />
-            </Button>
+            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">
+              PLANS FOR EVERY <br />
+              <span className="text-slate-500 italic">STAGE.</span>
+            </h2>
           </div>
-        ))}
+
+          <div className="bg-slate-900/50 border border-white/5 p-1 rounded-2xl flex">
+            <button 
+              onClick={() => setBillingCycle('monthly')}
+              className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${billingCycle === 'monthly' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+            >
+              MONTHLY
+            </button>
+            <button 
+              onClick={() => setBillingCycle('annually')}
+              className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${billingCycle === 'annually' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+            >
+              ANNUALLY <span className="ml-1 text-[10px] text-indigo-300">-20%</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          {products?.map((product) => {
+            const displayPrice = billingCycle === 'annually' ? (product.price * 0.8).toFixed(0) : product.price;
+            
+            return (
+              <div
+                key={product.id}
+                className={`group relative flex flex-col p-10 rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] ${
+                  product.is_featured
+                    ? "bg-slate-900 border-indigo-500/30 text-white shadow-[0_0_50px_rgba(99,102,241,0.1)]"
+                    : "bg-slate-900/40 border-white/5 text-slate-300"
+                }`}
+              >
+                {product.is_featured && (
+                  <div className="absolute -top-4 left-10 bg-indigo-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-xl">
+                    Most Popular
+                  </div>
+                )}
+
+                <div className="mb-10 space-y-6">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-2">
+                        {product.categories?.name || "Hosting"}
+                      </div>
+                      <h4 className="text-3xl font-black text-white tracking-tighter">{product.name}</h4>
+                    </div>
+                    <div className="p-3 bg-white/5 rounded-2xl">
+                       <Cpu className="w-6 h-6 text-indigo-400" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-5xl font-black text-white">
+                      {product.currency === 'INR' ? '₹' : displayPrice}
+                    </span>
+                    <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                      /{billingCycle === 'monthly' ? 'mo' : 'yr'}
+                    </span>
+                  </div>
+                  
+                  <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                    Perfect for high-traffic applications requiring isolated resources and dedicated performance.
+                  </p>
+                </div>
+
+                <div className="space-y-4 mb-12 flex-grow">
+                  {(product.features as string[])?.map((feature, i) => (
+                    <div key={i} className="flex items-center gap-3 text-xs font-semibold">
+                      <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 text-indigo-400" />
+                      </div>
+                      <span className="group-hover:text-white transition-colors">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Button
+                  className={`w-full py-8 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
+                    product.is_featured
+                      ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg"
+                      : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
+                  }`}
+                >
+                  Configure Server <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
