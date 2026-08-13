@@ -8,6 +8,19 @@ import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    title: "GROWUPHOST | Enterprise NVMe Hosting & VPS Mumbai",
+    meta: [
+      {
+        name: "description",
+        content: "High-performance enterprise infrastructure. Experience zero-latency NVMe hosting, VPS servers, and dedicated hardware in Mumbai. 99.9% uptime guaranteed.",
+      },
+      { property: "og:title", content: "GROWUPHOST | Enterprise Infrastructure" },
+      { property: "og:description", content: "Unmatched performance with zero latency infrastructure. Scale your business with GROWUPHOST." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
 function Index() {
