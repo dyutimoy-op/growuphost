@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronDown, Menu, User, Bell, ShieldCheck, Globe } from "lucide-react";
+import { ChevronDown, Menu, User, Bell, ShieldCheck, Globe, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,61 +25,52 @@ export function Navbar() {
 
 
   return (
-    <header className="w-full border-b bg-background sticky top-0 z-50">
+    <header className="w-full border-b border-white/10 bg-slate-950 text-white sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="bg-[#5831f7] text-white py-2 px-4 md:px-8 flex justify-end items-center gap-6 text-sm">
-        <a href={settings?.['login_url'] || "/auth"} className="hover:opacity-80 transition-opacity">Login</a>
-        <span className="opacity-40">|</span>
-        <a href={settings?.['register_url'] || "/auth"} className="hover:opacity-80 transition-opacity">Register</a>
-        <span className="opacity-40">|</span>
-        <a href={settings?.['offers_url'] || "/"} className="hover:opacity-80 transition-opacity">Offers</a>
-
-
-        <span className="opacity-40">|</span>
-        <Link to="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-          <ShieldCheck className="w-4 h-4" />
-        </Link>
-        <span className="opacity-40">|</span>
-        <Bell className="w-4 h-4 cursor-pointer hover:opacity-80 transition-opacity" />
+      <div className="bg-slate-900/50 py-2 px-8 flex justify-between items-center text-xs text-slate-400">
+        <div className="flex gap-4">
+           <span>Support: support@growuphost.com</span>
+           <span>Live Status: Operational</span>
+        </div>
+        <div className="flex items-center gap-6">
+            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-400 transition-colors">Login</a>
+            <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-400 transition-colors">Register</a>
+            <Globe className="w-3 h-3" />
+            <span>INR</span>
+        </div>
       </div>
 
       {/* Main Nav */}
-      <nav className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <Link to="/" className="text-2xl font-black text-foreground tracking-tighter uppercase italic">
+      <nav className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-12">
+          <Link to="/" className="text-2xl font-black tracking-tighter italic text-white">
             {settings?.['company_name'] || 'GROWUPHOST'}
           </Link>
 
-
-
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             {categories?.map((category) => (
               <DropdownMenu key={category.id}>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
-                  {category.name} <ChevronDown className="w-4 h-4" />
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-indigo-400 transition-colors">
+                  {category.name} <ChevronDown className="w-3 h-3" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
+                <DropdownMenuContent className="bg-slate-900 border-slate-800 text-white">
                   <DropdownMenuItem>
                     <Link to="/" search={{ category: category.slug }} className="w-full">
-                      View All {category.name}
+                      View All
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ))}
-            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Blog</Link>
-            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Support</Link>
+            <a href="/about" className="text-sm font-medium hover:text-indigo-400 transition-colors">About</a>
+            <a href="/contact" className="text-sm font-medium hover:text-indigo-400 transition-colors">Contact</a>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2 rounded-full px-4">
-            <Globe className="w-4 h-4 text-primary" />
-            <span className="font-semibold">₹ INR</span>
-            <ChevronDown className="w-3 h-3" />
-          </Button>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="w-6 h-6" />
+          <Search className="w-5 h-5 cursor-pointer hover:text-indigo-400" />
+          <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-full px-6">
+            Client Area
           </Button>
         </div>
       </nav>
