@@ -82,11 +82,7 @@ export function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-3 sm:gap-6 ml-4">
-              <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-200 transition-colors whitespace-nowrap">Login</a>
-              <div className="w-px h-3 bg-white/20" />
-              <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-200 transition-colors whitespace-nowrap">Register</a>
               <div className="hidden sm:flex items-center gap-6">
-                <div className="w-px h-3 bg-white/20" />
                 <div className="flex items-center gap-2">
                   <Globe className="w-3 h-3" /> INR
                 </div>
@@ -125,17 +121,13 @@ export function Navbar() {
                   {category.name}
                 </Link>
               ))}
-              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
             </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-6 ml-auto">
             <div className="hidden lg:flex items-center gap-4">
-              <Button variant="ghost" className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
-                <a href={settings?.['login_url'] || "/auth"}>Login</a>
-              </Button>
-              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
-                <a href={settings?.['register_url'] || "/auth"}>Register</a>
+              <Button className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
+                <Link to="/contact">Contact</Link>
               </Button>
             </div>
             
@@ -187,12 +179,8 @@ export function Navbar() {
 
             <div className="space-y-6 pt-12 border-t border-white/5">
               <Button className="w-full bg-indigo-600 hover:bg-indigo-700 py-8 rounded-2xl text-lg font-black uppercase tracking-widest shadow-xl shadow-indigo-600/20 active:scale-[0.98] transition-all" asChild>
-                 <a href={settings?.['login_url'] || "/auth"}>Client Portal</a>
+                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
               </Button>
-              <div className="grid grid-cols-2 gap-4">
-                 <a href={settings?.['login_url'] || "/auth"} className="flex items-center justify-center py-5 bg-white/5 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-300 active:bg-white/10 transition-colors">Login</a>
-                 <a href={settings?.['register_url'] || "/auth"} className="flex items-center justify-center py-5 bg-white/5 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-300 active:bg-white/10 transition-colors">Signup</a>
-              </div>
             </div>
           </div>
           
