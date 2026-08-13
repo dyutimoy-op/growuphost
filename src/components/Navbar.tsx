@@ -28,10 +28,19 @@ export function Navbar() {
 
   return (
     <header 
-      className={`w-full fixed top-0 z-50 transition-all duration-500 ${
-        isScrolled ? "bg-slate-950/98 backdrop-blur-md border-b border-white/5 py-5 shadow-2xl shadow-indigo-500/10" : "bg-transparent py-9"
+      className={`w-full fixed top-0 z-50 transition-all duration-700 ${
+        isScrolled 
+          ? "py-4" 
+          : "py-10"
       }`}
     >
+      <div 
+        className={`absolute inset-x-0 top-0 transition-all duration-700 ease-out ${
+          isScrolled 
+            ? "mx-6 mt-4 h-24 rounded-3xl bg-slate-950/80 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-15px_rgba(79,70,229,0.3),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
+            : "h-full bg-transparent translate-y-0"
+        }`}
+      />
       {/* Top Bar - Refined Desktop */}
       <div className={`hidden lg:flex bg-white/5 backdrop-blur-sm py-1.5 px-6 justify-between items-center text-[11px] font-bold text-slate-400 mb-3 rounded-full mx-auto max-w-6xl border border-white/5 transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-4 h-0 overflow-hidden my-0 border-0 pointer-events-none" : "opacity-100"}`}>
         <div className="flex gap-6">
@@ -45,19 +54,24 @@ export function Navbar() {
            </span>
         </div>
         <div className="flex items-center gap-6">
-            <a href="mailto:support@growuphost.com" className="hover:text-indigo-400 transition-colors uppercase tracking-widest">Support</a>
+            <a href="mailto:support@growuphost.com" className="hover:text-indigo-400 transition-colors uppercase tracking-[0.15em]">Support</a>
             <div className="w-px h-3 bg-white/10" />
-            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-400 transition-colors uppercase tracking-widest">Client Login</a>
-            <Globe className="w-3 h-3" />
-            <span className="uppercase tracking-widest">INR</span>
+            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-400 transition-colors uppercase tracking-[0.15em]">Login</a>
+            <div className="w-px h-3 bg-white/10" />
+            <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-400 transition-colors uppercase tracking-[0.15em] text-indigo-400">Register</a>
+            <div className="w-px h-3 bg-white/10" />
+            <div className="flex items-center gap-2">
+              <Globe className="w-3 h-3" />
+              <span className="uppercase tracking-[0.15em]">INR</span>
+            </div>
         </div>
       </div>
 
-      <nav className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-        <div className="flex items-center gap-12">
-          <Link to="/" className="text-4xl font-black tracking-tighter italic text-white flex items-center gap-4">
-            <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center not-italic shadow-lg shadow-indigo-600/30">G</div>
-            {settings?.['company_name'] || 'GROWUPHOST'}
+      <nav className="relative max-w-[90rem] mx-auto px-8 lg:px-16 flex items-center justify-between">
+        <div className="flex items-center gap-16">
+          <Link to="/" className="text-5xl font-black tracking-tighter italic text-white flex items-center gap-6 group">
+            <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-transform group-hover:rotate-12 group-hover:scale-110">G</div>
+            <span className="drop-shadow-2xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -76,12 +90,17 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-4">
-            <Search className="w-5 h-5 cursor-pointer text-slate-400 hover:text-white transition-colors" />
-            <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-2xl px-8 py-6 text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-600/30 transition-transform active:scale-95">
-              Client Portal
-            </Button>
+        <div className="relative flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6">
+            <Search className="w-6 h-6 cursor-pointer text-slate-400 hover:text-white transition-colors" />
+            <div className="flex items-center gap-3">
+              <Button variant="outline" className="border-indigo-500/30 hover:bg-indigo-500/10 text-white rounded-2xl px-10 py-7 text-base font-black uppercase tracking-[0.2em] transition-all" asChild>
+                <a href={settings?.['register_url'] || "/auth"}>Register</a>
+              </Button>
+              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-2xl px-10 py-7 text-base font-black uppercase tracking-[0.2em] shadow-2xl shadow-indigo-600/40 transition-all hover:scale-105 active:scale-95" asChild>
+                <a href={settings?.['login_url'] || "/auth"}>Client Portal</a>
+              </Button>
+            </div>
           </div>
           
           {/* Mobile Menu Toggle */}

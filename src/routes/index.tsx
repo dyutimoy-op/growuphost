@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          little bit more larger and and little short the UNMATCHED PERFORMANCE text and header , footer , and navigation bar all set same in all pages have in the project
+          in header need register option also and header make it larger suitable with the website and navigation bar make 3d floting
         </div>
         <ProductGrid />
       </main>
