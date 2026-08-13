@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          make little small the navigation bar
+          more reduce and header make same size of have navigation bar size
         </div>
         <ProductGrid />
       </main>
