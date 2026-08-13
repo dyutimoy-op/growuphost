@@ -118,12 +118,12 @@ export function Navbar() {
                 <Link 
                   key={category.id} 
                   to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50"
+                  className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50"
                 >
                   {category.name}
                 </Link>
               ))}
-              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
+              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
             </div>
           </div>
 
