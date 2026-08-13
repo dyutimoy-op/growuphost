@@ -28,16 +28,16 @@ export function Navbar() {
 
   return (
     <header 
-      className={`w-full fixed top-0 z-50 transition-all duration-700 ${
+      className={`w-full fixed top-0 z-50 transition-all duration-700 pointer-events-none ${
         isScrolled 
-          ? "py-4" 
-          : "py-10"
+          ? "py-6 sm:py-8" 
+          : "py-10 sm:py-12"
       }`}
     >
       <div 
-        className={`absolute inset-x-0 top-0 transition-all duration-700 ease-out ${
+        className={`absolute inset-x-0 top-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-auto ${
           isScrolled 
-            ? "mx-6 mt-4 h-24 rounded-3xl bg-slate-950/80 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-15px_rgba(79,70,229,0.3),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
+            ? "mx-4 sm:mx-8 mt-4 sm:mt-6 h-[5rem] sm:h-24 rounded-[2rem] bg-slate-950/70 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
             : "h-full bg-transparent translate-y-0"
         }`}
       />
@@ -67,10 +67,10 @@ export function Navbar() {
         </div>
       </div>
 
-      <nav className="relative max-w-[90rem] mx-auto px-8 lg:px-16 flex items-center justify-between">
-        <div className="flex items-center gap-16">
-          <Link to="/" className="text-5xl font-black tracking-tighter italic text-white flex items-center gap-6 group">
-            <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-transform group-hover:rotate-12 group-hover:scale-110">G</div>
+      <nav className="relative max-w-[95rem] mx-auto px-6 sm:px-12 lg:px-20 flex items-center justify-between pointer-events-auto">
+        <div className="flex items-center gap-12 lg:gap-20">
+          <Link to="/" className="text-3xl sm:text-5xl font-black tracking-tighter italic text-white flex items-center gap-4 sm:gap-6 group">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-indigo-600 rounded-xl sm:rounded-2xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">G</div>
             <span className="drop-shadow-2xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
           </Link>
 
@@ -90,11 +90,11 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="relative flex items-center gap-6">
-          <div className="hidden sm:flex items-center gap-6">
+        <div className="relative flex items-center gap-4 sm:gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             <Search className="w-6 h-6 cursor-pointer text-slate-400 hover:text-white transition-colors" />
-            <div className="flex items-center gap-3">
-              <Button variant="outline" className="border-indigo-500/30 hover:bg-indigo-500/10 text-white rounded-2xl px-10 py-7 text-base font-black uppercase tracking-[0.2em] transition-all" asChild>
+            <div className="flex items-center gap-4">
+              <Button variant="outline" className="border-indigo-500/30 hover:bg-indigo-500/10 text-white rounded-2xl px-10 py-7 text-base font-black uppercase tracking-[0.2em] transition-all hover:border-indigo-500/60" asChild>
                 <a href={settings?.['register_url'] || "/auth"}>Register</a>
               </Button>
               <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-2xl px-10 py-7 text-base font-black uppercase tracking-[0.2em] shadow-2xl shadow-indigo-600/40 transition-all hover:scale-105 active:scale-95" asChild>
