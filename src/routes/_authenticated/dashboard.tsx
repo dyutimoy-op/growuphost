@@ -79,8 +79,8 @@ function AdminDashboard() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-6xl">
       <div>
-        <h1 className="text-3xl font-black text-slate-900 tracking-tight">GROWUPHOST Admin Panel</h1>
-        <p className="text-slate-500 mt-2 font-medium">Manage your landing page branding and URLs.</p>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">GROWUPHOST Control Center</h1>
+        <p className="text-slate-500 mt-2 font-medium">Enterprise infrastructure management interface.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -110,8 +110,8 @@ function AdminDashboard() {
                   <Settings className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-black tracking-tight">Site Settings</CardTitle>
-                  <p className="text-sm text-slate-500">Configure your branding and external links.</p>
+                   <CardTitle className="text-xl font-black tracking-tight">Infrastructure Config</CardTitle>
+                  <p className="text-sm text-slate-500">Global branding and service endpoint mapping.</p>
                 </div>
               </div>
               <Button 
