@@ -240,10 +240,11 @@ function AdminDashboard() {
                   variant={category.show_in_nav ? "default" : "outline"}
                   className={`rounded-xl px-4 ${category.show_in_nav ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : ''}`}
                   onClick={async () => {
-                    const { error } = await supabase
+                    const { error } = await (supabase
                       .from('categories')
-                      .update({ show_in_nav: !category.show_in_nav })
+                      .update({ show_in_nav: !category.show_in_nav } as any) as any)
                       .eq('id', category.id);
+
                     
                     if (error) {
                       toast.error("Failed to update: " + error.message);
