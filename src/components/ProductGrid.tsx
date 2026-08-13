@@ -70,7 +70,7 @@ export function ProductGrid() {
             return (
               <div
                 key={product.id}
-                className={`group relative flex flex-col p-8 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] ${
+                className={`group relative flex flex-col p-8 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] h-full ${
                   product.is_featured
                     ? "bg-slate-900 border-indigo-500/30 text-white shadow-[0_0_50px_rgba(99,102,241,0.1)]"
                     : "bg-slate-900/40 border-white/5 text-slate-300"
