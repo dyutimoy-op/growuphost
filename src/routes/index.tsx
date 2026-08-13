@@ -3,6 +3,8 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Footer } from "@/components/Footer";
+import { Toaster } from "sonner";
+
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -11,7 +13,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen flex flex-col bg-white selection:bg-primary/30 selection:text-primary">
+      <Toaster position="top-center" richColors />
       <Navbar />
+
       <main className="flex-grow">
         <Hero />
         <ProductGrid />
