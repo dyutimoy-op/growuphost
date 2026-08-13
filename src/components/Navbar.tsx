@@ -45,7 +45,7 @@ export function Navbar() {
     <header className="w-full fixed top-0 z-50 transition-all duration-500">
       {/* Promotion Bar (Ticker) */}
       {!isScrolled && newsAlert && (
-        <div className="w-full bg-indigo-600/95 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
+        <div className="w-full bg-indigo-700 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
           <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 overflow-hidden">
                <div className="flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
@@ -70,7 +70,7 @@ export function Navbar() {
 
       {/* Info Bar (Top Bar) */}
       {!isScrolled && (
-        <div className="w-full bg-indigo-700 text-white py-2 px-6 border-b border-white/5">
+        <div className="w-full bg-slate-900 text-white py-2 px-6 border-b border-white/5">
           <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
             <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
               <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
@@ -100,7 +100,7 @@ export function Navbar() {
           className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
             isScrolled 
               ? "h-full rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]" 
-              : "h-full bg-slate-950 border-b border-white/5"
+              : "h-full bg-slate-950/80 backdrop-blur-md border-b border-white/5"
           }`}
         />
 
