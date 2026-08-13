@@ -24,11 +24,11 @@ export function Navbar() {
     <header className="w-full border-b bg-background sticky top-0 z-50">
       {/* Top Bar */}
       <div className="bg-[#5831f7] text-white py-2 px-4 md:px-8 flex justify-end items-center gap-6 text-sm">
-        <Link to="/auth" className="hover:opacity-80 transition-opacity">Login</Link>
+        <Link to="/" className="hover:opacity-80 transition-opacity">Login</Link>
         <span className="opacity-40">|</span>
-        <Link to="/auth" className="hover:opacity-80 transition-opacity">Register</Link>
+        <Link to="/" className="hover:opacity-80 transition-opacity">Register</Link>
         <span className="opacity-40">|</span>
-        <Link to="/offers" className="hover:opacity-80 transition-opacity">Offers</Link>
+        <Link to="/" className="hover:opacity-80 transition-opacity">Offers</Link>
         <span className="opacity-40">|</span>
         <div className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
           <ShieldCheck className="w-4 h-4" />
@@ -52,16 +52,15 @@ export function Navbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
                   <DropdownMenuItem>
-                    <Link to={`/products?category=${category.slug}`} className="w-full">
+                    <Link to="/" search={{ category: category.slug }} className="w-full">
                       View All {category.name}
                     </Link>
                   </DropdownMenuItem>
-                  {/* Dynamic sub-items could be fetched based on products */}
                 </DropdownMenuContent>
               </DropdownMenu>
             ))}
-            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">Blog</Link>
-            <Link to="/support" className="text-sm font-medium hover:text-primary transition-colors">Support</Link>
+            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Blog</Link>
+            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">Support</Link>
           </div>
         </div>
 
