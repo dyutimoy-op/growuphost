@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          fix the header and nevigation bar and also make more modify the footer for the mainly desktop mode and also for phone mode
+          polish the header and navigation bar little bit larger
         </div>
         <ProductGrid />
       </main>

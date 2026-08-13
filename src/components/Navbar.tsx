@@ -29,7 +29,7 @@ export function Navbar() {
   return (
     <header 
       className={`w-full fixed top-0 z-50 transition-all duration-500 ${
-        isScrolled ? "bg-slate-950/90 backdrop-blur-md border-b border-white/5 py-3 shadow-2xl shadow-indigo-500/5" : "bg-transparent py-5"
+        isScrolled ? "bg-slate-950/95 backdrop-blur-md border-b border-white/5 py-4 shadow-2xl shadow-indigo-500/10" : "bg-transparent py-7"
       }`}
     >
       {/* Top Bar - Refined Desktop */}
@@ -55,32 +55,32 @@ export function Navbar() {
 
       <nav className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
         <div className="flex items-center gap-12">
-          <Link to="/" className="text-2xl font-black tracking-tighter italic text-white flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center not-italic">G</div>
+          <Link to="/" className="text-3xl font-black tracking-tighter italic text-white flex items-center gap-3">
+            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20">G</div>
             {settings?.['company_name'] || 'GROWUPHOST'}
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-10">
             {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
               <Link 
                 key={category.id} 
                 to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                className="text-sm font-bold text-slate-300 hover:text-white transition-colors relative group"
+                className="text-base font-black uppercase tracking-widest text-slate-300 hover:text-white transition-all relative group"
               >
                 {category.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
+                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
               </Link>
             ))}
-            <Link to="/contact" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">Contact</Link>
+            <Link to="/contact" className="text-base font-black uppercase tracking-widest text-slate-300 hover:text-white transition-all">Contact</Link>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center gap-4">
             <Search className="w-5 h-5 cursor-pointer text-slate-400 hover:text-white transition-colors" />
-            <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-xl px-6 font-bold shadow-lg shadow-indigo-600/20">
-              Portal
+            <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-2xl px-8 py-6 text-sm font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-600/30 transition-transform active:scale-95">
+              Client Portal
             </Button>
           </div>
           
