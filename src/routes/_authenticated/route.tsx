@@ -10,6 +10,17 @@ export const Route = createFileRoute('/_authenticated')({
     if (!session) {
       throw redirect({ to: '/auth' });
     }
+
+    // RBAC Check: Ensure user has 'admin' role
+    const { data: hasAdminRole, error } = await supabase.rpc('has_role', { 
+      _user_id: session.user.id, 
+      _role: 'admin' 
+    });
+
+    if (error || !hasAdminRole) {
+      console.error("RBAC Denied:", error);
+      throw redirect({ to: '/auth' });
+    }
   },
   component: AdminLayout,
 });
@@ -17,7 +28,7 @@ export const Route = createFileRoute('/_authenticated')({
 function AdminLayout() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.href = "/";
+    window.location.href = "/auth";
   };
 
   return (

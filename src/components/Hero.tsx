@@ -17,8 +17,8 @@ export function Hero() {
       </div>
 
       <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="space-y-8 lg:space-y-10 animate-in fade-in slide-in-from-left-12 duration-1000 text-center lg:text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          <div className="relative z-30 space-y-8 lg:space-y-10 animate-in fade-in slide-in-from-left-12 duration-1000 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 mx-auto lg:mx-0">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping" />
               <span className="text-indigo-400 text-[10px] lg:text-xs font-black tracking-[0.2em] uppercase">Enterprise Grade Infrastructure</span>
