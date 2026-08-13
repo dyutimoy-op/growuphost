@@ -59,7 +59,7 @@ export function Navbar() {
             {newsAlert.link_url && (
               <a 
                 href={newsAlert.link_url}
-                className="flex items-center gap-2 text-yellow-400 hover:text-white transition-colors text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap"
+                className="absolute right-6 flex items-center gap-2 text-yellow-400 hover:text-white transition-colors text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap"
               >
                 Join Waitlist <ArrowRight className="w-3 h-3" />
               </a>
