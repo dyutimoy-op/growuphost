@@ -24,15 +24,15 @@ export function Navbar() {
     <header className="w-full border-b bg-background sticky top-0 z-50">
       {/* Top Bar */}
       <div className="bg-[#5831f7] text-white py-2 px-4 md:px-8 flex justify-end items-center gap-6 text-sm">
-        <Link to="/" className="hover:opacity-80 transition-opacity">Login</Link>
+        <Link to="/auth" className="hover:opacity-80 transition-opacity">Login</Link>
         <span className="opacity-40">|</span>
-        <Link to="/" className="hover:opacity-80 transition-opacity">Register</Link>
+        <Link to="/auth" className="hover:opacity-80 transition-opacity">Register</Link>
         <span className="opacity-40">|</span>
         <Link to="/" className="hover:opacity-80 transition-opacity">Offers</Link>
         <span className="opacity-40">|</span>
-        <div className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+        <Link to="/_authenticated" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
           <ShieldCheck className="w-4 h-4" />
-        </div>
+        </Link>
         <span className="opacity-40">|</span>
         <Bell className="w-4 h-4 cursor-pointer hover:opacity-80 transition-opacity" />
       </div>
