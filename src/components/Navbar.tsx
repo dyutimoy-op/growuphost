@@ -66,8 +66,8 @@ export function Navbar() {
     >
       {/* Promotion News Ticker */}
       {!isScrolled && newsAlert && (
-        <div className="w-full bg-gradient-to-r from-orange-600/90 via-rose-600/90 to-emerald-600/90 pointer-events-auto border-b border-white/10 backdrop-blur-md">
-          <div className="max-w-[95rem] mx-auto px-4 h-10 sm:h-12 flex items-center justify-center gap-4 sm:gap-8 overflow-hidden">
+        <div className="w-full bg-[#3d31d4] pointer-events-auto border-b border-white/10 backdrop-blur-md">
+          <div className="max-w-[95rem] mx-auto px-4 h-8 sm:h-10 flex items-center justify-center gap-4 sm:gap-8 overflow-hidden">
              <div className="flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/20">
                <span className="text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-1.5 whitespace-nowrap">
                  <Bell className="w-3 h-3 animate-bounce" />
@@ -94,9 +94,9 @@ export function Navbar() {
                 </div>
                 <a 
                   href={newsAlert.link_url || settings?.['offers_url'] || "#"} 
-                  className="flex items-center gap-2 bg-white text-orange-600 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest hover:bg-orange-50 transition-all shadow-xl hover:scale-105 active:scale-95"
+                  className="flex items-center gap-2 bg-[#ffdd00] text-[#3d31d4] px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest hover:bg-[#ffe54d] transition-all shadow-xl hover:scale-105 active:scale-95"
                 >
-                  Claim Offer <ArrowRight className="w-3 h-3" />
+                  {newsAlert.badge_text || "JOIN WAITLIST"} <ArrowRight className="w-3 h-3" />
                 </a>
              </div>
           </div>
@@ -107,11 +107,11 @@ export function Navbar() {
         className={`absolute inset-x-0 top-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-auto ${
           isScrolled 
             ? "mx-4 sm:mx-8 mt-2 sm:mt-3 h-14 sm:h-16 rounded-full bg-slate-950/70 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
-            : `h-full bg-white translate-y-0 ${newsAlert ? 'mt-10 sm:mt-12' : ''}`
+            : `h-full bg-white translate-y-0 ${newsAlert ? 'mt-[4.5rem]' : 'mt-8'}`
         }`}
       />
       {/* Top Bar - Refined Desktop */}
-      <div className={`hidden lg:flex bg-white/5 backdrop-blur-sm py-1.5 px-6 justify-between items-center text-[11px] font-bold text-slate-400 mb-3 rounded-full mx-auto max-w-6xl border border-white/5 transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-4 h-0 overflow-hidden my-0 border-0 pointer-events-none" : "opacity-100"}`}>
+      <div className={`hidden lg:flex bg-[#4f46e5] py-1.5 px-6 justify-between items-center text-[11px] font-bold text-white mb-0 transition-all duration-500 ${isScrolled ? "opacity-0 -translate-y-4 h-0 overflow-hidden my-0 border-0 pointer-events-none" : "opacity-100"}`}>
         <div className="flex gap-6">
            <span className="flex items-center gap-2">
              <Globe className="w-3 h-3 text-indigo-400" />
@@ -123,11 +123,11 @@ export function Navbar() {
            </span>
         </div>
         <div className="flex items-center gap-6">
-            <a href="mailto:support@growuphost.com" className="hover:text-indigo-400 transition-colors uppercase tracking-[0.15em]">Support</a>
-            <div className="w-px h-3 bg-white/10" />
-            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-400 transition-colors uppercase tracking-[0.15em]">Login</a>
-            <div className="w-px h-3 bg-white/10" />
-            <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-400 transition-colors uppercase tracking-[0.15em] text-indigo-400">Register</a>
+            <a href="mailto:support@growuphost.com" className="hover:text-indigo-200 transition-colors uppercase tracking-[0.15em]">support@growuphost.com</a>
+            <div className="w-px h-3 bg-white/20" />
+            <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-200 transition-colors uppercase tracking-[0.15em]">Login</a>
+            <div className="w-px h-3 bg-white/20" />
+            <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-200 transition-colors uppercase tracking-[0.15em]">Register</a>
             <div className="w-px h-3 bg-white/10" />
             <div className="flex items-center gap-2">
               <Globe className="w-3 h-3" />
