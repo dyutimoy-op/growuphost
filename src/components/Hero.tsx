@@ -28,22 +28,22 @@ export function Hero() {
 
             <div className="space-y-4">
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter">
-                POWERED <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">
+                UNMATCHED <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-blue-400">
                   PERFORMANCE
                 </span>
               </h1>
               <p className="text-xl text-slate-400 max-w-xl leading-relaxed font-medium">
-                Unleash the full potential of your business with our ultra-fast NVMe storage, DDR5 RAM, and high-capacity network.
+                Enterprise-grade infrastructure for businesses that demand zero latency and 100% reliability.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-6">
-              <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-8 rounded-full text-lg font-bold shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all hover:scale-105" asChild>
-                <a href={settings?.['hero_cta_url'] || "/"}>Get Started <ArrowRight className="ml-2 w-5 h-5" /></a>
+              <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-8 rounded-2xl text-lg font-black shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all hover:scale-105 active:scale-95" asChild>
+                <a href={settings?.['hero_cta_url'] || "/"}>Get Started Now <ArrowRight className="ml-2 w-5 h-5" /></a>
               </Button>
 
-              <Button size="lg" variant="outline" className="border-white/10 text-white hover:bg-white/5 px-10 py-8 rounded-full text-lg font-bold gap-2">
+              <Button size="lg" variant="outline" className="border-white/10 text-white hover:bg-white/5 px-10 py-8 rounded-2xl text-lg font-black gap-2 backdrop-blur-md">
                 <Play className="w-5 h-5 fill-current text-indigo-400" /> Infrastructure
               </Button>
             </div>
