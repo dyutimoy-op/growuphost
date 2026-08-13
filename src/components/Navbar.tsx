@@ -42,10 +42,10 @@ export function Navbar() {
   });
 
   return (
-    <header className="w-full fixed top-0 z-50 transition-all duration-500">
+    <header className="w-full fixed top-0 left-0 right-0 z-50">
       {/* Promotion Bar (Ticker) */}
       {!isScrolled && newsAlert && (
-        <div className="w-full bg-indigo-500 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
+        <div className="w-full bg-indigo-500 text-white border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center relative z-[52]">
           <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 overflow-hidden">
                <div className="flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
@@ -70,7 +70,7 @@ export function Navbar() {
 
       {/* Info Bar (Top Bar) */}
       {!isScrolled && (
-        <div className="w-full bg-indigo-600 text-white py-2 px-6 border-b border-white/10">
+        <div className="w-full bg-indigo-600 text-white py-2 px-6 border-b border-white/10 relative z-[51]">
           <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
             <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
               <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
@@ -95,16 +95,16 @@ export function Navbar() {
       )}
 
       {/* Main Navigation */}
-      <div className={`w-full transition-all duration-500 ${isScrolled ? "py-2 sm:py-3 px-4 sm:px-8" : "py-0"}`}>
+      <div className={`w-full relative z-50 transition-all duration-500 ${isScrolled ? "py-2 px-4" : "py-0"}`}>
         <div 
           className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
             isScrolled 
-              ? "h-full rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]" 
+              ? "h-full rounded-full bg-slate-950/95 backdrop-blur-xl border border-white/10 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)]" 
               : "h-full bg-slate-950 border-b border-white/5"
           }`}
         />
 
-        <nav className="relative max-w-7xl mx-auto px-6 flex items-center justify-between h-16 sm:h-20">
+        <nav className="relative max-w-7xl mx-auto px-6 flex items-center justify-between h-14 sm:h-16">
           <div className="flex items-center gap-12">
             <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
