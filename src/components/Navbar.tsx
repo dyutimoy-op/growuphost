@@ -71,7 +71,7 @@ export function Navbar() {
       {/* Info Bar (Top Bar) */}
       {!isScrolled && (
         <div className="w-full bg-indigo-600 text-white py-2 px-6 border-b border-white/10 relative z-[51]">
-          <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.1em] sm:tracking-widest">
             <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
               <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
                 <Phone className="w-3 h-3" /> <span className="hidden sm:inline">+91 72 52 89 0016</span>
@@ -81,13 +81,15 @@ export function Navbar() {
                 <Mail className="w-3 h-3" /> <span className="hidden sm:inline">support@growuphost.com</span>
               </a>
             </div>
-            <div className="flex items-center gap-6">
-              <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-200 transition-colors">Login</a>
+            <div className="flex items-center gap-3 sm:gap-6 ml-4">
+              <a href={settings?.['login_url'] || "/auth"} className="hover:text-indigo-200 transition-colors whitespace-nowrap">Login</a>
               <div className="w-px h-3 bg-white/20" />
-              <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-200 transition-colors">Register</a>
-              <div className="w-px h-3 bg-white/20" />
-              <div className="flex items-center gap-2">
-                <Globe className="w-3 h-3" /> INR
+              <a href={settings?.['register_url'] || "/auth"} className="hover:text-indigo-200 transition-colors whitespace-nowrap">Register</a>
+              <div className="hidden sm:flex items-center gap-6">
+                <div className="w-px h-3 bg-white/20" />
+                <div className="flex items-center gap-2">
+                  <Globe className="w-3 h-3" /> INR
+                </div>
               </div>
             </div>
           </div>
@@ -104,16 +106,16 @@ export function Navbar() {
           }`}
         />
 
-        <nav className="relative max-w-7xl mx-auto px-6 flex items-center h-16 sm:h-20">
-          <div className="absolute left-6 flex items-center">
-            <Link to="/" className="text-2xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span className="relative z-50 text-2xl sm:text-3xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
+        <nav className="relative max-w-7xl mx-auto px-4 sm:px-6 flex items-center h-16 sm:h-20">
+          <div className="flex-shrink-0 flex items-center">
+            <Link to="/" className="text-xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-2 sm:gap-3 group relative z-50">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white flex-shrink-0">G</div>
+              <span className="relative z-50 truncate max-w-[120px] xs:max-w-none">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
           </div>
 
-          <div className="flex-1 flex justify-center">
-            <div className="hidden lg:flex items-center gap-8">
+          <div className="flex-1 hidden lg:flex justify-center">
+            <div className="flex items-center gap-8">
               {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
                 <Link 
                   key={category.id} 
@@ -127,7 +129,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="absolute right-6 flex items-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-2 sm:gap-6 ml-auto">
             <div className="hidden lg:flex items-center gap-4">
               <Button variant="ghost" className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Login</a>
@@ -138,7 +140,7 @@ export function Navbar() {
             </div>
             
             <button 
-              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg"
+              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg relative z-50"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
