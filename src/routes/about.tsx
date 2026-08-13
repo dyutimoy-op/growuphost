@@ -5,6 +5,13 @@ import { Info, Globe, Shield, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
+  head: () => ({
+    title: "About GROWUPHOST | Our Infrastructure Mission",
+    meta: [
+      { name: "description", content: "Learn about the GROWUPHOST mission, our global infrastructure, and why businesses trust us for high-performance hosting." },
+      { property: "og:title", content: "About GROWUPHOST" },
+    ],
+  }),
 });
 
 function AboutPage() {

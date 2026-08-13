@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Check, ArrowRight, Zap, Shield, Cpu } from "lucide-react";
+import { Check, ArrowRight, Zap, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -31,87 +31,87 @@ export function ProductGrid() {
   }
 
   return (
-    <section className="py-32 px-8 bg-slate-950 relative overflow-hidden">
+    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-slate-950 relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 lg:mb-20 gap-8 text-center lg:text-left">
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 text-indigo-400 text-xs font-black tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 text-indigo-400 text-[10px] lg:text-xs font-black tracking-widest uppercase mx-auto lg:mx-0">
               <Zap className="w-3 h-3 fill-current" /> Scalable Infrastructure
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">
-              PLANS FOR EVERY <br />
+            <h2 className="text-4xl lg:text-6xl font-black text-white tracking-tighter leading-[1.1] lg:leading-none">
+              PLANS FOR EVERY <br className="hidden sm:block" />
               <span className="text-indigo-500 italic">STAGE.</span>
             </h2>
           </div>
 
-          <div className="bg-slate-900/50 border border-white/5 p-1 rounded-2xl flex">
+          <div className="bg-slate-900/50 border border-white/5 p-1 rounded-2xl flex mx-auto lg:mx-0 shrink-0">
             <button 
               onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${billingCycle === 'monthly' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              className={`px-6 py-2.5 rounded-xl text-[10px] lg:text-xs font-black transition-all ${billingCycle === 'monthly' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-slate-400 hover:text-white'}`}
             >
               MONTHLY
             </button>
             <button 
               onClick={() => setBillingCycle('annually')}
-              className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all ${billingCycle === 'annually' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              className={`px-6 py-2.5 rounded-xl text-[10px] lg:text-xs font-black transition-all ${billingCycle === 'annually' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-slate-400 hover:text-white'}`}
             >
-              ANNUALLY <span className="ml-1 text-[10px] text-indigo-300">-20%</span>
+              ANNUALLY <span className="ml-1 text-[8px] lg:text-[10px] text-indigo-300">-20%</span>
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {products?.map((product) => {
             const displayPrice = billingCycle === 'annually' ? (product.price * 0.8).toFixed(0) : product.price;
             
             return (
               <div
                 key={product.id}
-                className={`group relative flex flex-col p-10 rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] ${
+                className={`group relative flex flex-col p-8 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] ${
                   product.is_featured
                     ? "bg-slate-900 border-indigo-500/30 text-white shadow-[0_0_50px_rgba(99,102,241,0.1)]"
                     : "bg-slate-900/40 border-white/5 text-slate-300"
                 }`}
               >
                 {product.is_featured && (
-                  <div className="absolute -top-4 left-10 bg-indigo-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-xl">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 lg:left-10 lg:translate-x-0 bg-indigo-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-xl whitespace-nowrap">
                     Most Popular
                   </div>
                 )}
 
-                <div className="mb-10 space-y-6">
+                <div className="mb-8 lg:mb-10 space-y-6">
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-2">
                         {product.categories?.name || "Hosting"}
                       </div>
-                      <h4 className="text-3xl font-black text-white tracking-tighter">{product.name}</h4>
+                      <h4 className="text-2xl lg:text-3xl font-black text-white tracking-tighter">{product.name}</h4>
                     </div>
-                    <div className="p-3 bg-white/5 rounded-2xl">
-                       <Cpu className="w-6 h-6 text-indigo-400" />
+                    <div className="p-3 bg-white/5 rounded-2xl shrink-0">
+                       <Cpu className="w-5 h-5 lg:w-6 lg:h-6 text-indigo-400" />
                     </div>
                   </div>
                   
                   <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-black text-white">
-                      {product.currency === 'INR' ? '₹' : displayPrice}
+                    <span className="text-4xl lg:text-5xl font-black text-white">
+                      {product.currency === 'INR' ? '₹' : ''}{displayPrice}
                     </span>
-                    <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                    <span className="text-xs lg:text-sm font-bold text-slate-500 uppercase tracking-widest">
                       /{billingCycle === 'monthly' ? 'mo' : 'yr'}
                     </span>
                   </div>
                   
                   <p className="text-sm text-slate-400 font-medium leading-relaxed">
-                    Perfect for high-traffic applications requiring isolated resources and dedicated performance.
+                    High-performance infrastructure with isolated resources and dedicated reliability.
                   </p>
                 </div>
 
-                <div className="space-y-4 mb-12 flex-grow">
+                <div className="space-y-4 mb-10 lg:mb-12 flex-grow">
                   {(product.features as string[])?.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-xs font-semibold">
+                    <div key={i} className="flex items-center gap-3 text-xs font-bold text-left">
                       <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3 text-indigo-400" />
                       </div>
@@ -121,9 +121,9 @@ export function ProductGrid() {
                 </div>
 
                 <Button
-                  className={`w-full py-8 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
+                  className={`w-full py-7 lg:py-8 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
                     product.is_featured
-                      ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg"
+                      ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20"
                       : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
                   }`}
                 >
