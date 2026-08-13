@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen flex flex-col bg-white selection:bg-primary/30 selection:text-primary">
+    <div className="min-h-screen flex flex-col bg-slate-950 selection:bg-indigo-500/30 selection:text-indigo-400">
       <Toaster position="top-center" richColors />
       <Navbar />
 
