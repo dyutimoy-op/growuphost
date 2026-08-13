@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
 
 
+import { Check, X } from 'lucide-react';
+
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
 });
@@ -31,6 +33,15 @@ function AdminDashboard() {
         revenue: '₹45,900',
       };
     },
+  });
+
+  const { data: categoriesData } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('categories').select('*').order('name');
+      if (error) throw error;
+      return data;
+    }
   });
 
   const { data: settings } = useQuery({
@@ -197,6 +208,56 @@ function AdminDashboard() {
             <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
               <div className="text-emerald-500 text-xs font-bold uppercase tracking-widest">System Status</div>
               <div className="mt-1 text-sm font-medium">All functions operational</div>
+            </div>
+          </CardContent>
+        </Card>
+      <div className="grid grid-cols-1 gap-8">
+        <Card className="border-none shadow-sm rounded-3xl p-8 bg-white">
+          <CardHeader className="px-0 pt-0">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-indigo-100 rounded-2xl">
+                <Layers className="w-6 h-6 text-indigo-600" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-black tracking-tight">Navigation Categories</CardTitle>
+                <p className="text-sm text-slate-500">Toggle which categories appear in your main navigation bar.</p>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="px-0 pb-0 pt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {queryClient.getQueryData<any[]>(['categories'])?.map((category) => (
+                <div 
+                  key={category.id}
+                  className="flex items-center justify-between p-4 rounded-2xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                >
+                  <div className="flex flex-col">
+                    <span className="font-bold text-slate-900">{category.name}</span>
+                    <span className="text-[10px] text-slate-400 font-mono tracking-tighter uppercase">{category.slug}</span>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant={category.show_in_nav ? "default" : "outline"}
+                    className={`rounded-xl px-4 ${category.show_in_nav ? 'bg-indigo-600 hover:bg-indigo-700' : ''}`}
+                    onClick={async () => {
+                      const { error } = await supabase
+                        .from('categories')
+                        .update({ show_in_nav: !category.show_in_nav })
+                        .eq('id', category.id);
+                      
+                      if (error) {
+                        toast.error("Failed to update: " + error.message);
+                      } else {
+                        queryClient.invalidateQueries({ queryKey: ['categories'] });
+                        toast.success(`${category.name} ${!category.show_in_nav ? 'added to' : 'removed from'} navigation`);
+                      }
+                    }}
+                  >
+                    {category.show_in_nav ? <Check className="w-4 h-4 mr-1" /> : <X className="w-4 h-4 mr-1" />}
+                    {category.show_in_nav ? 'Visible' : 'Hidden'}
+                  </Button>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
