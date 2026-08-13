@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, Layers, Users, TrendingUp, Settings, Save, Globe, Check, X } from 'lucide-react';
+import { Package, Layers, Users, TrendingUp, Settings, Save, Globe, Check, X, Bell, Trash2, Plus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -36,6 +36,15 @@ function AdminDashboard() {
     queryKey: ['categories'],
     queryFn: async () => {
       const { data, error } = await supabase.from('categories').select('*').order('name');
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  const { data: newsAlerts } = useQuery({
+    queryKey: ['news-alerts'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('news_alerts').select('*').order('created_at', { ascending: false });
       if (error) throw error;
       return data;
     }
@@ -254,6 +263,95 @@ function AdminDashboard() {
                   {category.show_in_nav ? <Check className="w-4 h-4 mr-1" /> : <X className="w-4 h-4 mr-1" />}
                   {category.show_in_nav ? 'Visible' : 'Hidden'}
                 </Button>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      <Card className="border-white/5 shadow-2xl rounded-3xl p-8 bg-slate-900 mt-8">
+        <CardHeader className="px-0 pt-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-indigo-500/10 rounded-2xl">
+                <Bell className="w-6 h-6 text-indigo-400" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-black tracking-tight text-white">Promotional News Alerts</CardTitle>
+                <p className="text-sm text-slate-400">Manage the top-bar floating news ticker.</p>
+              </div>
+            </div>
+            <Button 
+              onClick={async () => {
+                const { error } = await supabase.from('news_alerts').insert({
+                  content: 'New alert message...',
+                  badge_text: 'NEW',
+                  is_active: true
+                });
+                if (error) toast.error(error.message);
+                else {
+                  queryClient.invalidateQueries({ queryKey: ['news-alerts'] });
+                  toast.success('Alert template added');
+                }
+              }}
+              className="bg-indigo-600 hover:bg-indigo-700 rounded-xl"
+            >
+              <Plus className="w-4 h-4 mr-2" /> Add Alert
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="px-0 pb-0 pt-8">
+          <div className="space-y-4">
+            {newsAlerts?.map((alert: any) => (
+              <div key={alert.id} className="p-6 rounded-2xl border border-white/5 bg-slate-800/50 space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">Alert Content</label>
+                      <Input 
+                        defaultValue={alert.content}
+                        onBlur={async (e) => {
+                          const { error } = await supabase.from('news_alerts').update({ content: e.target.value }).eq('id', alert.id);
+                          if (!error) toast.success('Updated content');
+                        }}
+                        className="bg-slate-900 border-white/10"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">Badge Text</label>
+                      <Input 
+                        defaultValue={alert.badge_text}
+                        onBlur={async (e) => {
+                          const { error } = await supabase.from('news_alerts').update({ badge_text: e.target.value }).eq('id', alert.id);
+                          if (!error) toast.success('Updated badge');
+                        }}
+                        className="bg-slate-900 border-white/10"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 ml-4">
+                    <Button 
+                      size="sm" 
+                      variant={alert.is_active ? "default" : "outline"}
+                      className={alert.is_active ? "bg-emerald-600" : ""}
+                      onClick={async () => {
+                        const { error } = await supabase.from('news_alerts').update({ is_active: !alert.is_active }).eq('id', alert.id);
+                        queryClient.invalidateQueries({ queryKey: ['news-alerts'] });
+                      }}
+                    >
+                      {alert.is_active ? 'Active' : 'Inactive'}
+                    </Button>
+                    <Button 
+                      size="icon" 
+                      variant="destructive" 
+                      onClick={async () => {
+                        await supabase.from('news_alerts').delete().eq('id', alert.id);
+                        queryClient.invalidateQueries({ queryKey: ['news-alerts'] });
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

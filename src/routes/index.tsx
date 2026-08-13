@@ -32,7 +32,7 @@ function Index() {
       <main className="flex-grow">
         <Hero />
         <div className="hidden">
-          header have a side round shape border i need it in navigation bar
+          header need this type of fully shettle with page and add best news flot in the header which i add thorugh the admin panel so modify the admin panel and add this feature
         </div>
         <ProductGrid />
       </main>
