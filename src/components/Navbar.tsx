@@ -71,7 +71,7 @@ export function Navbar() {
       {/* Info Bar (Top Bar) */}
       {!isScrolled && (
         <div className="w-full bg-indigo-600 text-white py-2 px-6 border-b border-white/10 relative z-[51]">
-          <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.1em] sm:tracking-widest">
             <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
               <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
                 <Phone className="w-3 h-3" /> <span className="hidden sm:inline">+91 72 52 89 0016</span>
