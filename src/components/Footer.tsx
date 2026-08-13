@@ -6,70 +6,95 @@ export function Footer() {
   const { data: settings } = useSiteSettings();
 
   return (
-    <footer className="bg-slate-950 border-t border-white/5 pt-16 lg:pt-24 pb-12 px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_bottom,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
-
+    <footer className="bg-slate-950 border-t border-white/5 pt-20 lg:pt-32 pb-12 px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-600/5 blur-[120px] rounded-full translate-x-1/2 translate-y-1/2" />
+      
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 lg:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-20">
           
           {/* Brand Column */}
-          <div className="lg:col-span-4 space-y-6 lg:space-y-8 text-center sm:text-left">
-            <Link to="/" className="text-2xl lg:text-3xl font-black italic tracking-tighter text-white uppercase inline-flex items-center gap-2">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center not-italic text-sm">G</div>
+          <div className="lg:col-span-5 space-y-8 text-center md:text-left">
+            <Link to="/" className="text-3xl font-black italic tracking-tighter text-white uppercase inline-flex items-center gap-3">
+              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center not-italic text-base shadow-lg shadow-indigo-600/20">G</div>
               {settings?.['company_name'] || 'GROWUPHOST'}
             </Link>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto sm:mx-0 font-medium">
-              Providing enterprise-grade infrastructure since 2018. High-performance cloud hosting for businesses that demand zero downtime.
+            <p className="text-slate-400 text-base leading-relaxed max-w-md mx-auto md:mx-0 font-medium italic opacity-80">
+              "We provide the engine for your digital success. High-performance infrastructure with unmatched reliability in the heart of Mumbai."
             </p>
-            <div className="flex justify-center sm:justify-start gap-3">
-               {[Twitter, Github, Linkedin, Facebook].map((Icon, i) => (
-                 <a key={i} href="#" className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition-all group">
-                   <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                 </a>
-               ))}
+            
+            <div className="flex flex-col gap-6 items-center md:items-start">
+              <div className="flex gap-4">
+                 {[Twitter, Github, Linkedin, Facebook].map((Icon, i) => (
+                   <a key={i} href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 hover:-translate-y-1 transition-all group">
+                     <Icon className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                   </a>
+                 ))}
+              </div>
+              
+              <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/5 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Support 24/7/365
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/5 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                  99.9% Uptime
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Links Columns */}
-          <div className="lg:col-span-2 space-y-6 text-center sm:text-left">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Services</h4>
-            <ul className="space-y-4 text-sm font-bold text-slate-500">
-               <li><Link to="/shared-hosting" className="hover:text-white transition-colors">Shared Hosting</Link></li>
-               <li><Link to="/vps-hosting" className="hover:text-white transition-colors">VPS Servers</Link></li>
-               <li><Link to="/dedicated-servers" className="hover:text-white transition-colors">Dedicated Nodes</Link></li>
-               <li><Link to="/licenses" className="hover:text-white transition-colors">Licenses</Link></li>
+          <div className="lg:col-span-2 space-y-8 text-center md:text-left">
+            <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-indigo-400">Services</h4>
+            <ul className="space-y-5 text-[13px] font-bold text-slate-500">
+               <li><Link to="/shared-hosting" className="hover:text-white hover:translate-x-1 inline-block transition-all">Web Hosting</Link></li>
+               <li><Link to="/vps-hosting" className="hover:text-white hover:translate-x-1 inline-block transition-all">Cloud VPS</Link></li>
+               <li><Link to="/dedicated-servers" className="hover:text-white hover:translate-x-1 inline-block transition-all">Dedicated Hardware</Link></li>
+               <li><Link to="/licenses" className="hover:text-white hover:translate-x-1 inline-block transition-all">Software Licenses</Link></li>
+               <li><Link to="/contact" className="hover:text-white hover:translate-x-1 inline-block transition-all">SSL Certificates</Link></li>
             </ul>
           </div>
 
-          <div className="lg:col-span-2 space-y-6 text-center sm:text-left">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Support</h4>
-            <ul className="space-y-4 text-sm font-bold text-slate-500">
-               <li><Link to="/" className="hover:text-white transition-colors">Knowledgebase</Link></li>
-               <li><Link to="/" className="hover:text-white transition-colors">Client Area</Link></li>
-               <li><Link to="/" className="hover:text-white transition-colors">Server Status</Link></li>
-               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+          <div className="lg:col-span-2 space-y-8 text-center md:text-left">
+            <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-indigo-400">Company</h4>
+            <ul className="space-y-5 text-[13px] font-bold text-slate-500">
+               <li><Link to="/contact" className="hover:text-white hover:translate-x-1 inline-block transition-all">Contact Us</Link></li>
+               <li><Link to="/" className="hover:text-white hover:translate-x-1 inline-block transition-all">Knowledgebase</Link></li>
+               <li><Link to="/" className="hover:text-white hover:translate-x-1 inline-block transition-all">Service Status</Link></li>
+               <li><Link to="/legal/sla" className="hover:text-white hover:translate-x-1 inline-block transition-all">SLA Guarantee</Link></li>
+               <li><a href="#" className="hover:text-white hover:translate-x-1 inline-block transition-all">Acceptable Use</a></li>
             </ul>
           </div>
 
-          <div className="lg:col-span-4 space-y-6 text-center sm:text-left">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Infrastructure</h4>
-            <div className="grid grid-cols-1 gap-4">
-               <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex items-center justify-between sm:justify-start gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Mumbai, IN</span>
+          {/* Location/Infra */}
+          <div className="lg:col-span-3 space-y-8 text-center md:text-left">
+            <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-indigo-400">Global Presence</h4>
+            <div className="space-y-6">
+               <div className="p-6 bg-gradient-to-br from-white/5 to-transparent rounded-3xl border border-white/5 group hover:border-indigo-500/20 transition-all">
+                  <div className="flex items-center gap-4 mb-3 justify-center md:justify-start">
+                    <Globe className="w-5 h-5 text-indigo-500 group-hover:animate-spin" />
+                    <span className="text-sm font-black text-white uppercase tracking-wider">Mumbai Center 1</span>
                   </div>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">
-                     Ping: 12ms
+                  <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-tighter">
+                     <span className="text-slate-500">Node Status</span>
+                     <span className="text-emerald-500">Active</span>
+                  </div>
+                  <div className="w-full bg-white/5 h-1 rounded-full mt-3 overflow-hidden">
+                    <div className="bg-emerald-500 h-full w-[94%]" />
                   </div>
                </div>
+
                <div className="flex gap-4">
-                  <div className="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-help" title="PCI-DSS Compliant">
+                  <div className="flex-1 bg-white/5 border border-white/10 p-5 rounded-2xl flex flex-col items-center gap-2 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all cursor-help" title="PCI-DSS Compliant">
                      <ShieldCheck className="w-6 h-6 text-indigo-400" />
+                     <span className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-500">PCI-DSS</span>
                   </div>
-                  <div className="flex-1 bg-white/5 border border-white/10 p-4 rounded-xl flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-help" title="Tier 3 Certified">
+                  <div className="flex-1 bg-white/5 border border-white/10 p-5 rounded-2xl flex flex-col items-center gap-2 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all cursor-help" title="Tier 3 Certified">
                      <Zap className="w-6 h-6 text-indigo-400" />
+                     <span className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-500">TIER III</span>
                   </div>
                </div>
             </div>
@@ -77,15 +102,18 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-           <div className="flex flex-wrap justify-center gap-6 lg:gap-8 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              <Link to="/legal/sla" className="hover:text-white transition-colors">SLA Guarantee</Link>
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+        <div className="pt-12 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-10">
+           <div className="flex flex-wrap justify-center gap-8 lg:gap-12 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+              <Link to="/legal/sla" className="hover:text-white transition-colors">SLA</Link>
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="#" className="hover:text-white transition-colors">Cookies</a>
            </div>
            
-           <div className="text-[10px] font-bold text-slate-600 uppercase tracking-widest text-center">
-              © 2026 {settings?.['company_name'] || 'GROWUPHOST'}. Professional Infrastructure.
+           <div className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] text-center lg:text-right flex flex-col md:flex-row gap-2 md:gap-4 items-center">
+              <span>© 2026 {settings?.['company_name'] || 'GROWUPHOST'}. Professional Infrastructure.</span>
+              <span className="w-1 h-1 bg-slate-700 rounded-full hidden md:block" />
+              <span className="text-slate-500">Registered in India.</span>
            </div>
         </div>
       </div>
