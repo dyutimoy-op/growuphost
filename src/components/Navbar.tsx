@@ -48,22 +48,11 @@ export function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {categories?.map((category) => (
-              <DropdownMenu key={category.id}>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium hover:text-indigo-400 transition-colors">
-                  {category.name} <ChevronDown className="w-3 h-3" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-slate-900 border-slate-800 text-white">
-                  <DropdownMenuItem>
-                    <Link to="/" search={{ category: category.slug }} className="w-full">
-                      View All
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ))}
-            <a href="/about" className="text-sm font-medium hover:text-indigo-400 transition-colors">About</a>
-            <a href="/contact" className="text-sm font-medium hover:text-indigo-400 transition-colors">Contact</a>
+            <Link to="/shared-hosting" className="text-sm font-medium hover:text-indigo-400 transition-colors">Shared</Link>
+            <Link to="/vps-hosting" className="text-sm font-medium hover:text-indigo-400 transition-colors">VPS</Link>
+            <Link to="/dedicated-servers" className="text-sm font-medium hover:text-indigo-400 transition-colors">Dedicated</Link>
+            <Link to="/licenses" className="text-sm font-medium hover:text-indigo-400 transition-colors">Licenses</Link>
+            <Link to="/contact" className="text-sm font-medium hover:text-indigo-400 transition-colors">Contact</Link>
           </div>
         </div>
 
