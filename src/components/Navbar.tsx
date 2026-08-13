@@ -110,7 +110,7 @@ export function Navbar() {
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="text-xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-2 sm:gap-3 group relative z-50">
               <div className="w-8 h-8 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white flex-shrink-0">G</div>
-              <span className="relative z-50 truncate max-w-[120px] xs:max-w-none">{settings?.['company_name'] || 'GROWUPHOST'}</span>
+              <span className="relative z-50 whitespace-nowrap">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
           </div>
 
