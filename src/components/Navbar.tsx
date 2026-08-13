@@ -138,7 +138,7 @@ export function Navbar() {
 
       <nav className="relative max-w-[95rem] mx-auto px-6 sm:px-12 lg:px-20 flex items-center justify-between pointer-events-auto h-14 sm:h-16 lg:h-20">
         <div className="flex items-center gap-10 lg:gap-16">
-          <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-slate-900 flex items-center gap-3 sm:gap-4 group">
+          <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 sm:gap-4 group">
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 text-base sm:text-lg text-white">G</div>
             <span className="drop-shadow-sm">{settings?.['company_name'] || 'GROWUPHOST'}</span>
           </Link>
