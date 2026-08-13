@@ -48,10 +48,15 @@ export function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/shared-hosting" className="text-sm font-medium hover:text-indigo-400 transition-colors">Shared</Link>
-            <Link to="/vps-hosting" className="text-sm font-medium hover:text-indigo-400 transition-colors">VPS</Link>
-            <Link to="/dedicated-servers" className="text-sm font-medium hover:text-indigo-400 transition-colors">Dedicated</Link>
-            <Link to="/licenses" className="text-sm font-medium hover:text-indigo-400 transition-colors">Licenses</Link>
+            {categories?.filter(cat => cat.show_in_nav).map((category) => (
+              <Link 
+                key={category.id} 
+                to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
+                className="text-sm font-medium hover:text-indigo-400 transition-colors"
+              >
+                {category.name}
+              </Link>
+            ))}
             <Link to="/contact" className="text-sm font-medium hover:text-indigo-400 transition-colors">Contact</Link>
           </div>
         </div>
