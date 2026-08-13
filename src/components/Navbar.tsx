@@ -106,8 +106,8 @@ export function Navbar() {
       <div 
         className={`absolute inset-x-0 top-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-auto ${
           isScrolled 
-            ? "mx-4 sm:mx-8 mt-2 sm:mt-3 h-14 sm:h-16 rounded-full bg-slate-950/70 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
-            : `h-full bg-white translate-y-0 ${newsAlert ? 'mt-[4.5rem]' : 'mt-8'}`
+            ? "mx-4 sm:mx-8 mt-2 sm:mt-3 h-14 sm:h-16 rounded-full bg-slate-950/90 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
+            : `h-full bg-slate-950 translate-y-0 ${newsAlert ? 'mt-[4.5rem]' : 'mt-8'}`
         }`}
       />
       {/* Top Bar - Refined Desktop */}
@@ -138,7 +138,7 @@ export function Navbar() {
 
       <nav className="relative max-w-[95rem] mx-auto px-6 sm:px-12 lg:px-20 flex items-center justify-between pointer-events-auto h-14 sm:h-16 lg:h-20">
         <div className="flex items-center gap-10 lg:gap-16">
-          <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-slate-900 flex items-center gap-3 sm:gap-4 group">
+          <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 sm:gap-4 group">
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center not-italic shadow-2xl shadow-indigo-600/40 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 text-base sm:text-lg text-white">G</div>
             <span className="drop-shadow-sm">{settings?.['company_name'] || 'GROWUPHOST'}</span>
           </Link>
@@ -149,21 +149,21 @@ export function Navbar() {
               <Link 
                 key={category.id} 
                 to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                className={`text-xs font-black uppercase tracking-[0.2em] transition-all relative group ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-indigo-600'}`}
+                className={`text-xs font-black uppercase tracking-[0.2em] transition-all relative group ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-200 hover:text-white'}`}
               >
                 {category.name}
                 <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
               </Link>
             ))}
-            <Link to="/contact" className={`text-xs font-black uppercase tracking-[0.2em] transition-all ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-indigo-600'}`}>Contact</Link>
+            <Link to="/contact" className={`text-xs font-black uppercase tracking-[0.2em] transition-all ${isScrolled ? 'text-slate-300 hover:text-white' : 'text-slate-200 hover:text-white'}`}>Contact</Link>
           </div>
         </div>
 
         <div className={`relative flex items-center gap-4 sm:gap-6 ${isScrolled ? '' : 'pt-2'}`}>
           <div className="hidden lg:flex items-center gap-6">
-            <Search className={`w-5 h-5 cursor-pointer transition-colors ${isScrolled ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-indigo-600'}`} />
+            <Search className={`w-5 h-5 cursor-pointer transition-colors ${isScrolled ? 'text-slate-400 hover:text-white' : 'text-slate-300 hover:text-white'}`} />
             <div className="flex items-center gap-3">
-              <Button variant="outline" className={`rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] transition-all h-10 sm:h-11 ${isScrolled ? 'border-indigo-500/30 hover:bg-indigo-500/10 text-white hover:border-indigo-500/60' : 'border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-indigo-600'}`} asChild>
+              <Button variant="outline" className={`rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] transition-all h-10 sm:h-11 ${isScrolled ? 'border-indigo-500/30 hover:bg-indigo-500/10 text-white hover:border-indigo-500/60' : 'border-white/20 hover:bg-white/10 text-white hover:border-white/40'}`} asChild>
                 <a href={settings?.['register_url'] || "/auth"}>Register</a>
               </Button>
               <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 rounded-lg sm:rounded-xl px-5 py-2.5 text-xs font-black uppercase tracking-[0.15em] shadow-2xl shadow-indigo-600/40 transition-all h-10 sm:h-11 hover:scale-105 active:scale-95" asChild>
@@ -174,7 +174,7 @@ export function Navbar() {
           
           {/* Mobile Menu Toggle */}
           <button 
-            className={`lg:hidden p-2 rounded-lg transition-colors ${isScrolled ? 'text-white hover:bg-white/5' : 'text-slate-600 hover:bg-slate-100'}`}
+            className={`lg:hidden p-2 rounded-lg transition-colors ${isScrolled ? 'text-white hover:bg-white/5' : 'text-white hover:bg-white/10'}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
