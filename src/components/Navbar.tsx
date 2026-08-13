@@ -108,7 +108,7 @@ export function Navbar() {
           <div className="absolute left-6 flex items-center">
             <Link to="/" className="text-2xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span className="relative z-50">{settings?.['company_name'] || 'GROWUPHOST'}</span>
+              <span className="relative z-50 text-2xl sm:text-3xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
           </div>
 
