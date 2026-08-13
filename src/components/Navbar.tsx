@@ -95,11 +95,11 @@ export function Navbar() {
       )}
 
       {/* Main Navigation */}
-      <div className={`w-full transition-all duration-500 ${isScrolled ? "py-2 sm:py-3 px-4 sm:px-8" : "py-0"}`}>
+      <div className={`w-full transition-all duration-500 ${isScrolled ? "py-2 px-4" : "py-0"}`}>
         <div 
           className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
             isScrolled 
-              ? "h-full rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]" 
+              ? "h-full rounded-full bg-slate-950/95 backdrop-blur-xl border border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]" 
               : "h-full bg-slate-950 border-b border-white/5"
           }`}
         />
