@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X, Search, Globe, ChevronRight, Bell, ArrowRight } from "lucide-react";
+import { Menu, X, Globe, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -10,12 +10,6 @@ export function Navbar() {
   const { data: settings } = useSiteSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -31,30 +25,6 @@ export function Navbar() {
       return data;
     },
   });
-
-  const { data: newsAlert } = useQuery({
-    queryKey: ["news-alert"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("news_alerts")
-        .select("*")
-        .eq("is_active", true)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .single();
-      if (error) return null;
-      return data;
-    },
-  });
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-IN', { 
-      hour12: false, 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit' 
-    });
-  };
 
   return (
     <header 
@@ -112,7 +82,7 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay - Premium Full Screen */}
+      {/* Mobile Menu Overlay */}
       <div 
         className={`lg:hidden fixed inset-0 top-0 bg-slate-950/98 backdrop-blur-2xl z-40 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
@@ -149,8 +119,8 @@ export function Navbar() {
             </div>
 
             <div className="space-y-6 pt-12 border-t border-white/5">
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 py-8 rounded-2xl text-lg font-black uppercase tracking-widest shadow-xl shadow-indigo-600/20 active:scale-[0.98] transition-all">
-                Client Portal
+              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 py-8 rounded-2xl text-lg font-black uppercase tracking-widest shadow-xl shadow-indigo-600/20 active:scale-[0.98] transition-all" asChild>
+                 <a href={settings?.['login_url'] || "/auth"}>Client Portal</a>
               </Button>
               <div className="grid grid-cols-2 gap-4">
                  <a href={settings?.['login_url'] || "/auth"} className="flex items-center justify-center py-5 bg-white/5 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-300 active:bg-white/10 transition-colors">Login</a>
@@ -169,3 +139,4 @@ export function Navbar() {
     </header>
   );
 }
+
