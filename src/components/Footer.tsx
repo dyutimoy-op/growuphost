@@ -32,10 +32,10 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Services</h4>
             <ul className="space-y-4 text-sm font-bold text-slate-500">
-               <li><Link to="/" className="hover:text-white transition-colors">Shared Hosting</Link></li>
-               <li><Link to="/" className="hover:text-white transition-colors">VPS Servers</Link></li>
-               <li><Link to="/" className="hover:text-white transition-colors">Dedicated Nodes</Link></li>
-               <li><Link to="/" className="hover:text-white transition-colors">Cloud GPUs</Link></li>
+               <li><Link to="/shared-hosting" className="hover:text-white transition-colors">Shared Hosting</Link></li>
+               <li><Link to="/vps-hosting" className="hover:text-white transition-colors">VPS Servers</Link></li>
+               <li><Link to="/dedicated-servers" className="hover:text-white transition-colors">Dedicated Nodes</Link></li>
+               <li><Link to="/licenses" className="hover:text-white transition-colors">Licenses</Link></li>
             </ul>
           </div>
 
@@ -45,7 +45,7 @@ export function Footer() {
                <li><Link to="/" className="hover:text-white transition-colors">Knowledgebase</Link></li>
                <li><Link to="/" className="hover:text-white transition-colors">Client Area</Link></li>
                <li><Link to="/" className="hover:text-white transition-colors">Server Status</Link></li>
-               <li><Link to="/" className="hover:text-white transition-colors">Contact Us</Link></li>
+               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
