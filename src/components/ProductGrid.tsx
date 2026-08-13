@@ -43,7 +43,7 @@ export function ProductGrid() {
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none">
               PLANS FOR EVERY <br />
-              <span className="text-slate-500 italic">STAGE.</span>
+              <span className="text-indigo-500 italic">STAGE.</span>
             </h2>
           </div>
 
