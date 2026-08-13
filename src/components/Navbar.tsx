@@ -104,16 +104,16 @@ export function Navbar() {
           }`}
         />
 
-        <nav className="relative max-w-7xl mx-auto px-6 flex items-center h-16 sm:h-20">
-          <div className="absolute left-6 flex items-center">
-            <Link to="/" className="text-2xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span className="relative z-50 text-2xl sm:text-3xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
+        <nav className="relative max-w-7xl mx-auto px-4 sm:px-6 flex items-center h-16 sm:h-20">
+          <div className="flex-shrink-0 flex items-center">
+            <Link to="/" className="text-xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-2 sm:gap-3 group relative z-50">
+              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white flex-shrink-0">G</div>
+              <span className="relative z-50 truncate max-w-[120px] xs:max-w-none">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
           </div>
 
-          <div className="flex-1 flex justify-center">
-            <div className="hidden lg:flex items-center gap-8">
+          <div className="flex-1 hidden lg:flex justify-center">
+            <div className="flex items-center gap-8">
               {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
                 <Link 
                   key={category.id} 
@@ -127,7 +127,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="absolute right-6 flex items-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-2 sm:gap-6 ml-auto">
             <div className="hidden lg:flex items-center gap-4">
               <Button variant="ghost" className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Login</a>
@@ -138,7 +138,7 @@ export function Navbar() {
             </div>
             
             <button 
-              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg"
+              className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg relative z-50"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
