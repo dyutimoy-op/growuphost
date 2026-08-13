@@ -106,8 +106,8 @@ export function Navbar() {
 
         <nav className="relative max-w-7xl mx-auto px-6 flex items-center h-16 sm:h-20">
           <div className="absolute left-6 flex items-center">
-            <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
+            <Link to="/" className="text-2xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
               <span className="relative z-50">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
           </div>
