@@ -30,7 +30,7 @@ export function Navbar() {
         <span className="opacity-40">|</span>
         <Link to="/" className="hover:opacity-80 transition-opacity">Offers</Link>
         <span className="opacity-40">|</span>
-        <Link to="/_authenticated/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+        <Link to="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
           <ShieldCheck className="w-4 h-4" />
         </Link>
         <span className="opacity-40">|</span>
