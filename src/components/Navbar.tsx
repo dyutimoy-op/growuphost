@@ -45,7 +45,7 @@ export function Navbar() {
     <header className="w-full fixed top-0 z-50 transition-all duration-500">
       {/* Promotion Bar (Ticker) */}
       {!isScrolled && newsAlert && (
-        <div className="w-full bg-indigo-700 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
+        <div className="w-full bg-indigo-500 backdrop-blur-md border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center">
           <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 overflow-hidden">
                <div className="flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
@@ -70,7 +70,7 @@ export function Navbar() {
 
       {/* Info Bar (Top Bar) */}
       {!isScrolled && (
-        <div className="w-full bg-slate-900 text-white py-2 px-6 border-b border-white/5">
+        <div className="w-full bg-indigo-600 text-white py-2 px-6 border-b border-white/10">
           <div className="max-w-7xl mx-auto flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
             <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
               <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
@@ -116,18 +116,18 @@ export function Navbar() {
                 <Link 
                   key={category.id} 
                   to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors"
+                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
                 >
                   {category.name}
                 </Link>
               ))}
-              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-colors">Contact</Link>
+              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors">Contact</Link>
             </div>
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
             <div className="hidden lg:flex items-center gap-4">
-              <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300 hover:text-white hover:bg-white/5 px-6" asChild>
+              <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Login</a>
               </Button>
               <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[11px] font-bold uppercase tracking-[0.2em] px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
