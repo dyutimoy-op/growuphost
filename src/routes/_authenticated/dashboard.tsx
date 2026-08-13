@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package, Layers, Users, TrendingUp } from 'lucide-react';
 
-export const Route = createFileRoute('/_authenticated/')({
+export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
 });
 
