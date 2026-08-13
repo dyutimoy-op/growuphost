@@ -179,12 +179,8 @@ export function Navbar() {
 
             <div className="space-y-6 pt-12 border-t border-white/5">
               <Button className="w-full bg-indigo-600 hover:bg-indigo-700 py-8 rounded-2xl text-lg font-black uppercase tracking-widest shadow-xl shadow-indigo-600/20 active:scale-[0.98] transition-all" asChild>
-                 <a href={settings?.['login_url'] || "/auth"}>Client Portal</a>
+                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
               </Button>
-              <div className="grid grid-cols-2 gap-4">
-                 <a href={settings?.['login_url'] || "/auth"} className="flex items-center justify-center py-5 bg-white/5 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-300 active:bg-white/10 transition-colors">Login</a>
-                 <a href={settings?.['register_url'] || "/auth"} className="flex items-center justify-center py-5 bg-white/5 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-300 active:bg-white/10 transition-colors">Signup</a>
-              </div>
             </div>
           </div>
           
