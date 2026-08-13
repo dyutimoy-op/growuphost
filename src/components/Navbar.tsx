@@ -46,7 +46,7 @@ export function Navbar() {
       {/* Promotion Bar (Ticker) */}
       {!isScrolled && newsAlert && (
         <div className="w-full bg-indigo-500 text-white border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center relative z-[52]">
-          <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
+          <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-center gap-4 relative">
             <div className="flex items-center gap-3 overflow-hidden">
                <div className="flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
                  <Bell className="w-3 h-3" />
