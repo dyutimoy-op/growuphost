@@ -121,14 +121,13 @@ export function Navbar() {
                   {category.name}
                 </Link>
               ))}
+              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
             </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-6 ml-auto">
             <div className="hidden lg:flex items-center gap-4">
-              <Button className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
-                <Link to="/contact">Contact</Link>
-              </Button>
+              {/* Login and Register removed per previous request, keeping space for right-aligned items if needed later */}
             </div>
             
             <button 
