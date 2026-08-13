@@ -107,7 +107,7 @@ export function Navbar() {
         className={`absolute inset-x-0 top-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] pointer-events-auto ${
           isScrolled 
             ? "mx-4 sm:mx-8 mt-2 sm:mt-3 h-14 sm:h-16 rounded-full bg-slate-950/90 backdrop-blur-2xl border border-white/10 shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4),inset_0_1px_1px_0_rgba(255,255,255,0.1)] translate-y-0" 
-            : `h-full bg-slate-950 translate-y-0 ${newsAlert ? 'mt-[4.5rem]' : 'mt-8'}`
+            : "h-full bg-slate-950"
         }`}
       />
       {/* Top Bar - Refined Desktop */}
