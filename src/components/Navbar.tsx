@@ -104,11 +104,11 @@ export function Navbar() {
           }`}
         />
 
-        <nav className="relative max-w-7xl mx-auto px-6 flex items-center h-14 sm:h-16">
+        <nav className="relative max-w-7xl mx-auto px-6 flex items-center h-16 sm:h-20">
           <div className="absolute left-6 flex items-center">
-            <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
-              <span className="relative z-50">{settings?.['company_name'] || 'GROWUPHOST'}</span>
+            <Link to="/" className="text-2xl sm:text-3xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
+              <span className="relative z-50 text-2xl sm:text-3xl">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
           </div>
 
@@ -118,21 +118,21 @@ export function Navbar() {
                 <Link 
                   key={category.id} 
                   to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                  className="text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50"
+                  className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50"
                 >
                   {category.name}
                 </Link>
               ))}
-              <Link to="/contact" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
+              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
             </div>
           </div>
 
           <div className="absolute right-6 flex items-center gap-4 sm:gap-6">
             <div className="hidden lg:flex items-center gap-4">
-              <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
+              <Button variant="ghost" className="text-[12px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Login</a>
               </Button>
-              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[11px] font-bold uppercase tracking-[0.2em] px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
+              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700 text-[12px] font-bold uppercase tracking-[0.2em] px-8 py-6 rounded-lg shadow-lg shadow-indigo-600/20 transition-all hover:scale-105" asChild>
                 <a href={settings?.['register_url'] || "/auth"}>Register</a>
               </Button>
             </div>
