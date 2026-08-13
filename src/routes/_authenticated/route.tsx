@@ -4,11 +4,11 @@ import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarMenu, S
 import { LayoutDashboard, Package, Layers, Image as ImageIcon, Settings, LogOut, Globe } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated" as any)({
+export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      throw redirect({ to: "/auth" as any });
+      throw redirect({ to: '/auth' });
     }
   },
   component: AdminLayout,
