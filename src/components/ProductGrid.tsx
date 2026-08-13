@@ -111,7 +111,7 @@ export function ProductGrid() {
 
                 <div className="space-y-4 mb-10 lg:mb-12 flex-grow">
                   {(product.features as string[])?.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-xs font-bold">
+                    <div key={i} className="flex items-center gap-3 text-xs font-bold text-left">
                       <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3 text-indigo-400" />
                       </div>
