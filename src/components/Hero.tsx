@@ -1,8 +1,12 @@
 import { Play, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSiteSettings } from "@/hooks/use-site-settings";
+
 
 export function Hero() {
+  const { data: settings } = useSiteSettings();
   return (
+
     <section className="relative w-full h-[700px] flex items-center justify-center overflow-hidden bg-slate-900">
       {/* Background Video/GIF Simulation */}
       <div className="absolute inset-0 z-0 opacity-40">
@@ -24,18 +28,21 @@ export function Hero() {
           <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight">
             Next Generation <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">
-              Cloud Hosting
+              Web Hosting
             </span>
           </h1>
+
 
           <p className="text-lg text-slate-300 max-w-lg leading-relaxed">
             Deploy your high performance systems optimized for scalability with full root access, bare metal hardware, and isolated resources.
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="bg-[#5831f7] hover:bg-[#4828d9] text-white px-8 py-7 rounded-2xl text-lg font-bold">
-              Get Started →
+            <Button size="lg" className="bg-[#5831f7] hover:bg-[#4828d9] text-white px-8 py-7 rounded-2xl text-lg font-bold" asChild>
+              <a href={settings?.['hero_cta_url'] || "/"}>Get Started →</a>
             </Button>
+
+
             <Button size="lg" variant="outline" className="border-slate-700 text-white hover:bg-slate-800 px-8 py-7 rounded-2xl text-lg font-bold gap-2">
               <Play className="w-5 h-5 fill-current" /> View Demo
             </Button>

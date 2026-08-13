@@ -1,14 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, Layers, Users, TrendingUp } from 'lucide-react';
+import { Package, Layers, Users, TrendingUp, Settings, Save, Globe } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { useState, useEffect } from 'react';
+
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
 });
 
 function AdminDashboard() {
+  const queryClient = useQueryClient();
+  const [localSettings, setLocalSettings] = useState<Record<string, string>>({});
+
   const { data: stats } = useQuery({
     queryKey: ['admin-stats'],
     queryFn: async () => {
@@ -19,10 +27,46 @@ function AdminDashboard() {
       return {
         products: products.count || 0,
         categories: categories.count || 0,
-        activeUsers: 1, // Mock
-        revenue: '₹45,900', // Mock
+        activeUsers: 1,
+        revenue: '₹45,900',
       };
     },
+  });
+
+  const { data: settings } = useQuery({
+    queryKey: ['site-settings'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('site_settings').select('*');
+      if (error) throw error;
+      const s: Record<string, string> = {};
+      data.forEach(item => s[item.key] = item.value || '');
+      return s;
+    }
+  });
+
+  useEffect(() => {
+    if (settings) {
+      setLocalSettings(settings);
+    }
+  }, [settings]);
+
+  const updateSettings = useMutation({
+    mutationFn: async (newSettings: Record<string, string>) => {
+      const updates = Object.entries(newSettings).map(([key, value]) => 
+        supabase.from('site_settings').update({ value }).eq('key', key)
+      );
+      const results = await Promise.all(updates);
+      const firstError = results.find(r => r.error);
+      if (firstError) throw firstError.error;
+      return true;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['site-settings'] });
+      toast.success('Settings updated successfully');
+    },
+    onError: (error) => {
+      toast.error('Failed to update settings: ' + error.message);
+    }
   });
 
   const cards = [
@@ -33,60 +77,126 @@ function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 max-w-6xl">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900">Dashboard Overview</h1>
-        <p className="text-slate-500 mt-2">Welcome to your HostPro management panel.</p>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">GROWUPHOST Admin Panel</h1>
+        <p className="text-slate-500 mt-2 font-medium">Manage your landing page branding and URLs.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card) => (
           <Card key={card.title} className="border-none shadow-sm rounded-2xl overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wider">
+              <CardTitle className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
                 {card.title}
               </CardTitle>
               <div className={`p-2 rounded-xl ${card.bg}`}>
-                <card.icon className={`w-5 h-5 ${card.color}`} />
+                <card.icon className={`w-4 h-4 ${card.color}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-black text-slate-900">{card.value}</div>
-              <p className="text-xs text-emerald-500 font-bold mt-2">
-                +12% <span className="text-slate-400 font-normal">from last month</span>
-              </p>
+              <div className="text-2xl font-black text-slate-900 tracking-tight">{card.value}</div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <Card className="border-none shadow-sm rounded-2xl p-6">
-          <CardHeader>
-            <CardTitle>Recent Products</CardTitle>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <Card className="lg:col-span-2 border-none shadow-sm rounded-3xl p-8 bg-white">
+          <CardHeader className="px-0 pt-0">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-primary/10 rounded-2xl">
+                  <Settings className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl font-black tracking-tight">Site Settings</CardTitle>
+                  <p className="text-sm text-slate-500">Configure your branding and external links.</p>
+                </div>
+              </div>
+              <Button 
+                onClick={() => updateSettings.mutate(localSettings)}
+                disabled={updateSettings.isPending}
+                className="bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-6 font-bold flex gap-2"
+              >
+                <Save className="w-4 h-4" />
+                {updateSettings.isPending ? 'Saving...' : 'Save Changes'}
+              </Button>
+            </div>
           </CardHeader>
-          <CardContent>
-            <p className="text-sm text-slate-500">List of recently added products will appear here.</p>
+          <CardContent className="px-0 pb-0 pt-8 space-y-8">
+            <div className="space-y-4">
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Company Branding</label>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700">Company Name</label>
+                <Input 
+                  value={localSettings['company_name'] || ''} 
+                  onChange={(e) => setLocalSettings({...localSettings, company_name: e.target.value})}
+                  className="rounded-xl border-slate-200 focus:border-primary/50 py-6"
+                  placeholder="e.g. GROWUPHOST"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6 pt-6 border-t border-slate-100">
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">External Links & Navigation</label>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">Login URL</label>
+                  <Input 
+                    value={localSettings['login_url'] || ''} 
+                    onChange={(e) => setLocalSettings({...localSettings, login_url: e.target.value})}
+                    className="rounded-xl border-slate-200 py-6"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">Register URL</label>
+                  <Input 
+                    value={localSettings['register_url'] || ''} 
+                    onChange={(e) => setLocalSettings({...localSettings, register_url: e.target.value})}
+                    className="rounded-xl border-slate-200 py-6"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">Offers Page URL</label>
+                  <Input 
+                    value={localSettings['offers_url'] || ''} 
+                    onChange={(e) => setLocalSettings({...localSettings, offers_url: e.target.value})}
+                    className="rounded-xl border-slate-200 py-6"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700">Hero CTA Link</label>
+                  <Input 
+                    value={localSettings['hero_cta_url'] || ''} 
+                    onChange={(e) => setLocalSettings({...localSettings, hero_cta_url: e.target.value})}
+                    className="rounded-xl border-slate-200 py-6"
+                  />
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
-        <Card className="border-none shadow-sm rounded-2xl p-6">
-          <CardHeader>
-            <CardTitle>System Status</CardTitle>
+
+        <Card className="border-none shadow-sm rounded-3xl p-8 bg-slate-900 text-white overflow-hidden relative">
+          <div className="absolute -right-4 -top-4 w-32 h-32 bg-primary/20 rounded-full blur-3xl" />
+          <CardHeader className="px-0 pt-0">
+            <div className="flex items-center gap-3">
+              <Globe className="w-5 h-5 text-primary" />
+              <CardTitle className="text-lg font-bold">Quick Links</CardTitle>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-600">Database Connection</span>
-                <span className="text-emerald-500 font-bold">Stable</span>
+          <CardContent className="px-0 space-y-4 pt-6">
+            <a href="/" target="_blank" className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-2xl transition-colors border border-white/10 group">
+              <span className="font-medium text-sm">View Website</span>
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary transition-colors">
+                <Globe className="w-4 h-4" />
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-600">WHMCS Sync</span>
-                <span className="text-amber-500 font-bold">Pending</span>
-              </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-600">Storage Usage</span>
-                <span className="text-slate-900 font-bold">4.2 GB / 100 GB</span>
-              </div>
+            </a>
+            <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
+              <div className="text-emerald-500 text-xs font-bold uppercase tracking-widest">System Status</div>
+              <div className="mt-1 text-sm font-medium">All functions operational</div>
             </div>
           </CardContent>
         </Card>
@@ -94,3 +204,4 @@ function AdminDashboard() {
     </div>
   );
 }
+
