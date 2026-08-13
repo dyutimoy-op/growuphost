@@ -25,7 +25,7 @@ export function Hero() {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black text-white leading-[0.95] lg:leading-[0.9] tracking-tighter">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[0.95] lg:leading-[0.9] tracking-tighter">
                 UNMATCHED <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-blue-400">
                   PERFORMANCE
