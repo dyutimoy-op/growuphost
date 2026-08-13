@@ -196,12 +196,12 @@ function AdminDashboard() {
             </div>
           </CardHeader>
           <CardContent className="px-0 space-y-4 pt-6">
-            <a href="/" target="_blank" className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-2xl transition-colors border border-white/5 group">
+            <Link to="/" className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-2xl transition-colors border border-white/5 group">
               <span className="font-medium text-sm">View Website</span>
               <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center group-hover:bg-indigo-600 transition-colors">
                 <Globe className="w-4 h-4" />
               </div>
-            </a>
+            </Link>
             <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
               <div className="text-emerald-400 text-xs font-bold uppercase tracking-widest">System Status</div>
               <div className="mt-1 text-sm font-medium">All functions operational</div>
@@ -240,7 +240,7 @@ function AdminDashboard() {
                   onClick={async () => {
                     const { error } = await supabase
                       .from('categories')
-                      .update({ show_in_nav: !category.show_in_nav })
+                      .update({ show_in_nav: !category.show_in_nav } as any)
                       .eq('id', category.id);
 
                     if (error) {
