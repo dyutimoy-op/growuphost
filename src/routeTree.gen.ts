@@ -14,7 +14,10 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DedicatedServersRouteImport } from './routes/dedicated-servers'
+import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as SharedHostingRouteImport } from './routes/shared-hosting'
+import { Route as VpsHostingRouteImport } from './routes/vps-hosting'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as LegalSlaRouteImport } from './routes/legal/sla'
 
@@ -42,9 +45,24 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DedicatedServersRoute = DedicatedServersRouteImport.update({
+  id: '/dedicated-servers',
+  path: '/dedicated-servers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LicensesRoute = LicensesRouteImport.update({
+  id: '/licenses',
+  path: '/licenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SharedHostingRoute = SharedHostingRouteImport.update({
   id: '/shared-hosting',
   path: '/shared-hosting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VpsHostingRoute = VpsHostingRouteImport.update({
+  id: '/vps-hosting',
+  path: '/vps-hosting',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -63,7 +81,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/dedicated-servers': typeof DedicatedServersRoute
+  '/licenses': typeof LicensesRoute
   '/shared-hosting': typeof SharedHostingRoute
+  '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/legal/sla': typeof LegalSlaRoute
 }
@@ -72,7 +93,10 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/dedicated-servers': typeof DedicatedServersRoute
+  '/licenses': typeof LicensesRoute
   '/shared-hosting': typeof SharedHostingRoute
+  '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/legal/sla': typeof LegalSlaRoute
 }
@@ -83,7 +107,10 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/dedicated-servers': typeof DedicatedServersRoute
+  '/licenses': typeof LicensesRoute
   '/shared-hosting': typeof SharedHostingRoute
+  '/vps-hosting': typeof VpsHostingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/legal/sla': typeof LegalSlaRoute
 }
@@ -94,7 +121,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/dedicated-servers'
+    | '/licenses'
     | '/shared-hosting'
+    | '/vps-hosting'
     | '/dashboard'
     | '/legal/sla'
   fileRoutesByTo: FileRoutesByTo
@@ -103,7 +133,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/dedicated-servers'
+    | '/licenses'
     | '/shared-hosting'
+    | '/vps-hosting'
     | '/dashboard'
     | '/legal/sla'
   id:
@@ -113,7 +146,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/dedicated-servers'
+    | '/licenses'
     | '/shared-hosting'
+    | '/vps-hosting'
     | '/_authenticated/dashboard'
     | '/legal/sla'
   fileRoutesById: FileRoutesById
@@ -124,7 +160,10 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  DedicatedServersRoute: typeof DedicatedServersRoute
+  LicensesRoute: typeof LicensesRoute
   SharedHostingRoute: typeof SharedHostingRoute
+  VpsHostingRoute: typeof VpsHostingRoute
   LegalSlaRoute: typeof LegalSlaRoute
 }
 
@@ -165,11 +204,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dedicated-servers': {
+      id: '/dedicated-servers'
+      path: '/dedicated-servers'
+      fullPath: '/dedicated-servers'
+      preLoaderRoute: typeof DedicatedServersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/licenses': {
+      id: '/licenses'
+      path: '/licenses'
+      fullPath: '/licenses'
+      preLoaderRoute: typeof LicensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shared-hosting': {
       id: '/shared-hosting'
       path: '/shared-hosting'
       fullPath: '/shared-hosting'
       preLoaderRoute: typeof SharedHostingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vps-hosting': {
+      id: '/vps-hosting'
+      path: '/vps-hosting'
+      fullPath: '/vps-hosting'
+      preLoaderRoute: typeof VpsHostingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -206,7 +266,10 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  DedicatedServersRoute: DedicatedServersRoute,
+  LicensesRoute: LicensesRoute,
   SharedHostingRoute: SharedHostingRoute,
+  VpsHostingRoute: VpsHostingRoute,
   LegalSlaRoute: LegalSlaRoute,
 }
 export const routeTree = rootRouteImport
