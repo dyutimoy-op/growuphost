@@ -37,7 +37,7 @@ function AdminLayout() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <Link to="/" className="flex items-center gap-3 font-medium text-slate-600 hover:text-primary transition-colors py-2">
+                      <Link to="/_authenticated/dashboard" className="flex items-center gap-3 font-medium text-slate-600 hover:text-primary transition-colors py-2">
                         <LayoutDashboard className="w-5 h-5" /> Dashboard
                       </Link>
                     </SidebarMenuButton>
