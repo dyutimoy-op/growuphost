@@ -1,22 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { ProductGrid } from "@/components/ProductGrid";
+import { Footer } from "@/components/Footer";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center p-8 text-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <div className="max-w-2xl font-mono text-sm text-gray-800 whitespace-pre-wrap">
-        {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                        \n                                            \n                                            I have approved the plan`}
-      </div>
+    <div className="min-h-screen flex flex-col bg-white selection:bg-primary/30 selection:text-primary">
+      <Navbar />
+      <main className="flex-grow">
+        <Hero />
+        <ProductGrid />
+      </main>
+      <Footer />
     </div>
   );
 }
