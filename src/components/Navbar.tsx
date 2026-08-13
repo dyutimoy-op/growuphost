@@ -46,7 +46,7 @@ export function Navbar() {
       {/* Promotion Bar (Ticker) */}
       {!isScrolled && newsAlert && (
         <div className="w-full bg-indigo-500 text-white border-b border-white/10 overflow-hidden h-10 sm:h-12 flex items-center relative z-[52]">
-          <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between gap-4">
+          <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-center gap-4 relative">
             <div className="flex items-center gap-3 overflow-hidden">
                <div className="flex items-center gap-2 bg-yellow-400 text-indigo-950 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider animate-pulse whitespace-nowrap">
                  <Bell className="w-3 h-3" />
@@ -59,7 +59,7 @@ export function Navbar() {
             {newsAlert.link_url && (
               <a 
                 href={newsAlert.link_url}
-                className="flex items-center gap-2 text-yellow-400 hover:text-white transition-colors text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap"
+                className="absolute right-6 flex items-center gap-2 text-yellow-400 hover:text-white transition-colors text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap"
               >
                 Join Waitlist <ArrowRight className="w-3 h-3" />
               </a>
@@ -104,13 +104,15 @@ export function Navbar() {
           }`}
         />
 
-        <nav className="relative max-w-7xl mx-auto px-6 flex items-center justify-between h-14 sm:h-16">
-          <div className="flex items-center gap-12">
+        <nav className="relative max-w-7xl mx-auto px-6 flex items-center h-14 sm:h-16">
+          <div className="absolute left-6 flex items-center">
             <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter italic text-white flex items-center gap-3 group relative z-50">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20 text-white">G</div>
               <span className="relative z-50">{settings?.['company_name'] || 'GROWUPHOST'}</span>
             </Link>
+          </div>
 
+          <div className="flex-1 flex justify-center">
             <div className="hidden lg:flex items-center gap-8">
               {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
                 <Link 
@@ -125,7 +127,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="absolute right-6 flex items-center gap-4 sm:gap-6">
             <div className="hidden lg:flex items-center gap-4">
               <Button variant="ghost" className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 hover:text-white hover:bg-white/10 px-6" asChild>
                 <a href={settings?.['login_url'] || "/auth"}>Login</a>
