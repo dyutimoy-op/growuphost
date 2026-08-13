@@ -29,7 +29,7 @@ export function Navbar() {
   return (
     <header 
       className={`w-full fixed top-0 z-50 transition-all duration-500 ${
-        isScrolled ? "bg-slate-950/95 backdrop-blur-md border-b border-white/5 py-4 shadow-2xl shadow-indigo-500/10" : "bg-transparent py-7"
+        isScrolled ? "bg-slate-950/98 backdrop-blur-md border-b border-white/5 py-5 shadow-2xl shadow-indigo-500/10" : "bg-transparent py-9"
       }`}
     >
       {/* Top Bar - Refined Desktop */}
@@ -55,24 +55,24 @@ export function Navbar() {
 
       <nav className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
         <div className="flex items-center gap-12">
-          <Link to="/" className="text-3xl font-black tracking-tighter italic text-white flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center not-italic shadow-lg shadow-indigo-600/20">G</div>
+          <Link to="/" className="text-4xl font-black tracking-tighter italic text-white flex items-center gap-4">
+            <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center not-italic shadow-lg shadow-indigo-600/30">G</div>
             {settings?.['company_name'] || 'GROWUPHOST'}
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-12">
             {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
               <Link 
                 key={category.id} 
                 to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                className="text-base font-black uppercase tracking-widest text-slate-300 hover:text-white transition-all relative group"
+                className="text-lg font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-all relative group"
               >
                 {category.name}
-                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
+                <span className="absolute -bottom-3 left-0 w-0 h-1 bg-indigo-500 transition-all group-hover:w-full" />
               </Link>
             ))}
-            <Link to="/contact" className="text-base font-black uppercase tracking-widest text-slate-300 hover:text-white transition-all">Contact</Link>
+            <Link to="/contact" className="text-lg font-black uppercase tracking-[0.2em] text-slate-300 hover:text-white transition-all">Contact</Link>
           </div>
         </div>
 
