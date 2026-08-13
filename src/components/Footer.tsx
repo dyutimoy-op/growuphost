@@ -1,108 +1,89 @@
 import { Link } from "@tanstack/react-router";
-import { Check } from "lucide-react";
+import { Check, Github, Twitter, Linkedin, Facebook, ShieldCheck, Zap, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSiteSettings } from "@/hooks/use-site-settings";
-
-
-interface FooterItem {
-  label: string;
-  sub: string;
-  status?: string;
-  icon?: string;
-}
-
-interface FooterSection {
-  title: string;
-  items: FooterItem[];
-}
 
 export function Footer() {
   const { data: settings } = useSiteSettings();
 
-  const sections: FooterSection[] = [
-    {
-      title: "COMPANY STATS",
-      items: [
-        { label: "GLOBAL NETWORK", sub: "5+ Locations Active", status: "bg-emerald-500" },
-        { label: "SUPPORT CENTER", sub: "24/7/365 Online", status: "bg-emerald-500" },
-        { label: "CUSTOMER RATING", sub: "4.9/5 TrustScore", status: "bg-emerald-500" },
-      ],
-    },
-    {
-      title: "ABOUT & SUPPORT",
-      items: [
-        { label: "About Us", sub: "Our history, infrastructure, and team.", icon: "ℹ️" },
-        { label: "Contact Us", sub: "Get in touch with our experts 24/7.", icon: "✉️" },
-        { label: "Affiliates Program", sub: "Earn up to 40% commission per sale.", icon: "👥" },
-      ],
-    },
-    {
-      title: "LEGAL & TRUST",
-      items: [
-        { label: "Privacy Policy", sub: "How we secure and process data.", icon: "🛡️" },
-        { label: "Terms & Conditions", sub: "Terms of service for our hosting services.", icon: "📄" },
-        { label: "Refund Policy", sub: "Our refund policies and guarantees.", icon: "🔄" },
-      ],
-    },
-  ];
-
   return (
-    <footer className="bg-slate-50 border-t py-16 px-4 md:px-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        {sections.map((section) => (
-          <div key={section.title}>
-            <h3 className="text-xs font-bold text-slate-400 tracking-widest mb-8">{section.title}</h3>
-            <div className="space-y-6">
-              {section.items.map((item) => (
-                <div key={item.label} className="flex gap-4 group cursor-pointer">
-                  {item.status ? (
-                    <div className="pt-1">
-                      <div className={`w-2 h-2 rounded-full ${item.status}`} />
-                    </div>
-                  ) : (
-                    <div className="w-10 h-10 rounded-lg bg-white border flex items-center justify-center text-lg group-hover:border-primary transition-colors">
-                      {item.icon}
-                    </div>
-                  )}
-                  <div>
-                    <h4 className="font-bold text-slate-800 text-sm group-hover:text-primary transition-colors">{item.label}</h4>
-                    <p className="text-slate-500 text-xs mt-1">{item.sub}</p>
-                  </div>
-                </div>
-              ))}
+    <footer className="bg-slate-950 border-t border-white/5 pt-24 pb-12 px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-4 space-y-8">
+            <Link to="/" className="text-3xl font-black italic tracking-tighter text-white uppercase">
+              {settings?.['company_name'] || 'GROWUPHOST'}
+            </Link>
+            <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+              Providing enterprise-grade infrastructure since 2018. We specialize in high-performance cloud hosting, dedicated servers, and managed services for businesses that can't afford downtime.
+            </p>
+            <div className="flex gap-4">
+               {[Twitter, Github, Linkedin, Facebook].map((Icon, i) => (
+                 <a key={i} href="#" className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition-all">
+                   <Icon className="w-5 h-5" />
+                 </a>
+               ))}
             </div>
           </div>
-        ))}
 
-        <div className="bg-white border rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-bold text-slate-800 mb-2">Partner with us</h3>
-          <p className="text-slate-500 text-sm mb-6">Refer clients and start generating passive income with our referral bonuses.</p>
-          
-          <ul className="space-y-3 mb-8">
-            {['High Conversions', 'Monthly Payouts', 'Dedicated Support'].map((feat) => (
-              <li key={feat} className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                <div className="w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-emerald-500" />
-                </div>
-                {feat}
-              </li>
-            ))}
-          </ul>
+          {/* Links Columns */}
+          <div className="lg:col-span-2 space-y-6">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Services</h4>
+            <ul className="space-y-4 text-sm font-bold text-slate-500">
+               <li><Link to="/" className="hover:text-white transition-colors">Shared Hosting</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">VPS Servers</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Dedicated Nodes</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Cloud GPUs</Link></li>
+            </ul>
+          </div>
 
-          <Button className="w-full bg-[#5831f7] hover:bg-[#4828d9] text-white py-6 rounded-xl" asChild>
-            <a href={settings?.['footer_partner_url'] || "/"}>Join Program →</a>
-          </Button>
+          <div className="lg:col-span-2 space-y-6">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Support</h4>
+            <ul className="space-y-4 text-sm font-bold text-slate-500">
+               <li><Link to="/" className="hover:text-white transition-colors">Knowledgebase</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Client Area</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Server Status</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Contact Us</Link></li>
+            </ul>
+          </div>
 
+          <div className="lg:col-span-2 space-y-6">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Legal</h4>
+            <ul className="space-y-4 text-sm font-bold text-slate-500">
+               <li><Link to="/" className="hover:text-white transition-colors">Terms of Service</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">SLA Guarantee</Link></li>
+               <li><Link to="/" className="hover:text-white transition-colors">Refund Policy</Link></li>
+            </ul>
+          </div>
 
+          <div className="lg:col-span-2 space-y-6">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Region</h4>
+            <div className="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-4">
+               <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-bold text-white">Mumbai, IN</span>
+               </div>
+               <div className="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">
+                  Latency: 12ms avg
+               </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-xs">
-        <p>© 2026 {settings?.['company_name'] || 'GROWUPHOST'}. All rights reserved.</p>
-        <div className="flex gap-6">
-          <Link to="/" className="hover:text-primary">Status</Link>
-          <Link to="/" className="hover:text-primary">Knowledgebase</Link>
-          <Link to="/" className="hover:text-primary">API Docs</Link>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+           <div className="flex gap-8 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+              <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-indigo-400" /> PCI-DSS COMPLIANT</div>
+              <div className="flex items-center gap-2"><Zap className="w-4 h-4 text-indigo-400" /> 10GBPS NETWORK</div>
+              <div className="flex items-center gap-2"><Globe className="w-4 h-4 text-indigo-400" /> 24 LOCATIONS</div>
+           </div>
+           
+           <div className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">
+              © 2026 {settings?.['company_name'] || 'GROWUPHOST'}. All Infrastructure Managed.
+           </div>
         </div>
       </div>
     </footer>
