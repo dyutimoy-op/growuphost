@@ -7,7 +7,7 @@ import { ProductModal } from '@/components/admin/ProductModal';
 import { CategoryModal } from '@/components/admin/CategoryModal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers } from 'lucide-react';
+import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
