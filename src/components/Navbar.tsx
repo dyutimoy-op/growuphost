@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X, Globe, ChevronRight, Bell, ArrowRight, Phone, Mail } from "lucide-react";
+import { Menu, X, Globe, ChevronRight, Bell, ArrowRight, Phone, Mail, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -113,16 +113,42 @@ export function Navbar() {
 
           <div className="flex-1 hidden lg:flex justify-center">
             <div className="flex items-center gap-8">
-              {categories?.filter((cat: any) => cat.show_in_nav).map((category: any) => (
-                <Link 
-                  key={category.id} 
-                  to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
-                  className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50"
-                >
-                  {category.name}
-                </Link>
-              ))}
-              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50">Contact</Link>
+              {categories?.filter((cat: any) => cat.show_in_nav && !cat.parent_id).map((category: any) => {
+                const subcategories = categories?.filter((sub: any) => sub.parent_id === category.id);
+                
+                return (
+                  <div key={category.id} className="relative group py-4">
+                    <Link 
+                      to={category.slug.startsWith('/') ? (category.slug as any) : `/${category.slug}`}
+                      className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50 flex items-center gap-1"
+                    >
+                      {category.name}
+                      {subcategories && subcategories.length > 0 && (
+                        <ChevronDown className="w-3 h-3 group-hover:rotate-180 transition-transform" />
+                      )}
+                    </Link>
+
+                    {subcategories && subcategories.length > 0 && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100]">
+                        <div className="bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4 min-w-[200px] shadow-2xl">
+                          <div className="grid gap-2">
+                            {subcategories.map((sub: any) => (
+                              <Link
+                                key={sub.id}
+                                to={sub.slug.startsWith('/') ? (sub.slug as any) : `/${sub.slug}`}
+                                className="text-[11px] font-bold uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 p-2 rounded-xl transition-all"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50 py-4">Contact</Link>
             </div>
           </div>
 
