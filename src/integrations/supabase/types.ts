@@ -20,9 +20,11 @@ export type Database = {
           background_media_url: string | null
           created_at: string | null
           description: string | null
+          display_order: number | null
           icon: string | null
           id: string
           name: string
+          parent_id: string | null
           show_in_nav: boolean | null
           slug: string
         }
@@ -31,9 +33,11 @@ export type Database = {
           background_media_url?: string | null
           created_at?: string | null
           description?: string | null
+          display_order?: number | null
           icon?: string | null
           id?: string
           name: string
+          parent_id?: string | null
           show_in_nav?: boolean | null
           slug: string
         }
@@ -42,13 +46,23 @@ export type Database = {
           background_media_url?: string | null
           created_at?: string | null
           description?: string | null
+          display_order?: number | null
           icon?: string | null
           id?: string
           name?: string
+          parent_id?: string | null
           show_in_nav?: boolean | null
           slug?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       media: {
         Row: {
@@ -114,6 +128,7 @@ export type Database = {
           created_at: string | null
           currency: string
           description: string | null
+          display_order: number | null
           features: Json | null
           id: string
           is_featured: boolean | null
@@ -127,6 +142,7 @@ export type Database = {
           created_at?: string | null
           currency?: string
           description?: string | null
+          display_order?: number | null
           features?: Json | null
           id?: string
           is_featured?: boolean | null
@@ -140,6 +156,7 @@ export type Database = {
           created_at?: string | null
           currency?: string
           description?: string | null
+          display_order?: number | null
           features?: Json | null
           id?: string
           is_featured?: boolean | null
