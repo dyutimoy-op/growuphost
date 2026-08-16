@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
+import { MediaUpload } from '@/components/admin/MediaUpload';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
@@ -279,15 +280,15 @@ function AdminDashboard() {
                    </div>
                 </div>
                 <div className="space-y-2">
-                   <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Banner Media URL (Image/GIF/Video)</label>
-                   <Input 
-                      defaultValue={category.background_media_url} 
-                      onBlur={async (e) => {
-                        await supabase.from('categories').update({ background_media_url: e.target.value }).eq('id', category.id);
-                        toast.success('Updated banner media');
+                   <MediaUpload 
+                      label="Banner Media (Image/GIF/Video)"
+                      currentUrl={category.background_media_url}
+                      path="categories"
+                      onUploadComplete={async (url) => {
+                        await supabase.from('categories').update({ background_media_url: url }).eq('id', category.id);
+                        toast.success('Banner updated');
+                        queryClient.invalidateQueries({ queryKey: ['categories-full'] });
                       }}
-                      className="bg-slate-950 border-white/10 rounded-xl"
-                      placeholder="https://..."
                    />
                 </div>
               </Card>
@@ -339,6 +340,16 @@ function AdminDashboard() {
                            />
                         </div>
                         <div className="space-y-4">
+                           <MediaUpload 
+                              label="Promo Image"
+                              currentUrl={popup.image_url}
+                              path="popups"
+                              onUploadComplete={async (url) => {
+                                await supabase.from('promo_popups').update({ image_url: url }).eq('id', popup.id);
+                                toast.success('Popup image updated');
+                                queryClient.invalidateQueries({ queryKey: ['promo-popups'] });
+                              }}
+                           />
                            <div className="flex gap-2">
                               <Input 
                                 defaultValue={popup.coupon_code}
