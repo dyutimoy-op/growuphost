@@ -1,28 +1,34 @@
-# Product & Category Management Plan
+# GROWUPHOST Full Control Admin & Marketing Suite
 
-The admin dashboard currently focuses on global settings and navigation. This plan will add comprehensive management for products and categories, allowing full control over the marketplace directly from the Admin Panel.
+This plan implements a comprehensive management system for GROWUPHOST, allowing the admin to control every aspect of the site, from products and categories to marketing popups and testimonials.
 
 ## Features
 
-- **Product Management**: Add, edit, and delete products with fields for name, price, description, billing cycle, features (JSON list), and WHMCS links.
-- **Category Management**: Create and manage product categories (Hosting, VPS, etc.) with control over descriptions and navigation visibility.
-- **Improved Admin Navigation**: Tabs or sections to easily switch between Global Settings, Categories, and Products.
+- **Marketing Popups**: Create and manage floating promotional popups with images, descriptions, and coupon codes. Admin can toggle them on/off and set "don't show again" behavior.
+- **Product & Category Suite**: Full CRUD (Create, Read, Update, Delete) for hosting plans and categories.
+  - **Dynamic Banners**: Support for images, GIFs, and short-duration video backgrounds in category headers.
+- **Global Link & Info Management**: Centralized control for all social links, contact numbers, emails, and navigation buttons (Login/Register/Offers).
+- **Testimonials & Trust**: Manage customer reviews and ratings displayed on the landing page.
+- **Improved Admin Experience**: A tabbed, high-performance interface for managing these distinct areas.
 
 ## Technical Details
 
-- **Database**: Uses existing `products` and `categories` tables in Supabase.
+- **Database**:
+  - `promo_popups`: Store active marketing campaigns.
+  - `testimonials`: Store user feedback.
+  - `categories`: Extended with `background_media_url` and `type`.
+  - `site_settings`: Expanded to cover all contact/social/link configurations.
 - **UI Components**:
-  - `ProductManager`: A new section in the dashboard with a list/table of products and a "Add Product" dialog.
-  - `CategoryManager`: A new section to manage category metadata beyond just navigation toggles.
-  - `FeatureEditor`: A simple interface to manage the JSON features list for each product.
-- **State Management**: Uses TanStack Query for data fetching and mutations with optimistic updates and toast notifications for user feedback.
+  - `PromoPopup`: A client-side component that handles display logic and local storage persistence for the "close" state.
+  - `AdminPanel (Refactor)`: Reorganized into Tabs: Dashboard, Products, Categories, Marketing (Popups/News), Testimonials, and Global Settings.
+  - `MediaPicker`: Enhanced logic to handle Video/GIF/Image URLs for headers.
 
 ## Implementation Steps
 
-1.  **Refactor Admin Dashboard**: Introduce a tabbed layout to separate "Global Config", "Products", and "Categories".
-2.  **Add Category Management**: Extend the existing category section to support adding, editing (name/slug/description), and deleting categories.
-3.  **Add Product Management**:
-    - Build a product list with search and filtering.
-    - Create a comprehensive "Add/Edit Product" form supporting all database fields.
-    - Implement the delete functionality with confirmation.
-4.  **Security**: Ensure all mutations are restricted to authenticated admin users via Supabase RLS policies (already in place).
+1.  **Database Expansion**: Apply migrations for popups, testimonials, and category media fields.
+2.  **Marketing & Social Admin**: Add dedicated management tabs for Promo Popups and Global Links (Social/Contact).
+3.  **Product & Category Mastery**: Implement full CRUD forms with media type selection for banners.
+4.  **Frontend Integration**:
+    - Mount the `PromoPopup` component in the root route.
+    - Update `CategoryProductGrid` and Hero components to use dynamic media backgrounds.
+    - Implement a `Testimonials` section on the homepage.

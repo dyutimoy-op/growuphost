@@ -16,6 +16,8 @@ export type Database = {
     Tables: {
       categories: {
         Row: {
+          background_media_type: string | null
+          background_media_url: string | null
           created_at: string | null
           description: string | null
           icon: string | null
@@ -25,6 +27,8 @@ export type Database = {
           slug: string
         }
         Insert: {
+          background_media_type?: string | null
+          background_media_url?: string | null
           created_at?: string | null
           description?: string | null
           icon?: string | null
@@ -34,6 +38,8 @@ export type Database = {
           slug: string
         }
         Update: {
+          background_media_type?: string | null
+          background_media_url?: string | null
           created_at?: string | null
           description?: string | null
           icon?: string | null
@@ -151,6 +157,45 @@ export type Database = {
           },
         ]
       }
+      promo_popups: {
+        Row: {
+          coupon_code: string | null
+          created_at: string | null
+          cta_text: string | null
+          cta_url: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          coupon_code?: string | null
+          created_at?: string | null
+          cta_text?: string | null
+          cta_url?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          coupon_code?: string | null
+          created_at?: string | null
+          cta_text?: string | null
+          cta_url?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           created_at: string | null
@@ -169,6 +214,36 @@ export type Database = {
           id?: string
           key?: string
           value?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          avatar_url: string | null
+          content: string
+          created_at: string | null
+          id: string
+          name: string
+          rating: number | null
+          role: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          name: string
+          rating?: number | null
+          role?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          name?: string
+          rating?: number | null
+          role?: string | null
         }
         Relationships: []
       }
