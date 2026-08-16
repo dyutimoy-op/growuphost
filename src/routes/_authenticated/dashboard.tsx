@@ -6,12 +6,9 @@ import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { ProductModal } from '@/components/admin/ProductModal';
 import { CategoryModal } from '@/components/admin/CategoryModal';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Package, Plus, Trash2, Settings, Check, X, Megaphone, Star, Save, Layout, Smartphone, Mail, Globe, MessageSquare } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers } from 'lucide-react';
 import { toast } from 'sonner';
-import { MediaUpload } from '@/components/admin/MediaUpload';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
@@ -167,7 +164,8 @@ function AdminDashboard() {
       </main>
 
       <ProductModal open={isProductModalOpen} onOpenChange={setIsProductModalOpen} product={selectedProduct} />
-      <CategoryModal open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen} category={selectedCategory} allCategories={categoriesData} />
+      <CategoryModal open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen} category={selectedCategory} allCategories={categoriesData || []} />
     </div>
   );
 }
+
