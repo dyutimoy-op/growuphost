@@ -5,8 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   Package, Layers, Users, TrendingUp, Settings, Save, Globe, 
   Check, X, Bell, Trash2, Plus, Star, Megaphone, Layout,
-  Smartphone, Mail, MessageSquare, Info
+  Smartphone, Mail, MessageSquare, Info, ExternalLink
 } from 'lucide-react';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
