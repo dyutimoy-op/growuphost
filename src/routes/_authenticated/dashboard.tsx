@@ -161,6 +161,62 @@ function AdminDashboard() {
             </div>
           </div>
         )}
+
+        {activeTab === 'marketing' && (
+          <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="flex justify-between items-center">
+               <h2 className="text-3xl font-black text-white">Marketing Popups</h2>
+               <Button 
+                 onClick={async () => {
+                   await supabase.from('promo_popups').insert({
+                     title: 'New Offer!',
+                     description: 'Get 20% off on all plans today.',
+                     is_active: false
+                   });
+                   queryClient.invalidateQueries({ queryKey: ['promo-popups'] });
+                 }}
+                 className="bg-orange-600 hover:bg-orange-700 rounded-xl px-6 font-bold"
+               >
+                 <Plus className="w-4 h-4 mr-2" /> Create Popup
+               </Button>
+            </div>
+            {/* ... simplified marketing list with delete ... */}
+            <div className="grid gap-4">
+               {queryClient.getQueryData<any[]>(['promo-popups'])?.map((popup) => (
+                 <Card key={popup.id} className="border-white/5 bg-slate-900/50 p-6 rounded-3xl flex justify-between items-center">
+                    <div>
+                      <h3 className="font-black text-white">{popup.title}</h3>
+                      <p className="text-xs text-slate-500">{popup.is_active ? 'Active' : 'Inactive'}</p>
+                    </div>
+                    <Button 
+                      variant="destructive" 
+                      onClick={async () => {
+                        if(confirm('Delete?')) {
+                          await supabase.from('promo_popups').delete().eq('id', popup.id);
+                          queryClient.invalidateQueries({ queryKey: ['promo-popups'] });
+                        }
+                      }}
+                      className="rounded-xl"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                 </Card>
+               ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'settings' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+             <div className="flex justify-between items-center">
+                <h2 className="text-3xl font-black text-white">Global Settings</h2>
+                <Button className="bg-indigo-600 hover:bg-indigo-700 px-8 font-black">
+                  <Save className="w-4 h-4 mr-2" /> Save All Changes
+                </Button>
+             </div>
+             {/* Settings logic here... */}
+          </div>
+        )}
       </main>
 
       <ProductModal open={isProductModalOpen} onOpenChange={setIsProductModalOpen} product={selectedProduct} />
@@ -168,4 +224,5 @@ function AdminDashboard() {
     </div>
   );
 }
+
 
