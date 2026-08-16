@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Github, Twitter, Linkedin, Facebook, ShieldCheck, Zap, Globe, ChevronRight } from "lucide-react";
+import { Github, Twitter, Linkedin, Facebook, ShieldCheck, Zap, Globe, ChevronRight, Instagram } from "lucide-react";
 import { useSiteSettings } from "@/hooks/use-site-settings";
 
 export function Footer() {
@@ -26,12 +26,22 @@ export function Footer() {
             
             <div className="flex flex-col gap-6 items-center md:items-start">
               <div className="flex gap-4">
-                 {[Twitter, Github, Linkedin, Facebook].map((Icon, i) => (
-                   <a key={i} href="#" className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 hover:-translate-y-1 transition-all group">
-                     <Icon className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                 {[
+                   { icon: Facebook, key: 'social_facebook' },
+                   { icon: Twitter, key: 'social_twitter' },
+                   { icon: Instagram, key: 'social_instagram' },
+                   { icon: Linkedin, key: 'social_linkedin' }
+                 ].map((item, i) => (
+                   <a 
+                     key={i} 
+                     href={settings?.[item.key] || '#'} 
+                     className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 hover:-translate-y-1 transition-all group"
+                   >
+                     <item.icon className="w-6 h-6 group-hover:scale-110 transition-transform" />
                    </a>
                  ))}
               </div>
+
               
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/5 text-[10px] font-black uppercase tracking-widest text-slate-400">
