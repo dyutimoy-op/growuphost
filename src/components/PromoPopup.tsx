@@ -39,7 +39,9 @@ export const PromoPopup = () => {
       }, 2000);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [activePopup, dismissed]);
+
 
   const handleClose = (dontShowAgain = false) => {
     setIsOpen(false);
