@@ -370,14 +370,6 @@ function AdminDashboard() {
                                 {popup.is_active ? 'Enabled' : 'Disabled'}
                               </Button>
                            </div>
-                           <Input 
-                              defaultValue={popup.image_url}
-                              onBlur={async (e) => {
-                                await supabase.from('promo_popups').update({ image_url: e.target.value }).eq('id', popup.id);
-                              }}
-                              className="bg-slate-950 border-white/10"
-                              placeholder="Image URL"
-                           />
                         </div>
                      </div>
                   </Card>
