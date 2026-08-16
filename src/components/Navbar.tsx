@@ -97,7 +97,7 @@ export function Navbar() {
         <div 
           className={`absolute inset-x-0 top-0 transition-all duration-500 ease-out ${
             isScrolled 
-              ? "h-full rounded-full bg-slate-950/95 backdrop-blur-xl border border-white/10 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)]" 
+              ? "h-full rounded-full bg-slate-900/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.8)]" 
               : "h-full bg-slate-950 border-b border-white/5"
           }`}
         />

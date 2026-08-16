@@ -5,7 +5,7 @@ import { useSiteSettings } from "@/hooks/use-site-settings";
 export function Hero() {
   const { data: settings } = useSiteSettings();
   return (
-    <section className="relative w-full min-h-[90vh] lg:min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-950 pt-56 pb-20 lg:pt-56 lg:pb-0">
+    <section className="relative w-full min-h-[90vh] lg:min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-950 pt-56 pb-20 lg:pt-56 lg:pb-0 z-10">
       {/* Background Effect */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.1),transparent_50%)]" />
