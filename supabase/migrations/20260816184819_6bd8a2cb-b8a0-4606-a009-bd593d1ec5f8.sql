@@ -1,0 +1,1 @@
+insert into promo_popups (title, description, is_active) values ('Initial Promotion', 'Get 50% off your first month with code GROWUP50', true);
