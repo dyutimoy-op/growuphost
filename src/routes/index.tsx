@@ -3,7 +3,9 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ProductGrid } from "@/components/ProductGrid";
 import { Footer } from "@/components/Footer";
+import { Testimonials } from "@/components/Testimonials";
 import { Toaster } from "sonner";
+
 
 
 export const Route = createFileRoute("/")({
@@ -35,6 +37,8 @@ function Index() {
           no no dont add the color as per image have just make like this and color have in my website maintain the color don't change color dark color i have in my webiste its need to maintain
         </div>
         <ProductGrid />
+        <Testimonials />
+
       </main>
       <Footer />
     </div>

@@ -13,27 +13,39 @@ interface ProductGridProps {
 export function CategoryProductGrid({ categorySlug, title, subtitle }: ProductGridProps) {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annually'>('monthly');
 
-  const { data: products, isLoading } = useQuery({
-    queryKey: ["products", categorySlug],
+  const { data: categoryData, isLoading: isCategoryLoading } = useQuery({
+    queryKey: ["category", categorySlug],
     queryFn: async () => {
-      const { data: category } = await supabase
+      const { data, error } = await supabase
         .from("categories")
-        .select("id")
+        .select("*")
         .eq("slug", categorySlug)
         .single();
-
-      if (!category) return [];
-
-      const { data, error } = await supabase
-        .from("products")
-        .select("*, categories(name, slug)")
-        .eq("category_id", category.id)
-        .order("price", { ascending: true });
       
       if (error) throw error;
       return data;
     },
   });
+
+  const { data: products, isLoading: isProductsLoading } = useQuery({
+    queryKey: ["products", categorySlug],
+    queryFn: async () => {
+      if (!categoryData?.id) return [];
+
+      const { data, error } = await supabase
+        .from("products")
+        .select("*, categories(name, slug)")
+        .eq("category_id", categoryData.id)
+        .order("price", { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!categoryData?.id,
+  });
+
+  const isLoading = isCategoryLoading || isProductsLoading;
+
 
   if (isLoading) {
     return (
@@ -47,8 +59,32 @@ export function CategoryProductGrid({ categorySlug, title, subtitle }: ProductGr
   }
 
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-slate-950 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
+    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-slate-950 relative overflow-hidden min-h-[600px] flex items-center">
+      {categoryData?.background_media_url ? (
+        <div className="absolute inset-0 z-0">
+          {categoryData.background_media_type === 'video' ? (
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover opacity-30"
+            >
+              <source src={categoryData.background_media_url} />
+            </video>
+          ) : (
+            <img 
+              src={categoryData.background_media_url} 
+              className="w-full h-full object-cover opacity-30"
+              alt={categoryData.name}
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-950" />
+        </div>
+      ) : (
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
+      )}
+
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 lg:mb-20 gap-8 text-center lg:text-left">

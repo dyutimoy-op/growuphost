@@ -73,13 +73,14 @@ export function Navbar() {
         <div className="w-full bg-indigo-600 text-white py-2 px-6 border-b border-white/10 relative z-[51]">
           <div className="max-w-7xl mx-auto flex justify-between items-center text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.1em] sm:tracking-widest">
             <div className="flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-1">
-              <a href="tel:+917252890016" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
-                <Phone className="w-3 h-3" /> <span className="hidden sm:inline">+91 72 52 89 0016</span>
+              <a href={`tel:${settings?.['contact_phone'] || '+917252890016'}`} className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
+                <Phone className="w-3 h-3" /> <span className="hidden sm:inline">{settings?.['contact_phone'] || '+91 72 52 89 0016'}</span>
               </a>
               <div className="w-px h-3 bg-white/20 shrink-0" />
-              <a href="mailto:support@growuphost.com" className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
-                <Mail className="w-3 h-3" /> <span className="hidden sm:inline">support@growuphost.com</span>
+              <a href={`mailto:${settings?.['contact_email'] || 'support@growuphost.com'}`} className="flex items-center gap-2 hover:text-indigo-200 transition-colors shrink-0">
+                <Mail className="w-3 h-3" /> <span className="hidden sm:inline">{settings?.['contact_email'] || 'support@growuphost.com'}</span>
               </a>
+
             </div>
             <div className="flex items-center gap-3 sm:gap-6 ml-4">
               <div className="hidden sm:flex items-center gap-6">
@@ -125,10 +126,19 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-6 ml-auto">
+          <div className="flex items-center gap-2 sm:gap-6 ml-auto relative z-50">
             <div className="hidden lg:flex items-center gap-4">
-              {/* Login and Register removed per previous request, keeping space for right-aligned items if needed later */}
+              <Link 
+                to={settings?.['login_url'] || '/auth'} 
+                className="text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
+              >
+                Login
+              </Link>
+              <Button asChild className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-6 font-bold text-[11px] uppercase tracking-widest">
+                <Link to={settings?.['register_url'] || '/auth'}>Register</Link>
+              </Button>
             </div>
+
             
             <button 
               className="lg:hidden p-2 text-white hover:bg-white/5 rounded-lg relative z-50"
