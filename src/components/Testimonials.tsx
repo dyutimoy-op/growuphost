@@ -39,7 +39,7 @@ export function Testimonials() {
             >
               <div className="flex text-yellow-500 mb-6">
                 {Array(5).fill(0).map((_, i) => (
-                  <Star key={i} className={`w-4 h-4 ${i < t.rating ? 'fill-current' : 'opacity-20'}`} />
+                  <Star key={i} className={`w-4 h-4 ${i < (t.rating || 5) ? 'fill-current' : 'opacity-20'}`} />
                 ))}
               </div>
               

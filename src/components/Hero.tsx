@@ -25,14 +25,15 @@ export function Hero() {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[0.95] lg:leading-[0.9] tracking-tighter">
-                UNMATCHED <br />
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-[0.95] lg:leading-[0.9] tracking-tighter uppercase">
+                {settings?.['banner_headline']?.split(' ').slice(0, -1).join(' ') || 'UNMATCHED'} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-blue-400">
-                  PERFORMANCE
+                  {settings?.['banner_headline']?.split(' ').slice(-1) || 'PERFORMANCE'}
                 </span>
               </h1>
+
               <p className="text-lg lg:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
-                Enterprise-grade infrastructure for businesses that demand zero latency and 100% reliability.
+                {settings?.['banner_subtext'] || 'Enterprise-grade infrastructure for businesses that demand zero latency and 100% reliability.'}
               </p>
             </div>
 
