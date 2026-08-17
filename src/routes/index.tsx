@@ -38,9 +38,6 @@ function Index() {
 
       <main className="flex-grow">
         <Hero />
-        <div className="hidden">
-          no no dont add the color as per image have just make like this and color have in my website maintain the color don't change color dark color i have in my webiste its need to maintain
-        </div>
         <ProductGrid />
         <Testimonials />
 
