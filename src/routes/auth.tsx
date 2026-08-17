@@ -24,6 +24,9 @@ export const Route = createFileRoute('/auth')({
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
     ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/auth" },
+    ],
   }),
 });
 
