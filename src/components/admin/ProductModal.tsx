@@ -13,6 +13,8 @@ import {
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Switch } from '@/components/ui/switch';
+import { MediaGallery } from './MediaGallery';
+import { Image as ImageIcon } from 'lucide-react';
 
 interface ProductModalProps {
   open: boolean;
@@ -26,6 +28,7 @@ export function ProductModal({ open, onOpenChange, product }: ProductModalProps)
     name: '',
     description: '',
     price: 0,
+    image_url: '',
     billing_cycle: 'monthly',
     category_id: '',
     whmcs_link: '',
@@ -33,6 +36,7 @@ export function ProductModal({ open, onOpenChange, product }: ProductModalProps)
     display_order: 0,
     currency: 'INR'
   });
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   const { data: categories } = useQuery({
     queryKey: ['categories-full'],
@@ -156,6 +160,39 @@ export function ProductModal({ open, onOpenChange, product }: ProductModalProps)
               placeholder="Premium NVMe SSD, Free SSL, 24/7 Support..."
             />
           </div>
+
+          <div className="space-y-2">
+            <Label className="text-slate-300 font-bold">Product Image</Label>
+            <div className="flex gap-4 items-start">
+              <div className="flex-1">
+                <Input 
+                  value={formData.image_url} 
+                  onChange={(e) => setFormData({...formData, image_url: e.target.value})}
+                  className="bg-slate-950 border-white/10 text-white"
+                  placeholder="https://..."
+                />
+              </div>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setIsGalleryOpen(true)}
+                className="bg-slate-950 border-white/10 text-white hover:bg-indigo-600"
+              >
+                <ImageIcon className="w-4 h-4 mr-2" /> Gallery
+              </Button>
+            </div>
+            {formData.image_url && (
+              <div className="mt-2 w-32 h-32 rounded-xl overflow-hidden border border-white/10 bg-slate-950">
+                <img src={formData.image_url} alt="Preview" className="w-full h-full object-cover" />
+              </div>
+            )}
+          </div>
+
+          <MediaGallery 
+            open={isGalleryOpen} 
+            onOpenChange={setIsGalleryOpen} 
+            onSelect={(url) => setFormData({...formData, image_url: url})} 
+          />
 
           <div className="flex items-center gap-8 bg-slate-950/50 p-4 rounded-xl border border-white/5">
             <div className="flex items-center gap-2">

@@ -8,6 +8,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 import { MediaUpload } from './MediaUpload';
+import { MediaGallery } from './MediaGallery';
+import { Image as ImageIcon } from 'lucide-react';
 
 interface MarketingModalProps {
   open: boolean;
@@ -17,6 +19,7 @@ interface MarketingModalProps {
 
 export function MarketingModal({ open, onOpenChange, popup }: MarketingModalProps) {
   const [loading, setLoading] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [formData, setFormData] = useState<any>({
     title: '',
     description: '',
@@ -150,11 +153,29 @@ export function MarketingModal({ open, onOpenChange, popup }: MarketingModalProp
 
             <div className="space-y-2">
               <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Popup Image</label>
+              <div className="flex gap-4 items-start mb-4">
+                <div className="flex-1">
+                  <Input 
+                    value={formData.image_url || ''} 
+                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                    className="bg-slate-950 border-white/10 rounded-xl"
+                    placeholder="https://..."
+                  />
+                </div>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => setIsGalleryOpen(true)}
+                  className="bg-slate-950 border-white/10 text-white hover:bg-indigo-600 rounded-xl"
+                >
+                  <ImageIcon className="w-4 h-4 mr-2" /> Gallery
+                </Button>
+              </div>
               <MediaUpload 
                 currentUrl={formData.image_url} 
                 onUploadComplete={(url: string) => setFormData({ ...formData, image_url: url })}
                 path="popups"
-                label="Popup Image"
+                label="Direct Upload"
               />
             </div>
           </div>
@@ -166,6 +187,12 @@ export function MarketingModal({ open, onOpenChange, popup }: MarketingModalProp
             </Button>
           </DialogFooter>
         </form>
+
+        <MediaGallery 
+          open={isGalleryOpen} 
+          onOpenChange={setIsGalleryOpen} 
+          onSelect={(url) => setFormData({ ...formData, image_url: url })} 
+        />
       </DialogContent>
     </Dialog>
   );

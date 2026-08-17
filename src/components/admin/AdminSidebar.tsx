@@ -8,7 +8,8 @@ import {
   Settings, 
   LogOut,
   Globe,
-  Bell
+  Bell,
+  Image as ImageIcon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,6 +24,7 @@ const navItems = [
   { name: 'News & Alerts', icon: Bell, href: '/dashboard', value: 'news' },
   { name: 'Testimonials', icon: Star, href: '/dashboard', value: 'testimonials' },
   { name: 'Global Settings', icon: Settings, href: '/dashboard', value: 'settings' },
+  { name: 'Media Library', icon: ImageIcon, href: '/dashboard', value: 'media' },
   { name: 'SEO & Performance', icon: Globe, href: '/dashboard', value: 'seo' },
 ];
 
