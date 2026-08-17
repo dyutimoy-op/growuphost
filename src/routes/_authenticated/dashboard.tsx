@@ -11,10 +11,13 @@ import { TestimonialModal } from '@/components/admin/TestimonialModal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers, Save, Globe, Zap, BarChart3, AlertCircle, CheckCircle2, Bell } from 'lucide-react';
 import { toast } from 'sonner';
 import { runSEOAudit, type SEOAuditResult } from '@/utils/seo-audit';
+import { MediaGallery } from '@/components/admin/MediaGallery';
+import { Image as ImageIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
@@ -32,6 +35,7 @@ function AdminDashboard() {
   const [selectedAlert, setSelectedAlert] = useState<any>(null);
   const [isTestimonialModalOpen, setIsTestimonialModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -166,8 +170,16 @@ function AdminDashboard() {
                { title: 'Categories', value: stats?.categories, icon: Layers, color: 'text-purple-400', bg: 'bg-purple-500/10' },
                { title: 'Popups', value: stats?.popups, icon: Megaphone, color: 'text-orange-400', bg: 'bg-orange-500/10' },
                { title: 'Reviews', value: stats?.testimonials, icon: Star, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+               { title: 'Storage', value: 'Library', icon: ImageIcon, color: 'text-sky-400', bg: 'bg-sky-500/10', action: () => setActiveTab('media') },
              ].map((card) => (
-               <Card key={card.title} className="border-white/5 bg-slate-900/50 rounded-3xl p-6">
+               <Card 
+                 key={card.title} 
+                 className={cn(
+                   "border-white/5 bg-slate-900/50 rounded-3xl p-6 transition-all",
+                   card.action && "cursor-pointer hover:bg-slate-800/50 hover:border-white/10"
+                 )}
+                 onClick={card.action}
+               >
                  <div className="flex justify-between items-start">
                    <div className={`p-3 rounded-2xl ${card.bg}`}>
                      <card.icon className={`w-6 h-6 ${card.color}`} />
@@ -338,6 +350,43 @@ function AdminDashboard() {
               ))}
               {testimonialsData?.length === 0 && <p className="text-slate-500 font-bold text-sm italic">No testimonials found.</p>}
             </div>
+          </div>
+        )}
+
+        {activeTab === 'media' && (
+          <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-black text-white">Media Library</h2>
+              <Button 
+                onClick={() => setIsGalleryOpen(true)}
+                className="bg-indigo-600 hover:bg-indigo-700 rounded-xl px-6 font-bold"
+              >
+                <ImageIcon className="w-4 h-4 mr-2" /> Open Gallery
+              </Button>
+            </div>
+            
+            <Card className="border-white/5 bg-slate-900/50 p-12 rounded-3xl text-center">
+              <ImageIcon className="w-16 h-16 text-slate-700 mx-auto mb-4" />
+              <h3 className="text-xl font-black text-white mb-2">Manage Your Assets</h3>
+              <p className="text-slate-500 font-bold max-w-md mx-auto mb-8">
+                Upload, view, and organize your images, videos, and GIFs in one central place.
+              </p>
+              <Button 
+                onClick={() => setIsGalleryOpen(true)}
+                className="bg-indigo-600 hover:bg-indigo-700 rounded-xl px-8 py-6 text-lg font-black"
+              >
+                Launch Media Library
+              </Button>
+            </Card>
+
+            <MediaGallery 
+              open={isGalleryOpen}
+              onOpenChange={setIsGalleryOpen}
+              onSelect={(url) => {
+                toast.success("URL copied: " + url);
+                navigator.clipboard.writeText(url);
+              }}
+            />
           </div>
         )}
 
