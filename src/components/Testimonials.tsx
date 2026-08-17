@@ -52,7 +52,7 @@ export function Testimonials() {
 
               <div className="mt-8 flex items-center gap-4">
                 {t.avatar_url ? (
-                  <img src={t.avatar_url} alt={t.name} className="w-12 h-12 rounded-2xl object-cover" />
+                  <img src={t.avatar_url} alt={t.name} className="w-12 h-12 rounded-2xl object-cover" loading="lazy" decoding="async" />
                 ) : (
                   <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center font-black text-white">
                     {t.name.charAt(0)}
