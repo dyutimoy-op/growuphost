@@ -5,11 +5,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { ProductModal } from '@/components/admin/ProductModal';
 import { CategoryModal } from '@/components/admin/CategoryModal';
+import { MarketingModal } from '@/components/admin/MarketingModal';
+import { AlertModal } from '@/components/admin/AlertModal';
+import { TestimonialModal } from '@/components/admin/TestimonialModal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers, Save, Globe, Zap, BarChart3, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers, Save, Globe, Zap, BarChart3, AlertCircle, CheckCircle2, Bell } from 'lucide-react';
 import { toast } from 'sonner';
 import { runSEOAudit, type SEOAuditResult } from '@/utils/seo-audit';
 
