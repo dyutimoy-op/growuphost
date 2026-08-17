@@ -144,7 +144,7 @@ export function MediaGallery({
                     
                     <div className="absolute inset-0 bg-indigo-600/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 text-center">
                       <p className="text-[10px] font-black uppercase tracking-tighter line-clamp-2 mb-1">{item.filename}</p>
-                      <p className="text-[8px] font-bold opacity-70 mb-3">{formatSize(item.file_size)}</p>
+                      <p className="text-[8px] font-bold opacity-70 mb-3">{formatSize(item.file_size || 0)}</p>
                       <Button size="sm" className="h-7 text-[10px] font-black bg-white text-indigo-600 hover:bg-slate-100 rounded-lg">
                         SELECT
                       </Button>
