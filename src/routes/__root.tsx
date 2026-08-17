@@ -125,8 +125,8 @@ function RootComponent() {
   const { data: settings } = useSiteSettings();
 
   useEffect(() => {
-    if (settings?.google_analytics_id && typeof window !== 'undefined') {
-      const gaId = settings.google_analytics_id;
+    const gaId = settings?.['google_analytics_id'];
+    if (gaId && typeof window !== 'undefined') {
       const script = document.createElement('script');
       script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
       script.async = true;
@@ -139,7 +139,7 @@ function RootComponent() {
       gtag('js', new Date());
       gtag('config', gaId);
     }
-  }, [settings?.google_analytics_id]);
+  }, [settings?.['google_analytics_id']]);
 
   return (
     <QueryClientProvider client={queryClient}>
