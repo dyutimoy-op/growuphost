@@ -107,21 +107,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const { queryClient } = Route.useRouteContext();
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        {children}
-        <Scripts />
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <Scripts />
+        </QueryClientProvider>
       </body>
     </html>
   );
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   const { data: settings } = useSiteSettings();
 
   useEffect(() => {
@@ -142,11 +145,11 @@ function RootComponent() {
   }, [settings?.['google_analytics_id']]);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Toaster position="top-center" richColors />
       <PromoPopup />
       <Outlet />
-    </QueryClientProvider>
+    </>
   );
 }
 
