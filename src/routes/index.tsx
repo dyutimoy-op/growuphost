@@ -13,11 +13,11 @@ const Testimonials = React.lazy(() => import("@/components/Testimonials").then(m
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
-    title: "Cheap Hosting Mumbai | Best Fast NVMe VPS & Shared Hosting | GROWUPHOST",
+    title: "Cheap Trusted Offshore & Bulletproof Hosting Mumbai | Best Fast Antiban VPS | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Experience the best cheap hosting in Mumbai with GROWUPHOST. High-performance enterprise infrastructure, zero-latency NVMe VPS, and shared hosting. 99.9% uptime guaranteed.",
+        content: "Experience the best cheap trusted offshore & bulletproof hosting in Mumbai with GROWUPHOST. High-performance antiban hosting, zero-latency offshore VPS, and secure webhosting. 99.9% uptime guaranteed.",
       },
       { property: "og:title", content: "GROWUPHOST | Enterprise NVMe Hosting & VPS Mumbai" },
       { property: "og:description", content: "Unmatched performance with zero latency infrastructure. Scale your business with GROWUPHOST enterprise solutions." },
