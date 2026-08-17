@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { useSiteSettings } from "@/hooks/use-site-settings";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -121,6 +122,24 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { data: settings } = useSiteSettings();
+
+  useEffect(() => {
+    if (settings?.google_analytics_id && typeof window !== 'undefined') {
+      const gaId = settings.google_analytics_id;
+      const script = document.createElement('script');
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args: any[]) {
+        (window.dataLayer as any).push(args);
+      }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    }
+  }, [settings?.google_analytics_id]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -129,5 +148,10 @@ function RootComponent() {
       <Outlet />
     </QueryClientProvider>
   );
+}
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
 }

@@ -40,7 +40,6 @@ function Index() {
         <Hero />
         <ProductGrid />
         <Testimonials />
-
       </main>
       <Footer />
     </div>
