@@ -19,7 +19,9 @@ import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as SharedHostingRouteImport } from './routes/shared-hosting'
 import { Route as VpsHostingRouteImport } from './routes/vps-hosting'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
 import { Route as LegalSlaRouteImport } from './routes/legal/sla'
+import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,9 +72,19 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LegalSlaRoute = LegalSlaRouteImport.update({
   id: '/legal/sla',
   path: '/legal/sla',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -86,7 +98,9 @@ export interface FileRoutesByFullPath {
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/sla': typeof LegalSlaRoute
+  '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -98,7 +112,9 @@ export interface FileRoutesByTo {
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/sla': typeof LegalSlaRoute
+  '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,7 +128,9 @@ export interface FileRoutesById {
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/sla': typeof LegalSlaRoute
+  '/legal/terms': typeof LegalTermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -126,7 +144,9 @@ export interface FileRouteTypes {
     | '/shared-hosting'
     | '/vps-hosting'
     | '/dashboard'
+    | '/legal/privacy'
     | '/legal/sla'
+    | '/legal/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -138,7 +158,9 @@ export interface FileRouteTypes {
     | '/shared-hosting'
     | '/vps-hosting'
     | '/dashboard'
+    | '/legal/privacy'
     | '/legal/sla'
+    | '/legal/terms'
   id:
     | '__root__'
     | '/'
@@ -151,7 +173,9 @@ export interface FileRouteTypes {
     | '/shared-hosting'
     | '/vps-hosting'
     | '/_authenticated/dashboard'
+    | '/legal/privacy'
     | '/legal/sla'
+    | '/legal/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,7 +188,9 @@ export interface RootRouteChildren {
   LicensesRoute: typeof LicensesRoute
   SharedHostingRoute: typeof SharedHostingRoute
   VpsHostingRoute: typeof VpsHostingRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalSlaRoute: typeof LegalSlaRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -239,11 +265,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/legal/sla': {
       id: '/legal/sla'
       path: '/legal/sla'
       fullPath: '/legal/sla'
       preLoaderRoute: typeof LegalSlaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -270,7 +310,9 @@ const rootRouteChildren: RootRouteChildren = {
   LicensesRoute: LicensesRoute,
   SharedHostingRoute: SharedHostingRoute,
   VpsHostingRoute: VpsHostingRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
   LegalSlaRoute: LegalSlaRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
