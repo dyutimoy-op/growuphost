@@ -154,27 +154,6 @@ function AdminDashboard() {
       toast.success('Testimonial deleted');
     }
   });
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products-full'] });
-      toast.success('Product deleted');
-    }
-  });
-
-  const deleteCategory = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('categories').delete().eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['categories-full'] });
-      toast.success('Category deleted');
-    }
-  });
-
   return (
     <div className="flex bg-slate-950 min-h-screen">
       <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
