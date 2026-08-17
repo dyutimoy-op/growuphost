@@ -11,12 +11,17 @@ export const Route = createFileRoute("/licenses")({
     meta: [
       {
         name: "description",
-        content: "Genuine enterprise software licenses with instant activation. Get official licenses for cPanel, LiteSpeed, CloudLinux, and WHMCS at competitive prices.",
+        content: "Official enterprise software licenses with instant activation. cPanel, LiteSpeed, CloudLinux, and WHMCS at competitive prices.",
       },
-      { property: "og:title", content: "Official Software Licenses | GROWUPHOST" },
-      { property: "og:description", content: "Instant activation for enterprise infrastructure software licenses." },
+      { property: "og:title", content: "Software Licenses | cPanel, LiteSpeed, CloudLinux" },
+      { property: "og:description", content: "Instant activation for enterprise infrastructure software licenses. Official cPanel, LiteSpeed partners." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Software Licenses | cPanel, LiteSpeed, CloudLinux" },
+      { name: "twitter:description", content: "Official enterprise software licenses with instant activation." },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/licenses" },
     ],
   }),
 });

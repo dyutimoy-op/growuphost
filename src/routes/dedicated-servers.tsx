@@ -7,16 +7,21 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/dedicated-servers")({
   component: DedicatedServersPage,
   head: () => ({
-    title: "Dedicated Servers Mumbai | Enterprise Bare Metal Hardware | GROWUPHOST",
+    title: "Dedicated Servers Mumbai | Bare Metal Infrastructure | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Pure bare-metal performance with 100% dedicated hardware. High-availability enterprise nodes in Tier 3 Mumbai data centers. Zero noisy neighbors.",
+        content: "Pure bare-metal performance with 100% dedicated hardware in Mumbai Tier 3 data centers. High-availability enterprise nodes for critical workloads.",
       },
-      { property: "og:title", content: "Enterprise Dedicated Servers Mumbai | GROWUPHOST" },
-      { property: "og:description", content: "Unmatched bare-metal performance for mission-critical enterprise workloads." },
+      { property: "og:title", content: "Dedicated Servers Mumbai | Bare Metal Infrastructure" },
+      { property: "og:description", content: "Unmatched bare-metal performance for mission-critical enterprise workloads in Mumbai." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Dedicated Servers Mumbai | Bare Metal Infrastructure" },
+      { name: "twitter:description", content: "Pure bare-metal performance with 100% dedicated hardware in Mumbai." },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/dedicated-servers" },
     ],
   }),
 });

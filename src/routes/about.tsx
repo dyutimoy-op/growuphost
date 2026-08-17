@@ -6,13 +6,18 @@ import { Info, Globe, Shield, Zap } from "lucide-react";
 export const Route = createFileRoute("/about")({
   component: AboutPage,
   head: () => ({
-    title: "About GROWUPHOST | Enterprise Mumbai Cloud Infrastructure",
+    title: "About GROWUPHOST | Enterprise Cloud Infrastructure Provider",
     meta: [
-      { name: "description", content: "Learn about the GROWUPHOST mission, our Tier 3 Mumbai data centers, and global NVMe infrastructure. Why businesses trust us for zero-latency hosting." },
-      { property: "og:title", content: "About GROWUPHOST | High-Performance Infrastructure" },
+      { name: "description", content: "Learn about GROWUPHOST's mission, our Tier 3 Mumbai data centers, and global NVMe infrastructure. Trusted by global developers." },
+      { property: "og:title", content: "About GROWUPHOST | Enterprise Cloud Infrastructure Provider" },
       { property: "og:description", content: "Reliable, enterprise-grade infrastructure for global developers and scale-up businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "About GROWUPHOST | Cloud Infrastructure Provider" },
+      { name: "twitter:description", content: "Learn about our mission and Tier 3 Mumbai data centers." },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/about" },
     ],
   }),
 });

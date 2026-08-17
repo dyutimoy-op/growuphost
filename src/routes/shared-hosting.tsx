@@ -7,16 +7,21 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/shared-hosting")({
   component: SharedHostingPage,
   head: () => ({
-    title: "Shared Hosting | High-Performance LiteSpeed NVMe | GROWUPHOST",
+    title: "Shared Hosting Mumbai | Fast LiteSpeed NVMe Hosting | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Experience ultra-fast shared hosting powered by LiteSpeed and NVMe storage. Scalable, secure, and affordable hosting solutions for Mumbai and beyond. 99.9% uptime guaranteed.",
+        content: "Premium shared hosting in Mumbai powered by LiteSpeed and NVMe storage. High-speed, secure, and affordable hosting solutions. 99.9% uptime guaranteed.",
       },
-      { property: "og:title", content: "Fast LiteSpeed Shared Hosting | GROWUPHOST" },
-      { property: "og:description", content: "Scale your website with zero-latency enterprise shared hosting." },
+      { property: "og:title", content: "Shared Hosting Mumbai | Fast LiteSpeed NVMe Hosting" },
+      { property: "og:description", content: "Scale your website with zero-latency enterprise shared hosting in Mumbai. LiteSpeed + NVMe storage." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Shared Hosting Mumbai | Fast LiteSpeed NVMe Hosting" },
+      { name: "twitter:description", content: "Premium shared hosting in Mumbai powered by LiteSpeed and NVMe storage. High-speed and secure." },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/shared-hosting" },
     ],
   }),
 });
