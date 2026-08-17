@@ -98,25 +98,62 @@ function AdminDashboard() {
     }
   });
 
-  const { data: categoriesData } = useQuery({
-    queryKey: ['categories-full'],
-    queryFn: async () => {
-      const { data, error } = await supabase.from('categories').select('*').order('name');
-      if (error) throw error;
-      return data;
-    }
-  });
-
-  const { data: productsData } = useQuery({
-    queryKey: ['products-full'],
-    queryFn: async () => {
-      const { data, error } = await supabase.from('products').select('*, categories(name)').order('display_order');
-      if (error) throw error;
-      return data;
-    }
-  });
-
   const deleteProduct = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('products').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products-full'] });
+      toast.success('Product deleted');
+    }
+  });
+
+  const deleteCategory = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('categories').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories-full'] });
+      toast.success('Category deleted');
+    }
+  });
+
+  const deletePopup = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('promo_popups').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['promo-popups'] });
+      toast.success('Popup deleted');
+    }
+  });
+
+  const deleteAlert = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('news_alerts').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['news-alerts'] });
+      queryClient.invalidateQueries({ queryKey: ['news-alert'] });
+      toast.success('Alert deleted');
+    }
+  });
+
+  const deleteTestimonial = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('testimonials').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['testimonials-full'] });
+      queryClient.invalidateQueries({ queryKey: ['testimonials-public'] });
+      toast.success('Testimonial deleted');
+    }
+  });
     mutationFn: async (id: string) => {
       const { error } = await supabase.from('products').delete().eq('id', id);
       if (error) throw error;
