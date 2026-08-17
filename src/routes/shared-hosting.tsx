@@ -6,6 +6,19 @@ import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/shared-hosting")({
   component: SharedHostingPage,
+  head: () => ({
+    title: "Shared Hosting | High-Performance LiteSpeed NVMe | GROWUPHOST",
+    meta: [
+      {
+        name: "description",
+        content: "Experience ultra-fast shared hosting powered by LiteSpeed and NVMe storage. Scalable, secure, and affordable hosting solutions for Mumbai and beyond. 99.9% uptime guaranteed.",
+      },
+      { property: "og:title", content: "Fast LiteSpeed Shared Hosting | GROWUPHOST" },
+      { property: "og:description", content: "Scale your website with zero-latency enterprise shared hosting." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
 function SharedHostingPage() {

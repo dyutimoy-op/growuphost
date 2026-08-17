@@ -6,6 +6,19 @@ import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/licenses")({
   component: LicensesPage,
+  head: () => ({
+    title: "Software Licenses | cPanel, LiteSpeed, CloudLinux | GROWUPHOST",
+    meta: [
+      {
+        name: "description",
+        content: "Genuine enterprise software licenses with instant activation. Get official licenses for cPanel, LiteSpeed, CloudLinux, and WHMCS at competitive prices.",
+      },
+      { property: "og:title", content: "Official Software Licenses | GROWUPHOST" },
+      { property: "og:description", content: "Instant activation for enterprise infrastructure software licenses." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
 function LicensesPage() {
