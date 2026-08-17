@@ -7,11 +7,11 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/dedicated-servers")({
   component: DedicatedServersPage,
   head: () => ({
-    title: "Dedicated Servers Mumbai | Bare Metal Infrastructure | GROWUPHOST",
+    title: "Best Dedicated Servers Mumbai | Cheap Bare Metal Infrastructure | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Pure bare-metal performance with 100% dedicated hardware in Mumbai Tier 3 data centers. High-availability enterprise nodes for critical workloads.",
+        content: "Get the best cheap dedicated servers in Mumbai. Pure bare-metal performance with 100% dedicated hardware in Tier 3 data centers for mission-critical workloads.",
       },
       { property: "og:title", content: "Dedicated Servers Mumbai | Bare Metal Infrastructure" },
       { property: "og:description", content: "Unmatched bare-metal performance for mission-critical enterprise workloads in Mumbai." },

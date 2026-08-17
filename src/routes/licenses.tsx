@@ -7,11 +7,11 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/licenses")({
   component: LicensesPage,
   head: () => ({
-    title: "Software Licenses | cPanel, LiteSpeed, CloudLinux | GROWUPHOST",
+    title: "Cheap Software Licenses | Best cPanel, LiteSpeed, CloudLinux | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Official enterprise software licenses with instant activation. cPanel, LiteSpeed, CloudLinux, and WHMCS at competitive prices.",
+        content: "Buy the best cheap software licenses with instant activation. Genuine cPanel, LiteSpeed, and CloudLinux licenses for your Mumbai infrastructure.",
       },
       { property: "og:title", content: "Software Licenses | cPanel, LiteSpeed, CloudLinux" },
       { property: "og:description", content: "Instant activation for enterprise infrastructure software licenses. Official cPanel, LiteSpeed partners." },
