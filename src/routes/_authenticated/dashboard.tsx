@@ -240,18 +240,7 @@ function AdminDashboard() {
             <div className="flex justify-between items-center">
               <h2 className="text-3xl font-black text-white">News & Alerts</h2>
               <Button 
-                onClick={async () => {
-                  const { error } = await supabase.from('news_alerts').insert({
-                    content: 'New flash announcement!',
-                    badge_text: 'NEW',
-                    is_active: true
-                  });
-                  if (error) toast.error(error.message);
-                  else {
-                    queryClient.invalidateQueries({ queryKey: ['news-alert'] });
-                    toast.success('Alert created');
-                  }
-                }}
+                onClick={() => { setSelectedAlert(null); setIsAlertModalOpen(true); }}
                 className="bg-indigo-600 hover:bg-indigo-700 rounded-xl px-6 font-bold"
               >
                 <Plus className="w-4 h-4 mr-2" /> Add Alert
@@ -259,9 +248,27 @@ function AdminDashboard() {
             </div>
             
             <div className="grid gap-4">
-              {/* Note: In a real app we'd fetch all alerts, here we'll just show a simplified list or the active one */}
-              <p className="text-slate-500 font-bold text-sm">Active news ticker alerts visible on the homepage.</p>
-              {/* Simplified implementation for now, assuming user will add/edit as needed */}
+              {alertsData?.map((alert: any) => (
+                <Card key={alert.id} className="border-white/5 bg-slate-900/50 p-6 rounded-3xl flex justify-between items-center">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-2 h-2 rounded-full ${alert.is_active ? 'bg-emerald-500 animate-pulse' : 'bg-slate-600'}`} />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-black bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded-md uppercase tracking-widest">
+                          {alert.badge_text || 'INFO'}
+                        </span>
+                        <h3 className="font-black text-white">{alert.content}</h3>
+                      </div>
+                      {alert.link_url && <p className="text-[10px] text-slate-500 font-bold truncate max-w-xs mt-1">{alert.link_url}</p>}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="icon" onClick={() => { setSelectedAlert(alert); setIsAlertModalOpen(true); }} className="rounded-xl"><Settings className="w-4 h-4" /></Button>
+                    <Button variant="destructive" size="icon" onClick={() => { if(confirm('Delete?')) deleteAlert.mutate(alert.id); }} className="rounded-xl"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                </Card>
+              ))}
+              {alertsData?.length === 0 && <p className="text-slate-500 font-bold text-sm italic">No alerts found.</p>}
             </div>
           </div>
         )}
@@ -271,50 +278,29 @@ function AdminDashboard() {
             <div className="flex justify-between items-center">
                <h2 className="text-3xl font-black text-white">Marketing Popups</h2>
                <Button 
-                 onClick={async () => {
-                   const { error } = await supabase.from('promo_popups').insert({
-                     title: 'New Offer!',
-                     description: 'Get 20% off on all plans today.',
-                     is_active: false
-                   });
-                   if (error) toast.error(error.message);
-                   else {
-                     queryClient.invalidateQueries({ queryKey: ['promo-popups'] });
-                     toast.success('Popup created');
-                   }
-                 }}
+                 onClick={() => { setSelectedPopup(null); setIsMarketingModalOpen(true); }}
                  className="bg-orange-600 hover:bg-orange-700 rounded-xl px-6 font-bold"
                >
                  <Plus className="w-4 h-4 mr-2" /> Create Popup
                </Button>
             </div>
             <div className="grid gap-4">
-               {queryClient.getQueryData<any[]>(['promo-popups'])?.map((popup) => (
+               {popupsData?.map((popup: any) => (
                  <Card key={popup.id} className="border-white/5 bg-slate-900/50 p-6 rounded-3xl flex justify-between items-center">
-                    <div>
-                      <h3 className="font-black text-white">{popup.title}</h3>
-                      <p className="text-xs text-slate-500">{popup.is_active ? 'Active' : 'Inactive'}</p>
+                    <div className="flex items-center gap-4">
+                      {popup.image_url && <img src={popup.image_url} alt="" className="w-12 h-12 rounded-xl object-cover border border-white/5" />}
+                      <div>
+                        <h3 className="font-black text-white">{popup.title}</h3>
+                        <p className="text-xs text-slate-500 font-bold">{popup.is_active ? 'Active' : 'Inactive'} • {popup.coupon_code || 'No coupon'}</p>
+                      </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button 
-                        variant="destructive" 
-                        onClick={async () => {
-                          if(confirm('Delete?')) {
-                            const { error } = await supabase.from('promo_popups').delete().eq('id', popup.id);
-                            if (error) toast.error(error.message);
-                            else {
-                              queryClient.invalidateQueries({ queryKey: ['promo-popups'] });
-                              toast.success('Popup deleted');
-                            }
-                          }
-                        }}
-                        className="rounded-xl"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                      <Button variant="outline" size="icon" onClick={() => { setSelectedPopup(popup); setIsMarketingModalOpen(true); }} className="rounded-xl"><Settings className="w-4 h-4" /></Button>
+                      <Button variant="destructive" size="icon" onClick={() => { if(confirm('Delete?')) deletePopup.mutate(popup.id); }} className="rounded-xl"><Trash2 className="w-4 h-4" /></Button>
                     </div>
                  </Card>
                ))}
+               {popupsData?.length === 0 && <p className="text-slate-500 font-bold text-sm italic">No popups found.</p>}
             </div>
           </div>
         )}
@@ -323,12 +309,34 @@ function AdminDashboard() {
           <div className="space-y-6 animate-in fade-in duration-500">
             <div className="flex justify-between items-center">
               <h2 className="text-3xl font-black text-white">Testimonials</h2>
-              <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-6 font-bold">
+              <Button 
+                onClick={() => { setSelectedTestimonial(null); setIsTestimonialModalOpen(true); }}
+                className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-6 font-bold"
+              >
                 <Plus className="w-4 h-4 mr-2" /> Add Review
               </Button>
             </div>
             <div className="grid gap-4">
-              <p className="text-slate-500 font-bold text-sm">Customer reviews displayed on the front page.</p>
+              {testimonialsData?.map((t: any) => (
+                <Card key={t.id} className="border-white/5 bg-slate-900/50 p-6 rounded-3xl flex justify-between items-center">
+                  <div className="flex items-center gap-4">
+                    {t.avatar_url ? (
+                      <img src={t.avatar_url} alt="" className="w-10 h-10 rounded-full object-cover" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center font-black">{t.name.charAt(0)}</div>
+                    )}
+                    <div>
+                      <h3 className="font-black text-white">{t.name}</h3>
+                      <p className="text-xs text-slate-500 font-bold">{t.role} • {t.rating} Stars</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="icon" onClick={() => { setSelectedTestimonial(t); setIsTestimonialModalOpen(true); }} className="rounded-xl"><Settings className="w-4 h-4" /></Button>
+                    <Button variant="destructive" size="icon" onClick={() => { if(confirm('Delete?')) deleteTestimonial.mutate(t.id); }} className="rounded-xl"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                </Card>
+              ))}
+              {testimonialsData?.length === 0 && <p className="text-slate-500 font-bold text-sm italic">No testimonials found.</p>}
             </div>
           </div>
         )}
