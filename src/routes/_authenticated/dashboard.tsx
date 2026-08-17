@@ -492,6 +492,9 @@ function AdminDashboard() {
 
       <ProductModal open={isProductModalOpen} onOpenChange={setIsProductModalOpen} product={selectedProduct} />
       <CategoryModal open={isCategoryModalOpen} onOpenChange={setIsCategoryModalOpen} category={selectedCategory} allCategories={categoriesData || []} />
+      <MarketingModal open={isMarketingModalOpen} onOpenChange={setIsMarketingModalOpen} popup={selectedPopup} />
+      <AlertModal open={isAlertModalOpen} onOpenChange={setIsAlertModalOpen} alert={selectedAlert} />
+      <TestimonialModal open={isTestimonialModalOpen} onOpenChange={setIsTestimonialModalOpen} testimonial={selectedTestimonial} />
     </div>
   );
 }
