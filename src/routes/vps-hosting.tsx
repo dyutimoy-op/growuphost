@@ -7,11 +7,11 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/vps-hosting")({
   component: VPSHostingPage,
   head: () => ({
-    title: "Cheap VPS Mumbai | Best NVMe Cloud Servers & High Performance | GROWUPHOST",
+    title: "Bulletproof VPS & Offshore Server | Cheap Antiban VPS Mumbai | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Buy cheap VPS servers in Mumbai with dedicated resources and full root access. Best high-performance NVMe storage for developers and enterprise scale.",
+        content: "Buy cheap bulletproof VPS and offshore servers in Mumbai with dedicated resources. Best high-performance antiban VPS for privacy and enterprise scale. Reliable and trusted.",
       },
       { property: "og:title", content: "NVMe VPS Mumbai | Enterprise Cloud Servers" },
       { property: "og:description", content: "Dedicated cloud resources with zero-latency Mumbai infrastructure. High-performance NVMe storage." },
