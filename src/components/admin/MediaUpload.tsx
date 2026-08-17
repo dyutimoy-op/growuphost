@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Upload, Loader2, Image as ImageIcon, Film, X } from 'lucide-react';
+import { Upload, Loader2, Image as ImageIcon, Film, X, CheckCircle2, AlertCircle } from 'lucide-react';
 import { uploadMedia } from '@/lib/storage';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { validateFile, optimizeImage } from '@/utils/media-optimization';
 
 interface MediaUploadProps {
   onUploadComplete: (url: string) => void;
@@ -21,30 +23,76 @@ export function MediaUpload({
   accept = "image/*,video/*,image/gif" 
 }: MediaUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'optimizing' | 'uploading' | 'success' | 'error'>('idle');
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentUrl || null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Optional: Add size limit check here if needed
-    if (file.size > 10 * 1024 * 1024) { // 10MB limit example
-      toast.error("File size exceeds 10MB limit");
+  const processFile = async (file: File) => {
+    // 1. Validation
+    const validation = validateFile(file);
+    if (!validation.valid) {
+      setUploadStatus('error');
+      toast.error(validation.error);
       return;
     }
 
     setIsUploading(true);
+    setUploadStatus('optimizing');
+
     try {
-      const url = await uploadMedia(file, path);
+      // 2. Optimization
+      const { file: optimizedFile, isOptimized, originalSize, optimizedSize } = await optimizeImage(file);
+      
+      if (isOptimized) {
+        const reduction = (((originalSize - optimizedSize) / originalSize) * 100).toFixed(0);
+        console.log(`Optimized image: ${reduction}% reduction`);
+      }
+
+      setUploadStatus('uploading');
+
+      // 3. Upload
+      const finalFile = optimizedFile instanceof Blob && !(optimizedFile instanceof File) 
+        ? new File([optimizedFile], file.name.replace(/\.[^/.]+$/, "") + ".webp", { type: 'image/webp' })
+        : optimizedFile as File;
+
+      const url = await uploadMedia(finalFile, path);
+      
       setPreviewUrl(url);
       onUploadComplete(url);
-      toast.success(`${label} uploaded successfully`);
+      setUploadStatus('success');
+      toast.success(`${label} uploaded and optimized`);
+      
+      // Reset status to idle after a delay
+      setTimeout(() => setUploadStatus('idle'), 3000);
     } catch (error: any) {
       console.error("Upload error:", error);
+      setUploadStatus('error');
       toast.error(`Upload failed: ${error.message}`);
     } finally {
       setIsUploading(false);
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) processFile(file);
+  };
+
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const onDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) processFile(file);
   };
 
   const isVideo = previewUrl?.match(/\.(mp4|webm|ogg)$/i) || previewUrl?.includes('video');
@@ -76,6 +124,7 @@ export function MediaUpload({
             onClick={() => {
               setPreviewUrl(null);
               onUploadComplete('');
+              setUploadStatus('idle');
             }}
             className="absolute top-2 right-2 p-1.5 bg-red-500/80 hover:bg-red-500 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity"
           >
@@ -84,8 +133,16 @@ export function MediaUpload({
         </div>
       )}
 
-      <div className="flex items-center gap-3">
-        <div className="relative flex-1">
+      <div className="flex flex-col gap-3">
+        <div 
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+          className={cn(
+            "relative flex-1 group",
+            isDragging && "scale-[0.98] transition-transform"
+          )}
+        >
           <Input
             type="file"
             accept={accept}
@@ -93,31 +150,68 @@ export function MediaUpload({
             disabled={isUploading}
             className="hidden"
             id={`file-upload-${label.replace(/\s+/g, '-').toLowerCase()}`}
+            ref={fileInputRef}
           />
           <label 
             htmlFor={`file-upload-${label.replace(/\s+/g, '-').toLowerCase()}`}
-            className={`
-              flex items-center justify-center gap-2 w-full px-4 py-3 
-              border-2 border-dashed border-white/10 rounded-2xl 
-              cursor-pointer hover:border-indigo-500/50 hover:bg-white/5 
-              transition-all text-sm font-bold
-              ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}
-            `}
-          >
-            {isUploading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
-            ) : (
-              <Upload className="w-4 h-4 text-indigo-400" />
+            className={cn(
+              "flex flex-col items-center justify-center gap-3 w-full px-4 py-8 border-2 border-dashed rounded-3xl cursor-pointer transition-all text-sm font-bold",
+              isDragging 
+                ? "border-indigo-500 bg-indigo-500/10" 
+                : "border-white/10 hover:border-indigo-500/50 hover:bg-white/5",
+              isUploading ? "opacity-50 cursor-not-allowed" : "",
+              uploadStatus === 'success' ? "border-emerald-500/50 bg-emerald-500/5" : "",
+              uploadStatus === 'error' ? "border-red-500/50 bg-red-500/5" : ""
             )}
-            {isUploading ? 'Uploading...' : `Upload ${label}`}
+          >
+            {uploadStatus === 'idle' && (
+              <>
+                <div className="p-4 bg-indigo-500/10 rounded-2xl group-hover:scale-110 transition-transform">
+                  <Upload className="w-6 h-6 text-indigo-400" />
+                </div>
+                <div className="text-center">
+                  <p className="text-white">Click or drag & drop to upload</p>
+                  <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">
+                    Optimized Image or Video (Max 10MB)
+                  </p>
+                </div>
+              </>
+            )}
+
+            {(uploadStatus === 'optimizing' || uploadStatus === 'uploading') && (
+              <>
+                <Loader2 className="w-8 h-8 animate-spin text-indigo-400" />
+                <div className="text-center">
+                  <p className="text-white">{uploadStatus === 'optimizing' ? 'Optimizing Image...' : 'Uploading to Server...'}</p>
+                  <div className="w-48 h-1 bg-white/10 rounded-full mt-3 overflow-hidden">
+                    <div className={cn(
+                      "h-full bg-indigo-500 transition-all duration-500",
+                      uploadStatus === 'optimizing' ? "w-1/3" : "w-2/3"
+                    )} />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {uploadStatus === 'success' && (
+              <>
+                <div className="p-4 bg-emerald-500/10 rounded-2xl">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                </div>
+                <p className="text-emerald-400">Successfully Uploaded & Optimized</p>
+              </>
+            )}
+
+            {uploadStatus === 'error' && (
+              <>
+                <div className="p-4 bg-red-500/10 rounded-2xl">
+                  <AlertCircle className="w-6 h-6 text-red-400" />
+                </div>
+                <p className="text-red-400">Upload Failed. Try Again.</p>
+              </>
+            )}
           </label>
         </div>
-        
-        {previewUrl && (
-          <div className="flex gap-2">
-            {isVideo ? <Film className="w-4 h-4 text-slate-500" /> : <ImageIcon className="w-4 h-4 text-slate-500" />}
-          </div>
-        )}
       </div>
     </div>
   );
