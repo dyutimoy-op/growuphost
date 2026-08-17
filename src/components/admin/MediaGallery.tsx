@@ -131,7 +131,12 @@ export function MediaGallery({
                     }}
                   >
                     {item.file_type?.startsWith('image/') ? (
-                      <img src={item.url} alt={item.filename} className="w-full h-full object-cover" />
+                      <img 
+                        src={`${item.url}${item.file_type !== 'image/gif' ? '?width=300&height=300&resize=contain' : ''}`} 
+                        alt={item.filename} 
+                        className="w-full h-full object-cover" 
+                        loading="lazy"
+                      />
                     ) : item.file_type?.startsWith('video/') ? (
                       <div className="w-full h-full flex items-center justify-center bg-indigo-500/10">
                         <Film className="w-8 h-8 text-indigo-400" />
