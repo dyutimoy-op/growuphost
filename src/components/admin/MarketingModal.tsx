@@ -50,17 +50,22 @@ export function MarketingModal({ open, onOpenChange, popup }: MarketingModalProp
     setLoading(true);
 
     try {
+      const dataToSubmit = { ...formData };
+      delete dataToSubmit.id;
+      delete dataToSubmit.created_at;
+      delete dataToSubmit.updated_at;
+
       if (popup?.id) {
         const { error } = await supabase
           .from('promo_popups')
-          .update(formData)
+          .update(dataToSubmit)
           .eq('id', popup.id);
         if (error) throw error;
         toast.success('Popup updated');
       } else {
         const { error } = await supabase
           .from('promo_popups')
-          .insert(formData);
+          .insert(dataToSubmit);
         if (error) throw error;
         toast.success('Popup created');
       }
@@ -146,9 +151,10 @@ export function MarketingModal({ open, onOpenChange, popup }: MarketingModalProp
             <div className="space-y-2">
               <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Popup Image</label>
               <MediaUpload 
-                value={formData.image_url} 
-                onChange={(url) => setFormData({ ...formData, image_url: url })}
-                usageTag="popups"
+                currentUrl={formData.image_url} 
+                onUploadComplete={(url: string) => setFormData({ ...formData, image_url: url })}
+                path="popups"
+                label="Popup Image"
               />
             </div>
           </div>
