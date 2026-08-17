@@ -91,6 +91,36 @@ export type Database = {
         }
         Relationships: []
       }
+      media_library: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          file_size: number | null
+          file_type: string | null
+          filename: string
+          id: string
+          url: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          filename: string
+          id?: string
+          url: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          filename?: string
+          id?: string
+          url?: string
+        }
+        Relationships: []
+      }
       news_alerts: {
         Row: {
           badge_text: string | null
