@@ -14,11 +14,13 @@ import {
   Film,
   CheckCircle2,
   Clock,
-  ExternalLink
+  ExternalLink,
+  Eye
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { MediaUpload } from './MediaUpload';
+import { UsagePreview } from './UsagePreview';
 
 interface MediaGalleryProps {
   open: boolean;
@@ -34,6 +36,7 @@ export function MediaGallery({
   title = "Media Gallery"
 }: MediaGalleryProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedForUsage, setSelectedForUsage] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { data: mediaItems, isLoading } = useQuery({
@@ -125,10 +128,7 @@ export function MediaGallery({
                   <div 
                     key={item.id}
                     className="group relative aspect-square bg-slate-950 rounded-xl overflow-hidden border border-white/5 hover:border-indigo-500 transition-all cursor-pointer"
-                    onClick={() => {
-                      onSelect(item.url);
-                      onOpenChange(false);
-                    }}
+                    onClick={() => {}}
                   >
                     {item.file_type?.startsWith('image/') ? (
                       <img 
@@ -150,9 +150,29 @@ export function MediaGallery({
                     <div className="absolute inset-0 bg-indigo-600/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 text-center">
                       <p className="text-[10px] font-black uppercase tracking-tighter line-clamp-2 mb-1">{item.filename}</p>
                       <p className="text-[8px] font-bold opacity-70 mb-3">{formatSize(item.file_size || 0)}</p>
-                      <Button size="sm" className="h-7 text-[10px] font-black bg-white text-indigo-600 hover:bg-slate-100 rounded-lg">
-                        SELECT
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          className="h-7 text-[10px] font-black bg-white text-indigo-600 hover:bg-slate-100 rounded-lg"
+                          onClick={() => {
+                            onSelect(item.url);
+                            onOpenChange(false);
+                          }}
+                        >
+                          SELECT
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          className="h-7 text-[10px] font-black bg-indigo-500 text-white hover:bg-indigo-400 rounded-lg"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedForUsage(item.url);
+                          }}
+                        >
+                          <Eye className="w-3 h-3 mr-1" />
+                          USAGE
+                        </Button>
+                      </div>
                     </div>
 
                     <button 
@@ -170,6 +190,14 @@ export function MediaGallery({
             )}
           </div>
         </div>
+        
+        {selectedForUsage && (
+          <UsagePreview 
+            open={!!selectedForUsage} 
+            onOpenChange={(open) => !open && setSelectedForUsage(null)} 
+            mediaUrl={selectedForUsage} 
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

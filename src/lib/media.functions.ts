@@ -1,9 +1,11 @@
 
 import { createServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
 
 export const getMediaUsage = createServerFn({ method: "GET" })
-  .handler(async ({ data: { url } }: { data: { url: string } }) => {
+  .inputValidator(z.object({ url: z.string() }))
+  .handler(async ({ input: { url } }) => {
     // We search across all tables that might use this URL
     const [products, categories, popups, testimonials] = await Promise.all([
       supabase.from('products').select('id, name').filter('description', 'ilike', `%${url}%`),
@@ -12,8 +14,6 @@ export const getMediaUsage = createServerFn({ method: "GET" })
       supabase.from('testimonials').select('id, name').eq('avatar_url', url)
     ]);
 
-    // Also check product features JSON if applicable, but for now simple checks
-    
     return {
       products: products.data || [],
       categories: categories.data || [],
@@ -23,7 +23,8 @@ export const getMediaUsage = createServerFn({ method: "GET" })
   });
 
 export const replaceMediaUrl = createServerFn({ method: "POST" })
-  .handler(async ({ data: { oldUrl, newUrl } }: { data: { oldUrl: string, newUrl: string } }) => {
+  .inputValidator(z.object({ oldUrl: z.string(), newUrl: z.string() }))
+  .handler(async ({ input: { oldUrl, newUrl } }) => {
     // 1. Categories
     await supabase.from('categories').update({ background_media_url: newUrl }).eq('background_media_url', oldUrl);
     
@@ -32,12 +33,6 @@ export const replaceMediaUrl = createServerFn({ method: "POST" })
     
     // 3. Testimonials
     await supabase.from('testimonials').update({ avatar_url: newUrl }).eq('avatar_url', oldUrl);
-    
-    // 4. Products (This is trickier if it's in description or featured image)
-    // For now we assume image_url might be a field in products based on ProductModal, 
-    // but looking at types.ts, products table doesn't have image_url? 
-    // Wait, ProductModal has image_url state but types.ts doesn't show it in Row.
-    // Let me re-check types.ts
     
     return { success: true };
   });
