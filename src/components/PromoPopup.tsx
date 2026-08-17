@@ -82,6 +82,8 @@ export const PromoPopup = () => {
                 src={activePopup.image_url} 
                 alt={activePopup.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
             </div>

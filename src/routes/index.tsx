@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { ProductGrid } from "@/components/ProductGrid";
 import { Footer } from "@/components/Footer";
-import { Testimonials } from "@/components/Testimonials";
 import { Toaster } from "sonner";
+import React from "react";
+
+const ProductGrid = React.lazy(() => import("@/components/ProductGrid").then(m => ({ default: m.ProductGrid })));
+const Testimonials = React.lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
 
 
 
@@ -38,9 +40,10 @@ function Index() {
 
       <main className="flex-grow">
         <Hero />
-        <ProductGrid />
-        <Testimonials />
-
+        <React.Suspense fallback={<div className="h-96 bg-slate-950 animate-pulse" />}>
+          <ProductGrid />
+          <Testimonials />
+        </React.Suspense>
       </main>
       <Footer />
     </div>
