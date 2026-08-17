@@ -7,16 +7,21 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/vps-hosting")({
   component: VPSHostingPage,
   head: () => ({
-    title: "NVMe VPS Servers Mumbai | Scalable Cloud Infrastructure | GROWUPHOST",
+    title: "NVMe VPS Mumbai | Enterprise Cloud Servers | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "High-performance NVMe VPS servers in Mumbai. Dedicated resources, full root access, and enterprise-grade infrastructure to power your applications.",
+        content: "High-performance NVMe VPS servers in Mumbai. Dedicated resources, full root access, and enterprise-grade infrastructure. Scale your cloud today.",
       },
-      { property: "og:title", content: "High-Performance NVMe VPS | GROWUPHOST" },
-      { property: "og:description", content: "Dedicated cloud resources with zero-latency Mumbai infrastructure." },
+      { property: "og:title", content: "NVMe VPS Mumbai | Enterprise Cloud Servers" },
+      { property: "og:description", content: "Dedicated cloud resources with zero-latency Mumbai infrastructure. High-performance NVMe storage." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "NVMe VPS Mumbai | Enterprise Cloud Servers" },
+      { name: "twitter:description", content: "High-performance NVMe VPS servers in Mumbai. Dedicated resources and full root access." },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/vps-hosting" },
     ],
   }),
 });

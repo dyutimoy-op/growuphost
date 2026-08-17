@@ -10,11 +10,16 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
   head: () => ({
-    title: "Contact GROWUPHOST | 24/7 Enterprise Support",
+    title: "Contact GROWUPHOST | 24/7 Enterprise Infrastructure Support",
     meta: [
-      { name: "description", content: "Contact the GROWUPHOST enterprise support team. Available 24/7 for sales inquiries, technical support, and infrastructure consulting." },
-      { property: "og:title", content: "Contact GROWUPHOST" },
-      { property: "og:description", content: "Get in touch with our infrastructure experts." },
+      { name: "description", content: "Get in touch with the GROWUPHOST enterprise support team. Available 24/7 for sales, technical support, and infrastructure consulting." },
+      { property: "og:title", content: "Contact GROWUPHOST | 24/7 Enterprise Support" },
+      { property: "og:description", content: "Get in touch with our infrastructure experts. Available 24/7 for your business." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/contact" },
     ],
   }),
 });

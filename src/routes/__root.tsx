@@ -80,14 +80,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "GROWUPHOST | Premium Hosting Solutions" },
-      { name: "description", content: "Experience unmatched performance with GROWUPHOST. We provide high-speed shared hosting, VPS, dedicated servers, and licenses for your digital success." },
+      { title: "GROWUPHOST | Premium Enterprise Hosting Mumbai" },
+      { name: "description", content: "High-performance enterprise infrastructure in Mumbai. NVMe Shared Hosting, VPS, and Dedicated Servers with 99.9% uptime guarantee." },
       { name: "author", content: "GROWUPHOST" },
-      { property: "og:title", content: "GROWUPHOST | Premium Hosting Solutions" },
-      { property: "og:description", content: "Experience unmatched performance with GROWUPHOST. We provide high-speed shared hosting, VPS, dedicated servers, and licenses for your digital success." },
+      { property: "og:title", content: "GROWUPHOST | Premium Enterprise Hosting Mumbai" },
+      { property: "og:description", content: "High-performance enterprise infrastructure in Mumbai. NVMe Shared Hosting, VPS, and Dedicated Servers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@growuphost" },
+      { name: "theme-color", content: "#0f172a" },
     ],
     links: [
       {
@@ -95,6 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "canonical", href: "https://growuphost.com" },
     ],
   }),
   shellComponent: RootShell,

@@ -18,6 +18,9 @@ export const Route = createFileRoute("/legal/terms")({
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, follow" },
     ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/legal/terms" },
+    ],
   }),
 });
 

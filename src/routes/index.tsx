@@ -17,10 +17,15 @@ export const Route = createFileRoute("/")({
         name: "description",
         content: "High-performance enterprise infrastructure. Experience zero-latency NVMe hosting, VPS servers, and dedicated hardware in Mumbai. 99.9% uptime guaranteed.",
       },
-      { property: "og:title", content: "GROWUPHOST | Enterprise Infrastructure" },
-      { property: "og:description", content: "Unmatched performance with zero latency infrastructure. Scale your business with GROWUPHOST." },
+      { property: "og:title", content: "GROWUPHOST | Enterprise NVMe Hosting & VPS Mumbai" },
+      { property: "og:description", content: "Unmatched performance with zero latency infrastructure. Scale your business with GROWUPHOST enterprise solutions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "GROWUPHOST | Enterprise NVMe Hosting & VPS Mumbai" },
+      { name: "twitter:description", content: "High-performance enterprise infrastructure. Zero-latency NVMe hosting, VPS servers, and dedicated hardware in Mumbai." },
+    ],
+    links: [
+      { rel: "canonical", href: "https://growuphost.com/" },
     ],
   }),
 });
@@ -33,9 +38,6 @@ function Index() {
 
       <main className="flex-grow">
         <Hero />
-        <div className="hidden">
-          no no dont add the color as per image have just make like this and color have in my website maintain the color don't change color dark color i have in my webiste its need to maintain
-        </div>
         <ProductGrid />
         <Testimonials />
 
