@@ -26,6 +26,12 @@ function AdminDashboard() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [isMarketingModalOpen, setIsMarketingModalOpen] = useState(false);
+  const [selectedPopup, setSelectedPopup] = useState<any>(null);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const [selectedAlert, setSelectedAlert] = useState<any>(null);
+  const [isTestimonialModalOpen, setIsTestimonialModalOpen] = useState(false);
+  const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
 
   const queryClient = useQueryClient();
 
@@ -45,6 +51,51 @@ function AdminDashboard() {
         popups: popups.count || 0,
       };
     },
+  });
+
+  const { data: categoriesData } = useQuery({
+    queryKey: ['categories-full'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('categories').select('*').order('name');
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  const { data: productsData } = useQuery({
+    queryKey: ['products-full'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('products').select('*, categories(name)').order('display_order');
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  const { data: popupsData } = useQuery({
+    queryKey: ['promo-popups'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('promo_popups').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  const { data: alertsData } = useQuery({
+    queryKey: ['news-alerts'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('news_alerts').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  const { data: testimonialsData } = useQuery({
+    queryKey: ['testimonials-full'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('testimonials').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data;
+    }
   });
 
   const { data: categoriesData } = useQuery({
