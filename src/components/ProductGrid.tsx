@@ -105,7 +105,7 @@ export function ProductGrid() {
                   </div>
                   
                   <p className="text-sm text-slate-400 font-medium leading-relaxed">
-                    High-performance infrastructure with isolated resources and dedicated reliability.
+                    Cheap trusted infrastructure with isolated resources and dedicated antiban reliability.
                   </p>
                 </div>
 

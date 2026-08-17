@@ -33,7 +33,7 @@ export function Hero() {
               </h1>
 
               <p className="text-lg lg:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
-                {settings?.['banner_subtext'] || 'Enterprise-grade infrastructure for businesses that demand zero latency and 100% reliability.'}
+                {settings?.['banner_subtext'] || 'Cheap trusted offshore & bulletproof hosting with antiban servers. Enterprise-grade infrastructure for businesses that demand zero latency and 100% reliability.'}
               </p>
             </div>
 

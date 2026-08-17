@@ -60,11 +60,11 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-8 text-center md:text-left">
             <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-indigo-400">Services</h4>
             <ul className="space-y-5 text-[13px] font-bold text-slate-500">
-               <li><Link to="/shared-hosting" className="hover:text-white hover:translate-x-1 inline-block transition-all">Web Hosting</Link></li>
-               <li><Link to="/vps-hosting" className="hover:text-white hover:translate-x-1 inline-block transition-all">Cloud VPS</Link></li>
-               <li><Link to="/dedicated-servers" className="hover:text-white hover:translate-x-1 inline-block transition-all">Dedicated Hardware</Link></li>
+               <li><Link to="/shared-hosting" className="hover:text-white hover:translate-x-1 inline-block transition-all">Offshore Web Hosting</Link></li>
+               <li><Link to="/vps-hosting" className="hover:text-white hover:translate-x-1 inline-block transition-all">Bulletproof VPS</Link></li>
+               <li><Link to="/dedicated-servers" className="hover:text-white hover:translate-x-1 inline-block transition-all">Bulletproof Dedicated</Link></li>
                <li><Link to="/licenses" className="hover:text-white hover:translate-x-1 inline-block transition-all">Software Licenses</Link></li>
-               <li><Link to="/contact" className="hover:text-white hover:translate-x-1 inline-block transition-all">SSL Certificates</Link></li>
+               <li><Link to="/contact" className="hover:text-white hover:translate-x-1 inline-block transition-all">Antiban Hosting</Link></li>
             </ul>
           </div>
 

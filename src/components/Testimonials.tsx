@@ -27,7 +27,7 @@ export function Testimonials() {
             TRUSTED BY <span className="text-indigo-500 italic">THOUSANDS</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-lg font-medium">
-            Hear from our global customers who power their infrastructure with GROWUPHOST.
+            Hear from our global customers who power their cheap trusted offshore & bulletproof infrastructure with GROWUPHOST.
           </p>
         </div>
 

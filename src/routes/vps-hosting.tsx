@@ -7,11 +7,11 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/vps-hosting")({
   component: VPSHostingPage,
   head: () => ({
-    title: "Cheap VPS Mumbai | Best NVMe Cloud Servers & High Performance | GROWUPHOST",
+    title: "Bulletproof VPS & Offshore Server | Cheap Antiban VPS Mumbai | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Buy cheap VPS servers in Mumbai with dedicated resources and full root access. Best high-performance NVMe storage for developers and enterprise scale.",
+        content: "Buy cheap bulletproof VPS and offshore servers in Mumbai with dedicated resources. Best high-performance antiban VPS for privacy and enterprise scale. Reliable and trusted.",
       },
       { property: "og:title", content: "NVMe VPS Mumbai | Enterprise Cloud Servers" },
       { property: "og:description", content: "Dedicated cloud resources with zero-latency Mumbai infrastructure. High-performance NVMe storage." },
@@ -36,7 +36,7 @@ function VPSHostingPage() {
            <div className="max-w-7xl mx-auto py-20 text-center space-y-6">
               <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">VPS <span className="text-indigo-500">Servers</span></h1>
               <p className="text-slate-400 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-                Experience dedicated resources and full root access with our high-performance NVMe Virtual Private Servers.
+                Experience privacy and power with our cheap bulletproof VPS and offshore servers. High-performance antiban infrastructure.
               </p>
            </div>
         </div>

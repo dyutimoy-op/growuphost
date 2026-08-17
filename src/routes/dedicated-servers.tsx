@@ -7,11 +7,11 @@ import { Toaster } from "sonner";
 export const Route = createFileRoute("/dedicated-servers")({
   component: DedicatedServersPage,
   head: () => ({
-    title: "Best Dedicated Servers Mumbai | Cheap Bare Metal Infrastructure | GROWUPHOST",
+    title: "Bulletproof Dedicated Servers & Offshore Infrastructure | GROWUPHOST",
     meta: [
       {
         name: "description",
-        content: "Get the best cheap dedicated servers in Mumbai. Pure bare-metal performance with 100% dedicated hardware in Tier 3 data centers for mission-critical workloads.",
+        content: "Get the best cheap bulletproof dedicated servers and offshore infrastructure in Mumbai. Pure bare-metal antiban performance with 100% dedicated hardware for mission-critical privacy.",
       },
       { property: "og:title", content: "Dedicated Servers Mumbai | Bare Metal Infrastructure" },
       { property: "og:description", content: "Unmatched bare-metal performance for mission-critical enterprise workloads in Mumbai." },
@@ -36,7 +36,7 @@ function DedicatedServersPage() {
            <div className="max-w-7xl mx-auto py-20 text-center space-y-6">
               <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">Dedicated <span className="text-indigo-500">Hardware</span></h1>
               <p className="text-slate-400 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-                Raw power with 100% dedicated hardware. No noisy neighbors, just pure performance for your enterprise workloads.
+                Raw power with cheap bulletproof dedicated servers. Secure offshore antiban hardware for mission-critical enterprise workloads.
               </p>
            </div>
         </div>
