@@ -9,8 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers, Save } from 'lucide-react';
+import { Package, Plus, Trash2, Settings, Megaphone, Star, Layers, Save, Globe, Zap, BarChart3, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { runSEOAudit, type SEOAuditResult } from '@/utils/seo-audit';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: AdminDashboard,
@@ -259,6 +260,94 @@ function AdminDashboard() {
             <div className="grid gap-4">
               <p className="text-slate-500 font-bold text-sm">Customer reviews displayed on the front page.</p>
             </div>
+          </div>
+        )}
+
+        {activeTab === 'seo' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+             <div className="flex justify-between items-center">
+                <h2 className="text-3xl font-black text-white">SEO & Performance</h2>
+                <Button 
+                  onClick={async () => {
+                    const result = await runSEOAudit();
+                    queryClient.invalidateQueries({ queryKey: ['site-settings'] });
+                    toast.success(`Audit complete! Score: ${result.score}`);
+                  }}
+                  className="bg-indigo-600 hover:bg-indigo-700 px-8 font-black rounded-xl"
+                >
+                  <BarChart3 className="w-4 h-4 mr-2" /> Run SEO Audit
+                </Button>
+             </div>
+
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+               {/* Analytics Card */}
+               <Card className="border-white/5 bg-slate-900/50 p-8 rounded-3xl space-y-6">
+                 <h3 className="text-xl font-black text-white border-b border-white/5 pb-4 flex items-center gap-2">
+                   <Zap className="w-5 h-5 text-indigo-400" /> Analytics & Tracking
+                 </h3>
+                 <div className="space-y-4">
+                   <div className="space-y-2">
+                     <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Google Analytics (GA4 ID)</label>
+                     <Input 
+                        placeholder="G-XXXXXXXXXX" 
+                        defaultValue={queryClient.getQueryData<any>(['site-settings'])?.google_analytics_id}
+                        className="bg-slate-950 border-white/10 text-white rounded-xl" 
+                        onChange={async (e) => {
+                          await supabase.from('site_settings').update({ value: e.target.value }).eq('key', 'google_analytics_id');
+                        }}
+                     />
+                   </div>
+                   <div className="space-y-2">
+                     <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Search Console Tag</label>
+                     <Input 
+                        placeholder="google-site-verification=..." 
+                        defaultValue={queryClient.getQueryData<any>(['site-settings'])?.google_search_console_tag}
+                        className="bg-slate-950 border-white/10 text-white rounded-xl" 
+                        onChange={async (e) => {
+                          await supabase.from('site_settings').update({ value: e.target.value }).eq('key', 'google_search_console_tag');
+                        }}
+                     />
+                   </div>
+                 </div>
+               </Card>
+
+               {/* Audit Results Card */}
+               <Card className="border-white/5 bg-slate-900/50 p-8 rounded-3xl space-y-6">
+                 <h3 className="text-xl font-black text-white border-b border-white/5 pb-4">Latest Audit Results</h3>
+                 {(() => {
+                   const auditStr = queryClient.getQueryData<any>(['site-settings'])?.seo_audit_results;
+                   let audit: SEOAuditResult | null = null;
+                   try { audit = auditStr ? JSON.parse(auditStr) : null; } catch(e) {}
+                   
+                   if (!audit?.last_run) return <div className="text-slate-500 font-bold italic">No audit run yet.</div>;
+
+                   return (
+                     <div className="space-y-4">
+                       <div className="flex items-center justify-between">
+                         <span className="text-slate-400 font-bold">Health Score:</span>
+                         <span className={`text-2xl font-black ${audit.score > 80 ? 'text-emerald-400' : 'text-orange-400'}`}>
+                           {audit.score}/100
+                         </span>
+                       </div>
+                       <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                         {audit.issues.map((issue, i) => (
+                           <div key={i} className="flex gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
+                             {issue.type === 'error' ? <AlertCircle className="w-5 h-5 text-red-400 shrink-0" /> : <CheckCircle2 className="w-5 h-5 text-orange-400 shrink-0" />}
+                             <div className="text-xs">
+                               <div className="text-white font-bold">{issue.message}</div>
+                               <div className="text-slate-500 font-medium">Route: {issue.route}</div>
+                             </div>
+                           </div>
+                         ))}
+                         {audit.issues.length === 0 && (
+                           <div className="text-emerald-400 font-bold text-sm">✓ No SEO issues detected!</div>
+                         )}
+                       </div>
+                     </div>
+                   );
+                 })()}
+               </Card>
+             </div>
           </div>
         )}
 
