@@ -32,13 +32,13 @@ export function UsagePreview({ open, onOpenChange, mediaUrl }: UsagePreviewProps
 
   const { data: usage, isLoading } = useQuery({
     queryKey: ['media-usage', mediaUrl],
-    queryFn: () => fetchUsage({ url: mediaUrl }),
+    queryFn: () => fetchUsage({ data: { url: mediaUrl } }),
     enabled: open && !!mediaUrl
   });
 
   const handleReplace = async (newUrl: string) => {
     try {
-      await replaceMedia({ oldUrl: mediaUrl, newUrl });
+      await replaceMedia({ data: { oldUrl: mediaUrl, newUrl } });
       toast.success('Media replaced successfully across all pages');
       queryClient.invalidateQueries();
       onOpenChange(false);
