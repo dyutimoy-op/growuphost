@@ -4,8 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 export const getMediaUsage = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ url: z.string() }))
-  .handler(async ({ input: { url } }) => {
+  .validator(z.object({ url: z.string() }))
+  .handler(async ({ data: { url } }) => {
     // We search across all tables that might use this URL
     const [products, categories, popups, testimonials] = await Promise.all([
       supabase.from('products').select('id, name').filter('description', 'ilike', `%${url}%`),
@@ -23,8 +23,8 @@ export const getMediaUsage = createServerFn({ method: "GET" })
   });
 
 export const replaceMediaUrl = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ oldUrl: z.string(), newUrl: z.string() }))
-  .handler(async ({ input: { oldUrl, newUrl } }) => {
+  .validator(z.object({ oldUrl: z.string(), newUrl: z.string() }))
+  .handler(async ({ data: { oldUrl, newUrl } }) => {
     // 1. Categories
     await supabase.from('categories').update({ background_media_url: newUrl }).eq('background_media_url', oldUrl);
     
