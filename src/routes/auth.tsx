@@ -11,6 +11,20 @@ import { toast } from 'sonner';
 
 export const Route = createFileRoute('/auth')({
   component: AuthPage,
+  head: () => ({
+    title: "Secure Login | Infrastructure Control Panel | GROWUPHOST",
+    meta: [
+      {
+        name: "description",
+        content: "Securely access your infrastructure control panel. Manage your VPS, dedicated servers, and hosting plans from the GROWUPHOST enterprise dashboard.",
+      },
+      { property: "og:title", content: "Secure Infrastructure Login | GROWUPHOST" },
+      { property: "og:description", content: "Access your enterprise hosting account securely." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
 });
 
 function AuthPage() {

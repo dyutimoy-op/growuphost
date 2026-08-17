@@ -6,6 +6,19 @@ import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/dedicated-servers")({
   component: DedicatedServersPage,
+  head: () => ({
+    title: "Dedicated Servers Mumbai | Enterprise Bare Metal Hardware | GROWUPHOST",
+    meta: [
+      {
+        name: "description",
+        content: "Pure bare-metal performance with 100% dedicated hardware. High-availability enterprise nodes in Tier 3 Mumbai data centers. Zero noisy neighbors.",
+      },
+      { property: "og:title", content: "Enterprise Dedicated Servers Mumbai | GROWUPHOST" },
+      { property: "og:description", content: "Unmatched bare-metal performance for mission-critical enterprise workloads." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
 function DedicatedServersPage() {

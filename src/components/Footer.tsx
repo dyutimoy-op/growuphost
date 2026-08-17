@@ -115,8 +115,8 @@ export function Footer() {
         <div className="pt-12 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-10">
            <div className="flex flex-wrap justify-center gap-8 lg:gap-12 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
               <Link to="/legal/sla" className="hover:text-white transition-colors">SLA</Link>
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <Link to="/legal/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link to="/legal/terms" className="hover:text-white transition-colors">Terms</Link>
               <a href="#" className="hover:text-white transition-colors">Cookies</a>
            </div>
            

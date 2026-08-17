@@ -5,6 +5,20 @@ import { FileText, ShieldCheck, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/legal/sla")({
   component: SLAPage,
+  head: () => ({
+    title: "Service Level Agreement (SLA) | 99.9% Uptime Guarantee | GROWUPHOST",
+    meta: [
+      {
+        name: "description",
+        content: "Review the GROWUPHOST Service Level Agreement. We guarantee 99.9% network uptime and 4-hour hardware replacement for our enterprise Mumbai infrastructure.",
+      },
+      { property: "og:title", content: "Service Level Agreement (SLA) | GROWUPHOST" },
+      { property: "og:description", content: "Our commitment to 99.9% uptime and enterprise reliability." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex, follow" },
+    ],
+  }),
 });
 
 function SLAPage() {

@@ -6,6 +6,19 @@ import { Toaster } from "sonner";
 
 export const Route = createFileRoute("/vps-hosting")({
   component: VPSHostingPage,
+  head: () => ({
+    title: "NVMe VPS Servers Mumbai | Scalable Cloud Infrastructure | GROWUPHOST",
+    meta: [
+      {
+        name: "description",
+        content: "High-performance NVMe VPS servers in Mumbai. Dedicated resources, full root access, and enterprise-grade infrastructure to power your applications.",
+      },
+      { property: "og:title", content: "High-Performance NVMe VPS | GROWUPHOST" },
+      { property: "og:description", content: "Dedicated cloud resources with zero-latency Mumbai infrastructure." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
 function VPSHostingPage() {
