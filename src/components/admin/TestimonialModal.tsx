@@ -45,17 +45,21 @@ export function TestimonialModal({ open, onOpenChange, testimonial }: Testimonia
     setLoading(true);
 
     try {
+      const dataToSubmit = { ...formData };
+      delete dataToSubmit.id;
+      delete dataToSubmit.created_at;
+
       if (testimonial?.id) {
         const { error } = await supabase
           .from('testimonials')
-          .update(formData)
+          .update(dataToSubmit)
           .eq('id', testimonial.id);
         if (error) throw error;
         toast.success('Testimonial updated');
       } else {
         const { error } = await supabase
           .from('testimonials')
-          .insert(formData);
+          .insert(dataToSubmit);
         if (error) throw error;
         toast.success('Testimonial added');
       }
@@ -124,9 +128,10 @@ export function TestimonialModal({ open, onOpenChange, testimonial }: Testimonia
             <div className="space-y-2">
               <label className="text-xs font-black text-slate-500 uppercase tracking-widest">Avatar Image</label>
               <MediaUpload 
-                value={formData.avatar_url} 
-                onChange={(url) => setFormData({ ...formData, avatar_url: url })}
-                usageTag="avatars"
+                currentUrl={formData.avatar_url} 
+                onUploadComplete={(url: string) => setFormData({ ...formData, avatar_url: url })}
+                path="avatars"
+                label="Avatar"
               />
             </div>
           </div>
