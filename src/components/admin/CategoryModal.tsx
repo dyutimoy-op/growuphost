@@ -86,7 +86,29 @@ export function CategoryModal({ open, onOpenChange, category, allCategories }: C
             </div>
           </div>
 
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-slate-300 font-bold">SEO Title</Label>
+              <Input 
+                value={formData.seo_title || ''} 
+                onChange={(e) => setFormData({...formData, seo_title: e.target.value})}
+                className="bg-slate-950 border-white/10 text-white"
+                placeholder="Meta title for SEO"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-slate-300 font-bold">SEO Description</Label>
+              <Input 
+                value={formData.seo_description || ''} 
+                onChange={(e) => setFormData({...formData, seo_description: e.target.value})}
+                className="bg-slate-950 border-white/10 text-white"
+                placeholder="Meta description for SEO"
+              />
+            </div>
+          </div>
+
           <div className="space-y-2">
+
             <Label className="text-slate-300 font-bold">Parent Category</Label>
             <Select 
               value={formData.parent_id || ''} 
