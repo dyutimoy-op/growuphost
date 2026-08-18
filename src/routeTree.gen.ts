@@ -17,6 +17,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DedicatedServersRouteImport } from './routes/dedicated-servers'
 import { Route as LicensesRouteImport } from './routes/licenses'
+import { Route as PackagesRouteImport } from './routes/packages'
 import { Route as SharedHostingRouteImport } from './routes/shared-hosting'
 import { Route as VpsHostingRouteImport } from './routes/vps-hosting'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -63,6 +64,11 @@ const LicensesRoute = LicensesRouteImport.update({
   path: '/licenses',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PackagesRoute = PackagesRouteImport.update({
+  id: '/packages',
+  path: '/packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SharedHostingRoute = SharedHostingRouteImport.update({
   id: '/shared-hosting',
   path: '/shared-hosting',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
+  '/packages': typeof PackagesRoute
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
+  '/packages': typeof PackagesRoute
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
+  '/packages': typeof PackagesRoute
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dedicated-servers'
     | '/licenses'
+    | '/packages'
     | '/shared-hosting'
     | '/vps-hosting'
     | '/dashboard'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dedicated-servers'
     | '/licenses'
+    | '/packages'
     | '/shared-hosting'
     | '/vps-hosting'
     | '/dashboard'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dedicated-servers'
     | '/licenses'
+    | '/packages'
     | '/shared-hosting'
     | '/vps-hosting'
     | '/_authenticated/dashboard'
@@ -199,6 +211,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DedicatedServersRoute: typeof DedicatedServersRoute
   LicensesRoute: typeof LicensesRoute
+  PackagesRoute: typeof PackagesRoute
   SharedHostingRoute: typeof SharedHostingRoute
   VpsHostingRoute: typeof VpsHostingRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
@@ -262,6 +275,13 @@ declare module '@tanstack/react-router' {
       path: '/licenses'
       fullPath: '/licenses'
       preLoaderRoute: typeof LicensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/packages': {
+      id: '/packages'
+      path: '/packages'
+      fullPath: '/packages'
+      preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shared-hosting': {
@@ -329,6 +349,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DedicatedServersRoute: DedicatedServersRoute,
   LicensesRoute: LicensesRoute,
+  PackagesRoute: PackagesRoute,
   SharedHostingRoute: SharedHostingRoute,
   VpsHostingRoute: VpsHostingRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,

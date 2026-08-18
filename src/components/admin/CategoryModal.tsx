@@ -29,8 +29,11 @@ export function CategoryModal({ open, onOpenChange, category, allCategories }: C
     parent_id: '',
     show_in_nav: true,
     display_order: 0,
-    background_media_url: ''
+    background_media_url: '',
+    seo_title: '',
+    seo_description: ''
   });
+
 
   const mutation = useMutation({
     mutationFn: async (data: any) => {
