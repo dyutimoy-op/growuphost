@@ -14,10 +14,8 @@ export const Route = createFileRoute("/$categorySlug")({
     return { categorySlug: params.categorySlug };
   },
   head: ({ loaderData }) => {
-    // This will be reactive once we fetch the data in the component, 
-    // but for the static head we need a way to get the data.
-    // In TanStack Start, head() can access loader data.
-    // For now, let's provide a basic placeholder that will be updated.
+    if (!loaderData) return { title: 'GROWUPHOST' };
+    
     return {
       title: `${loaderData.categorySlug.replace(/-/g, ' ').toUpperCase()} | GROWUPHOST`,
       meta: [
@@ -25,6 +23,7 @@ export const Route = createFileRoute("/$categorySlug")({
       ],
     };
   }
+
 });
 
 function DynamicCategoryPage() {
