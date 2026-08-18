@@ -234,8 +234,19 @@ function AdminDashboard() {
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-lg font-black text-white">{cat.name}</h3>
-                      <p className="text-xs text-slate-500">{cat.parent_id ? 'Subcategory' : 'Root'}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs text-slate-500">{cat.parent_id ? 'Subcategory' : 'Root'}</p>
+                        <a 
+                          href={`/${cat.slug}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-[10px] font-black text-indigo-400 hover:text-indigo-300 uppercase tracking-widest bg-indigo-500/10 px-2 py-0.5 rounded"
+                        >
+                          View Page
+                        </a>
+                      </div>
                     </div>
+
                     <div className="flex gap-2">
                       <Button variant="outline" size="icon" onClick={() => { setSelectedCategory(cat); setIsCategoryModalOpen(true); }} className="rounded-xl"><Settings className="w-4 h-4" /></Button>
                       <Button variant="destructive" size="icon" onClick={() => { if(confirm('Delete?')) deleteCategory.mutate(cat.id); }} className="rounded-xl"><Trash2 className="w-4 h-4" /></Button>
