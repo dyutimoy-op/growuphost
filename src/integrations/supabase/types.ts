@@ -25,6 +25,8 @@ export type Database = {
           id: string
           name: string
           parent_id: string | null
+          seo_description: string | null
+          seo_title: string | null
           show_in_nav: boolean | null
           slug: string
         }
@@ -38,6 +40,8 @@ export type Database = {
           id?: string
           name: string
           parent_id?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
           show_in_nav?: boolean | null
           slug: string
         }
@@ -51,6 +55,8 @@ export type Database = {
           id?: string
           name?: string
           parent_id?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
           show_in_nav?: boolean | null
           slug?: string
         }

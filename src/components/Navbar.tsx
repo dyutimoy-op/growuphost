@@ -148,7 +148,9 @@ export function Navbar() {
                   </div>
                 );
               })}
+              <Link to="/packages" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50 py-4">Packages</Link>
               <Link to="/contact" className="text-[13px] font-bold uppercase tracking-[0.2em] text-white hover:text-indigo-400 transition-colors relative z-50 py-4">Contact</Link>
+
             </div>
           </div>
 
@@ -202,6 +204,15 @@ export function Navbar() {
                   </Link>
                 ))}
                 <Link 
+                  to="/packages" 
+                  className="flex items-center justify-between text-4xl font-black text-white py-4 active:text-indigo-500 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Packages
+                  <ChevronRight className="w-8 h-8 text-indigo-500/50" />
+                </Link>
+                <Link 
+
                   to="/contact" 
                   className="flex items-center justify-between text-4xl font-black text-white py-4 active:text-indigo-500 transition-colors"
                   onClick={() => setIsMenuOpen(false)}

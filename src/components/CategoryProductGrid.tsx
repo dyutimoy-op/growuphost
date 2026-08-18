@@ -167,14 +167,18 @@ export function CategoryProductGrid({ categorySlug, title, subtitle }: ProductGr
                   </div>
 
                   <Button
+                    asChild
                     className={`w-full py-7 lg:py-8 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
                       product.is_featured
                         ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20"
                         : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
                     }`}
                   >
-                    Configure Plan <ArrowRight className="ml-2 w-4 h-4" />
+                    <a href={product.whmcs_link || "#"}>
+                      Configure Plan <ArrowRight className="ml-2 w-4 h-4" />
+                    </a>
                   </Button>
+
                 </div>
               );
             })}

@@ -10,12 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategorySlugRouteImport } from './routes/$categorySlug'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DedicatedServersRouteImport } from './routes/dedicated-servers'
 import { Route as LicensesRouteImport } from './routes/licenses'
+import { Route as PackagesRouteImport } from './routes/packages'
 import { Route as SharedHostingRouteImport } from './routes/shared-hosting'
 import { Route as VpsHostingRouteImport } from './routes/vps-hosting'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -26,6 +28,11 @@ import { Route as LegalTermsRouteImport } from './routes/legal/terms'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/$categorySlug',
+  path: '/$categorySlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -55,6 +62,11 @@ const DedicatedServersRoute = DedicatedServersRouteImport.update({
 const LicensesRoute = LicensesRouteImport.update({
   id: '/licenses',
   path: '/licenses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PackagesRoute = PackagesRouteImport.update({
+  id: '/packages',
+  path: '/packages',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SharedHostingRoute = SharedHostingRouteImport.update({
@@ -90,11 +102,13 @@ const LegalTermsRoute = LegalTermsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$categorySlug': typeof CategorySlugRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
+  '/packages': typeof PackagesRoute
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -104,11 +118,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$categorySlug': typeof CategorySlugRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
+  '/packages': typeof PackagesRoute
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -120,11 +136,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/$categorySlug': typeof CategorySlugRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
+  '/packages': typeof PackagesRoute
   '/shared-hosting': typeof SharedHostingRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -136,11 +154,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$categorySlug'
     | '/about'
     | '/auth'
     | '/contact'
     | '/dedicated-servers'
     | '/licenses'
+    | '/packages'
     | '/shared-hosting'
     | '/vps-hosting'
     | '/dashboard'
@@ -150,11 +170,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$categorySlug'
     | '/about'
     | '/auth'
     | '/contact'
     | '/dedicated-servers'
     | '/licenses'
+    | '/packages'
     | '/shared-hosting'
     | '/vps-hosting'
     | '/dashboard'
@@ -165,11 +187,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/$categorySlug'
     | '/about'
     | '/auth'
     | '/contact'
     | '/dedicated-servers'
     | '/licenses'
+    | '/packages'
     | '/shared-hosting'
     | '/vps-hosting'
     | '/_authenticated/dashboard'
@@ -181,11 +205,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  CategorySlugRoute: typeof CategorySlugRoute
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   DedicatedServersRoute: typeof DedicatedServersRoute
   LicensesRoute: typeof LicensesRoute
+  PackagesRoute: typeof PackagesRoute
   SharedHostingRoute: typeof SharedHostingRoute
   VpsHostingRoute: typeof VpsHostingRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
@@ -200,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$categorySlug': {
+      id: '/$categorySlug'
+      path: '/$categorySlug'
+      fullPath: '/$categorySlug'
+      preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -242,6 +275,13 @@ declare module '@tanstack/react-router' {
       path: '/licenses'
       fullPath: '/licenses'
       preLoaderRoute: typeof LicensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/packages': {
+      id: '/packages'
+      path: '/packages'
+      fullPath: '/packages'
+      preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shared-hosting': {
@@ -303,11 +343,13 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  CategorySlugRoute: CategorySlugRoute,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   DedicatedServersRoute: DedicatedServersRoute,
   LicensesRoute: LicensesRoute,
+  PackagesRoute: PackagesRoute,
   SharedHostingRoute: SharedHostingRoute,
   VpsHostingRoute: VpsHostingRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
