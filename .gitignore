@@ -17,18 +17,7 @@ dist-ssr
 *.local
 
 # Environment / secrets
-#
-# `.env` is deliberately NOT listed here. It is already tracked (committed in
-# 3a90dbe) and holds only the Supabase project ref, URL and *publishable* key —
-# all three of which Vite inlines into the client bundle, so none is a secret;
-# see the reasoning at the top of .env.example. A `.env` line here would have no
-# effect on a tracked file anyway, and a rule that silently does nothing reads to
-# the next person as a rule that works.
-#
-# Everything else stays out. `.env.local`, `.env.production` and friends are where
-# a real secret would land, and the SERVICE-ROLE key must never reach a tracked
-# file at all — it bypasses row-level security entirely, so it belongs only in the
-# hosting provider's environment.
+.env
 .env.*
 !.env.example
 
