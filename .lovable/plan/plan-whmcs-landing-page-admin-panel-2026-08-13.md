@@ -10,12 +10,14 @@ Build a modern hosting landing page for a WHMCS backend, featuring dynamic conte
 ## Proposed Changes
 
 ### Database Schema (Lovable Cloud)
+
 - **Categories Table**: Store categories like 'Hosting', 'Reseller', 'Server', 'License'.
 - **Products Table**: Store product details (name, description, price, features, category_id, is_featured).
 - **Media Table**: Store loop videos, GIFs, and photos for the frontend.
 - **Settings Table**: Store site-wide configuration (hero text, contact info).
 
 ### Frontend (Landing Page)
+
 - **Navigation Bar**: Modern design with dropdowns for Hosting, Reseller, Server, etc. (inspired by user uploads).
 - **Hero Section**: High-impact section with support for background videos/GIFs.
 - **Product Sections**: Dynamic sections fetching products from the database, grouped by category.
@@ -23,12 +25,14 @@ Build a modern hosting landing page for a WHMCS backend, featuring dynamic conte
 - **Footer**: Detailed footer with "Company Stats", "About & Support", and "Legal & Trust" sections.
 
 ### Admin Panel
+
 - **Dashboard**: Overview of products and categories.
 - **Content Management**: Interfaces to add, edit, or delete categories and products.
 - **Media Management**: Upload and manage videos, GIFs, and photos.
 - **Settings Page**: Update text and visual highlights on the frontend.
 
 ## Technical Details
+
 - **Backend**: Lovable Cloud (Supabase) for database, auth, and storage.
 - **Styling**: Tailwind CSS v4 with Shadcn UI components.
 - **Routing**: TanStack Router with `_authenticated` layout for the admin panel.

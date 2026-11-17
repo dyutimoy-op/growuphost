@@ -1,0 +1,44 @@
+-- ============================================================================
+-- FIX: grant `authenticated` the table privileges the admin Global Settings tab
+-- needs on public.site_settings.
+--
+-- WHAT BROKE
+-- 20260813124754 created the table with:
+--     GRANT SELECT ON public.site_settings TO authenticated;
+--     CREATE POLICY "Allow admins to update" ... FOR UPDATE TO authenticated ...
+--     CREATE POLICY "Allow admins to insert" ... FOR INSERT TO authenticated ...
+--
+-- RLS policies and table privileges are two independent gates and a statement
+-- has to pass BOTH. `authenticated` was never granted INSERT or UPDATE, so an
+-- admin save through the Data API fails at the privilege check with
+-- `42501 permission denied for table site_settings` — before RLS is even
+-- consulted. The two admin policies above have therefore never been reachable.
+--
+-- This is the missing half of making the Global Settings tab persist: without it
+-- the seeded rows in 20260819091400 are readable but permanently read-only from
+-- the admin panel, and the tab would look exactly as broken as the hardcoded
+-- version it replaces.
+--
+-- SCOPE
+-- SELECT, INSERT, UPDATE only. DELETE is deliberately withheld: settings rows
+-- are a fixed key set that the UI binds to, there is no DELETE policy for them,
+-- and a deleted key silently falls back to a hardcoded default rather than
+-- surfacing an error. anon keeps SELECT only — the public site reads company
+-- name, contact details, and banner copy while unauthenticated.
+--
+-- Authorization is unchanged and still enforced by RLS: a non-admin
+-- `authenticated` user now holds the INSERT/UPDATE privilege but fails both
+-- admin policies, so every write is still rejected.
+--
+-- NOTE: public.site_settings is world-readable by design (the "Allow public read
+-- access" policy plus the anon SELECT grant), because the marketing pages fetch
+-- it anonymously. Never store a secret in this table — API keys, SMTP
+-- credentials, or webhook tokens placed here are readable by anyone with the
+-- publishable key.
+--
+-- Idempotent: GRANT is a no-op when the privilege is already held.
+-- ============================================================================
+
+GRANT SELECT, INSERT, UPDATE ON public.site_settings TO authenticated;
+GRANT SELECT ON public.site_settings TO anon;
+GRANT ALL ON public.site_settings TO service_role;

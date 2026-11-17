@@ -1,96 +1,103 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { useCallback, useEffect, useState } from "react";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { Loader2, ShieldAlert } from "lucide-react";
+
 import { supabase } from "@/integrations/supabase/client";
-import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroup, SidebarGroupContent, SidebarGroupLabel } from "@/components/ui/sidebar";
-import { LayoutDashboard, Package, Layers, Image as ImageIcon, Settings, LogOut, Globe } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      throw redirect({ to: '/auth' });
-    }
-
-    // RBAC Check: Ensure user has 'admin' role
-    const { data: hasAdminRole, error } = await supabase.rpc('has_role', { 
-      _user_id: session.user.id, 
-      _role: 'admin' 
-    });
-
-    if (error || !hasAdminRole) {
-      console.error("RBAC Denied:", error);
-      throw redirect({ to: '/auth' });
-    }
-  },
+export const Route = createFileRoute("/_authenticated")({
   component: AdminLayout,
+
+  head: () => ({
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
 });
 
+type GateStatus = "checking" | "allowed" | "denied";
+
 function AdminLayout() {
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/auth";
-  };
+  const [status, setStatus] = useState<GateStatus>("checking");
+  const navigate = useNavigate();
+
+  const evaluateAccess = useCallback(async (): Promise<GateStatus> => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) return "denied";
+
+    const { data: isAdmin, error } = await supabase.rpc("has_role", {
+      _user_id: session.user.id,
+      _role: "admin",
+    });
+
+    if (error || isAdmin !== true) return "denied";
+
+    return "allowed";
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async (): Promise<void> => {
+      const next = await evaluateAccess();
+      if (!cancelled) setStatus(next);
+    };
+
+    void run();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_OUT" && !cancelled) setStatus("denied");
+    });
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [evaluateAccess]);
+
+  useEffect(() => {
+    if (status === "denied") void navigate({ to: "/auth", replace: true });
+  }, [status, navigate]);
+
+  if (status === "checking") {
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6"
+      >
+        <div className="flex flex-col items-center gap-4 text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-400" aria-hidden="true" />
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-300">
+            Verifying admin access…
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "denied") {
+    return (
+      <div
+        role="status"
+        aria-live="polite"
+        className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6"
+      >
+        <div className="flex flex-col items-center gap-4 text-center max-w-sm">
+          <ShieldAlert className="w-8 h-8 text-red-400" aria-hidden="true" />
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-300">
+            Redirecting to sign in…
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-slate-950 text-white">
-        <Sidebar className="border-r border-white/10 bg-slate-900">
-          <SidebarHeader className="p-6 border-b border-white/10">
-            <Link to="/" className="text-xl font-black tracking-tighter uppercase italic">
-              GROWUP<span className="text-primary tracking-normal text-indigo-400">HOST</span> <span className="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded-full ml-1 uppercase not-italic">Admin</span>
-            </Link>
-          </SidebarHeader>
-          
-          <SidebarContent className="p-4 bg-slate-900">
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-slate-500 font-bold text-[10px] tracking-widest uppercase mb-4">Management</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link to="/dashboard" className="flex items-center gap-3 font-medium text-slate-300 hover:text-white transition-colors py-2">
-                        <LayoutDashboard className="w-5 h-5" /> Dashboard
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* Future management routes can be added here */}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-
-            <SidebarGroup className="mt-8">
-              <SidebarGroupLabel className="text-slate-500 font-bold text-[10px] tracking-widest uppercase mb-4">System</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link to="/dashboard" className="flex items-center gap-3 font-medium text-slate-300 hover:text-white transition-colors py-2">
-                        <Settings className="w-5 h-5" /> Site Settings
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link to="/" className="flex items-center gap-3 font-medium text-slate-300 hover:text-white transition-colors py-2">
-                        <Globe className="w-5 h-5" /> View Website
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton onClick={handleLogout} className="flex items-center gap-3 font-medium text-red-400 hover:bg-red-500/10 transition-colors py-2 mt-4 w-full text-left px-3">
-                      <LogOut className="w-5 h-5" /> Logout
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
-
-        <main className="flex-1 p-8 bg-slate-950">
-          <Outlet />
-        </main>
-      </div>
-    </SidebarProvider>
+    <div className="min-h-screen w-full bg-slate-950 text-white">
+      <Outlet />
+    </div>
   );
 }

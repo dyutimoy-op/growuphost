@@ -1,142 +1,134 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Check, ArrowRight, Zap, Cpu } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, Zap } from "lucide-react";
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
+import { WHMCS_LINKS } from "@/config/whmcs";
+
+import { BillingCycleToggle } from "./sections/BillingCycleToggle";
+import { PlanCard } from "./sections/PlanCard";
+import { Reveal } from "./sections/Reveal";
+import { CTA_SECONDARY, FOCUS_RING_BRAND } from "./sections/cta-styles";
+import {
+  resolveToggleSavingPercent,
+  useAnnualDiscountPercent,
+  type UiBillingCycle,
+} from "./sections/plan-data";
+import {
+  LoadingAnnouncement,
+  PlanGridSkeleton,
+  SectionEmpty,
+  SectionError,
+} from "./sections/states";
+import { pickShowcasePlans, useHomePlans } from "./sections/use-plans";
+
 export function ProductGrid() {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annually'>('monthly');
+  const [billingCycle, setBillingCycle] = useState<UiBillingCycle>("monthly");
+  const annualDiscountPercent = useAnnualDiscountPercent();
+  const { data, isPending, isError, refetch } = useHomePlans();
 
-  const { data: products, isLoading } = useQuery({
-    queryKey: ["products-featured"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("*, categories(name, slug)")
-        .order("price", { ascending: true });
-      if (error) throw error;
-      return data;
-    },
-  });
+  const plans = pickShowcasePlans(data, 6);
 
-  if (isLoading) {
-    return (
-      <div className="py-20 text-center text-slate-500 bg-slate-950">
-        <div className="animate-pulse flex flex-col items-center gap-4">
-           <div className="w-12 h-12 rounded-full bg-slate-800" />
-           <div className="h-4 w-48 bg-slate-800 rounded" />
-        </div>
-      </div>
-    );
-  }
+  const annualSavingPercent = resolveToggleSavingPercent(plans, annualDiscountPercent);
 
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-slate-950 relative overflow-hidden">
-      {/* Decorative Background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
+    <section
+      id="plans"
+      aria-labelledby="plans-heading"
+      className="relative overflow-hidden bg-slate-950 px-6 py-20 lg:px-8 lg:py-32"
+    >
+      <div
+        className="pointer-events-none absolute top-0 left-1/2 h-full w-full -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.06),transparent_70%)]"
+        aria-hidden="true"
+      />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 lg:mb-20 gap-8 text-center lg:text-left">
+      <div className="relative mx-auto max-w-7xl">
+        <Reveal
+          preset="rise"
+          className="mb-12 flex flex-col gap-6 text-center lg:mb-16 md:flex-row md:items-end md:justify-between md:text-left"
+        >
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 text-indigo-400 text-[10px] lg:text-xs font-black tracking-widest uppercase mx-auto lg:mx-0">
-              <Zap className="w-3 h-3 fill-current" /> Scalable Infrastructure
-            </div>
-            <h2 className="text-4xl lg:text-6xl font-black text-white tracking-tighter leading-[1.1] lg:leading-none">
-              PLANS FOR EVERY <br className="hidden sm:block" />
-              <span className="text-indigo-500 italic">STAGE.</span>
+            <p className="mx-auto inline-flex items-center gap-2 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase md:mx-0">
+              <Zap
+                className="h-3.5 w-3.5 fill-current text-blue-600 dark:text-blue-400"
+                aria-hidden="true"
+              />{" "}
+              Scalable Cloud Infrastructure
+            </p>
+            <h2
+              id="plans-heading"
+              className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-tight"
+            >
+              Plans built for every{" "}
+              <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">
+                stage.
+              </span>
             </h2>
+            <p className="mx-auto max-w-xl text-base leading-relaxed font-medium text-slate-700 dark:text-slate-300 md:mx-0 lg:text-lg">
+              Start with shared cloud, scale to high-performance NVMe VPS or dedicated hardware.
+              Your selected term carries straight through to checkout.
+            </p>
           </div>
 
-          <div className="bg-slate-900/50 border border-white/5 p-1 rounded-2xl flex mx-auto lg:mx-0 shrink-0">
-            <button 
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2.5 rounded-xl text-[10px] lg:text-xs font-black transition-all ${billingCycle === 'monthly' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-slate-400 hover:text-white'}`}
-            >
-              MONTHLY
-            </button>
-            <button 
-              onClick={() => setBillingCycle('annually')}
-              className={`px-6 py-2.5 rounded-xl text-[10px] lg:text-xs font-black transition-all ${billingCycle === 'annually' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-slate-400 hover:text-white'}`}
-            >
-              ANNUALLY <span className="ml-1 text-[8px] lg:text-[10px] text-indigo-300">-20%</span>
-            </button>
-          </div>
-        </div>
+          <BillingCycleToggle
+            value={billingCycle}
+            onChange={setBillingCycle}
+            annualSavingPercent={annualSavingPercent}
+            className="mx-auto md:mx-0"
+          />
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-          {products?.map((product) => {
-            const displayPrice = billingCycle === 'annually' ? (product.price * 0.8).toFixed(0) : product.price;
-            
-            return (
-              <div
-                key={product.id}
-                className={`group relative flex flex-col p-8 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] h-full ${
-                  product.is_featured
-                    ? "bg-slate-900 border-indigo-500/30 text-white shadow-[0_0_50px_rgba(99,102,241,0.1)]"
-                    : "bg-slate-900/40 border-white/5 text-slate-300"
-                }`}
+        {isPending && (
+          <>
+            <LoadingAnnouncement label="Loading hosting plans" />
+            <PlanGridSkeleton count={3} />
+          </>
+        )}
+
+        {!isPending && isError && <SectionError onRetry={() => void refetch()} />}
+
+        {!isPending && !isError && plans.length === 0 && (
+          <SectionEmpty
+            title="Our plans are being published"
+            message="The catalogue is empty right now. Everything currently for sale is listed in the GROWUPHOST store, and this page will fill in as soon as plans go live."
+          />
+        )}
+
+        {!isPending && !isError && plans.length > 0 && (
+          <>
+            <ul className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              {plans.map((plan, index) => (
+                <li key={plan.id} className="h-full">
+                  <Reveal preset="pop" delay={index * 0.06} className="h-full">
+                    <PlanCard
+                      product={plan}
+                      billingCycle={billingCycle}
+                      annualDiscountPercent={annualDiscountPercent}
+                      ctaLabel="Configure plan"
+                    />
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Button
+                asChild
+                className={`w-full rounded-2xl px-8 py-7 text-xs font-black tracking-widest uppercase sm:w-auto ${CTA_SECONDARY}`}
               >
-                {product.is_featured && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 lg:left-10 lg:translate-x-0 bg-indigo-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-xl whitespace-nowrap">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="mb-8 lg:mb-10 space-y-6">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-2">
-                        {product.categories?.name || "Hosting"}
-                      </div>
-                      <h4 className="text-2xl lg:text-3xl font-black text-white tracking-tighter">{product.name}</h4>
-                    </div>
-                    <div className="p-3 bg-white/5 rounded-2xl shrink-0">
-                       <Cpu className="w-5 h-5 lg:w-6 lg:h-6 text-indigo-400" />
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl lg:text-5xl font-black text-white">
-                      {product.currency === 'INR' ? '₹' : ''}{displayPrice}
-                    </span>
-                    <span className="text-xs lg:text-sm font-bold text-slate-500 uppercase tracking-widest">
-                      /{billingCycle === 'monthly' ? 'mo' : 'yr'}
-                    </span>
-                  </div>
-                  
-                  <p className="text-sm text-slate-400 font-medium leading-relaxed">
-                    Cheap trusted infrastructure with isolated resources and dedicated antiban reliability.
-                  </p>
-                </div>
-
-                <div className="space-y-4 mb-10 lg:mb-12 flex-grow">
-                  {(product.features as string[])?.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-3 text-xs font-bold text-left">
-                      <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
-                        <Check className="w-3 h-3 text-indigo-400" />
-                      </div>
-                      <span className="group-hover:text-white transition-colors">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Button
-                  asChild
-                  className={`w-full py-7 lg:py-8 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
-                    product.is_featured
-                      ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20"
-                      : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
-                  }`}
-                >
-                  <a href={product.whmcs_link || "#"}>
-                    Configure Server <ArrowRight className="ml-2 w-4 h-4" />
-                  </a>
-                </Button>
-
-              </div>
-            );
-          })}
-        </div>
+                <Link to="/packages">
+                  See every package <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
+              <a
+                href={WHMCS_LINKS.store}
+                className={`cursor-pointer rounded-xl px-2 py-2 text-xs font-black tracking-widest text-slate-400 uppercase underline-offset-4 transition-colors duration-200 hover:text-white hover:underline ${FOCUS_RING_BRAND}`}
+              >
+                Or open the store directly
+              </a>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

@@ -1,14 +1,33 @@
+# GROWUPHOST — https://growuphost.com
+# Public marketing site. Accounts, carts, and billing live in WHMCS on a separate
+# host and are not part of this site.
+
+# Named crawlers we explicitly welcome. Each group repeats the private-area rules,
+# because a crawler only ever obeys the single group that matches it.
 User-agent: Googlebot
 Allow: /
+Disallow: /auth
+Disallow: /dashboard
 
 User-agent: Bingbot
 Allow: /
+Disallow: /auth
+Disallow: /dashboard
 
 User-agent: Twitterbot
 Allow: /
+Disallow: /auth
+Disallow: /dashboard
 
 User-agent: facebookexternalhit
 Allow: /
+Disallow: /auth
+Disallow: /dashboard
 
+# Everyone else.
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /dashboard
+
+Sitemap: https://growuphost.com/sitemap.xml

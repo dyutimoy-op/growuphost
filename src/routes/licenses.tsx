@@ -1,52 +1,53 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CategoryProductGrid } from "@/components/CategoryProductGrid";
-import { Toaster } from "sonner";
+
+import { CategoryLandingPage } from "@/components/sections/CategoryLandingPage";
+import { prefetchCategoryLanding } from "@/components/sections/use-category-products";
+import { buildPageHead } from "@/lib/seo/head";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo/jsonld";
+
+const PATH = "/licenses";
+const CATEGORY_SLUG = "licenses";
 
 export const Route = createFileRoute("/licenses")({
   component: LicensesPage,
-  head: () => ({
-    title: "Cheap Software Licenses | Best cPanel, LiteSpeed, CloudLinux | GROWUPHOST",
-    meta: [
-      {
-        name: "description",
-        content: "Buy the best cheap software licenses with instant activation. Genuine cPanel, LiteSpeed, and CloudLinux licenses for your Mumbai infrastructure.",
-      },
-      { property: "og:title", content: "Software Licenses | cPanel, LiteSpeed, CloudLinux" },
-      { property: "og:description", content: "Instant activation for enterprise infrastructure software licenses. Official cPanel, LiteSpeed partners." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Software Licenses | cPanel, LiteSpeed, CloudLinux" },
-      { name: "twitter:description", content: "Official enterprise software licenses with instant activation." },
-    ],
-    links: [
-      { rel: "canonical", href: "https://growuphost.com/licenses" },
-    ],
-  }),
+
+  loader: async ({ context }) => {
+    await prefetchCategoryLanding(context.queryClient, CATEGORY_SLUG);
+  },
+  head: () =>
+    buildPageHead({
+      title: "cPanel, LiteSpeed & CloudLinux Licenses | GROWUPHOST",
+      description:
+        "Genuine cPanel, LiteSpeed, and CloudLinux licenses for your servers, with instant activation and support. Affordable monthly licensing for any provider's hardware.",
+      path: PATH,
+      ogTitle: "Software Licenses | cPanel, LiteSpeed, CloudLinux",
+      ogDescription:
+        "Genuine infrastructure software licenses with instant activation and support.",
+      jsonLd: [
+        serviceJsonLd({
+          name: "Software Licenses",
+          serviceType: "Server software licensing",
+          description:
+            "Genuine cPanel, LiteSpeed, and CloudLinux licenses with instant activation, usable on any provider's servers.",
+          path: PATH,
+        }),
+        breadcrumbJsonLd([
+          { name: "Hosting Packages", path: "/packages" },
+          { name: "Software Licenses", path: PATH },
+        ]),
+      ],
+    }),
 });
 
 function LicensesPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 selection:bg-indigo-500/30 selection:text-indigo-400">
-      <Toaster position="top-center" richColors />
-      <Navbar />
-      <main className="flex-grow">
-        <div className="pt-20 bg-slate-950 px-8">
-           <div className="max-w-7xl mx-auto py-20 text-center space-y-6">
-              <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">Software <span className="text-indigo-500">Licenses</span></h1>
-              <p className="text-slate-400 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-                Genuine licenses for cPanel, LiteSpeed, CloudLinux, and more. Instant activation and official support included.
-              </p>
-           </div>
-        </div>
-        <CategoryProductGrid 
-          categorySlug="licenses" 
-          title="CLOUD LICENSING" 
-          subtitle="All the tools you need to manage your infrastructure professionally."
-        />
-      </main>
-      <Footer />
-    </div>
+    <CategoryLandingPage
+      categorySlug={CATEGORY_SLUG}
+      eyebrow="Genuine · Instant Activation"
+      title="Software Licenses"
+      subtitle="Genuine licenses for cPanel, LiteSpeed, CloudLinux, and more. Instant activation and official support included."
+      gridTitle="CLOUD LICENSING"
+      gridSubtitle="All the tools you need to manage your infrastructure professionally."
+    />
   );
 }

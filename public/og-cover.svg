@@ -1,0 +1,38 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GROWUPHOST — enterprise NVMe hosting, VPS and dedicated servers in Mumbai">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1120"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.12" r="0.65">
+      <stop offset="0" stop-color="#4f46e5" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#4f46e5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="24" y="24" width="1152" height="582" rx="28" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+  <text x="80" y="150" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="6" fill="#818cf8">ENTERPRISE HOSTING INFRASTRUCTURE</text>
+
+  <text x="74" y="300" font-family="Arial, Helvetica, sans-serif" font-size="132" font-weight="800" letter-spacing="-4">
+    <tspan fill="#ffffff">GROWUP</tspan><tspan fill="#818cf8">HOST</tspan>
+  </text>
+
+  <rect x="80" y="338" width="420" height="6" rx="3" fill="url(#rule)"/>
+
+  <text x="80" y="428" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="#e2e8f0">NVMe Hosting &#183; VPS &#183; Dedicated Servers</text>
+
+  <text x="80" y="484" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="500" fill="#94a3b8">Offshore &#183; Bulletproof &#183; Antiban — Mumbai, India</text>
+
+  <g>
+    <rect x="80" y="524" width="272" height="52" rx="26" fill="#4f46e5" fill-opacity="0.15" stroke="#6366f1" stroke-width="1.5"/>
+    <circle cx="112" cy="550" r="7" fill="#34d399"/>
+    <text x="132" y="559" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" letter-spacing="1" fill="#c7d2fe">99.9% UPTIME SLA</text>
+  </g>
+</svg>

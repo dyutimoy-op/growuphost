@@ -10,12 +10,14 @@ Add image, GIF, and video upload support to the Admin Panel for categories (bann
 ## Proposed Changes
 
 ### Storage Infrastructure
+
 - Create a `media` bucket in the backend storage.
 - Add RLS policies to the `media` bucket:
   - `public` can read objects.
   - `authenticated` (admins) can upload, update, and delete objects.
 
 ### Admin Dashboard Enhancements
+
 - Create a `MediaUpload` component for the dashboard.
   - Support drag-and-drop and file selection.
   - Filter by type (image, video, gif).
@@ -28,35 +30,38 @@ Add image, GIF, and video upload support to the Admin Panel for categories (bann
   - Add the `MediaUpload` component to each popup card to manage its promotional image.
 
 ### Visual Polish
+
 - Add loading spinners and success toasts for uploads.
 - Ensure media previews handle aspect ratios correctly (especially for wide banners).
 
 ## Technical Details
 
 ### Storage Helper
+
 Create `src/lib/storage.ts` to encapsulate storage operations:
+
 ```typescript
 export const uploadMedia = async (file: File, path: string) => {
-  const fileExt = file.name.split('.').pop();
+  const fileExt = file.name.split(".").pop();
   const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
   const filePath = `${path}/${fileName}`;
 
-  const { data, error } = await supabase.storage
-    .from('media')
-    .upload(filePath, file);
+  const { data, error } = await supabase.storage.from("media").upload(filePath, file);
 
   if (error) throw error;
 
-  const { data: { publicUrl } } = supabase.storage
-    .from('media')
-    .getPublicUrl(filePath);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("media").getPublicUrl(filePath);
 
   return publicUrl;
 };
 ```
 
 ### Components
+
 - `src/components/admin/MediaUpload.tsx`: A reusable component using `Input type="file"` styled with Tailwind.
 
 ### Database Updates
+
 The `media` table already exists in the schema and will be used to track uploaded assets for easier management in a future "Media Library" tab if needed.

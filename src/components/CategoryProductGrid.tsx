@@ -1,8 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Check, ArrowRight, Cpu, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Zap } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
+
+import { useBrokenImage } from "@/hooks/use-broken-image";
+import { toMediaSrc } from "@/lib/media-url";
+
+import { BillingCycleToggle } from "./sections/BillingCycleToggle";
+import { PlanCard } from "./sections/PlanCard";
+import { Reveal } from "./sections/Reveal";
+import {
+  categoryProductsQueryOptions,
+  categoryQueryOptions,
+} from "./sections/use-category-products";
+import {
+  resolveToggleSavingPercent,
+  useAnnualDiscountPercent,
+  type UiBillingCycle,
+} from "./sections/plan-data";
+import {
+  LoadingAnnouncement,
+  PlanGridSkeleton,
+  SectionEmpty,
+  SectionError,
+} from "./sections/states";
 
 interface ProductGridProps {
   categorySlug: string;
@@ -10,183 +31,172 @@ interface ProductGridProps {
   subtitle: string;
 }
 
+function splitTitle(title: string): { lead: string; emphasis: string } {
+  const words = title.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return { lead: "", emphasis: "Plans" };
+  const last = words[words.length - 1] ?? "";
+  if (words.length === 1) return { lead: "", emphasis: last };
+  return { lead: words.slice(0, -1).join(" "), emphasis: last };
+}
+
 export function CategoryProductGrid({ categorySlug, title, subtitle }: ProductGridProps) {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annually'>('monthly');
+  const [billingCycle, setBillingCycle] = useState<UiBillingCycle>("monthly");
+  const annualDiscountPercent = useAnnualDiscountPercent();
+  const prefersReducedMotion = useReducedMotion();
+  const backgroundVideoRef = useRef<HTMLVideoElement>(null);
 
-  const { data: categoryData, isLoading: isCategoryLoading } = useQuery({
-    queryKey: ["category", categorySlug],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("categories")
-        .select("*")
-        .eq("slug", categorySlug)
-        .single();
-      
-      if (error) throw error;
-      return data;
+  const categoryQuery = useQuery(categoryQueryOptions(categorySlug));
+  const categoryData = categoryQuery.data;
+
+  const productsQuery = useQuery(categoryProductsQueryOptions(categorySlug, categoryData?.id));
+
+  const isLoading = categoryQuery.isPending || (Boolean(categoryData) && productsQuery.isPending);
+  const isError = categoryQuery.isError || productsQuery.isError;
+  const products = productsQuery.data ?? [];
+  const { lead, emphasis } = splitTitle(title);
+
+  const backgroundUrl = toMediaSrc(categoryData?.background_media_url);
+
+  const {
+    isBroken: isBackgroundBroken,
+    handleError: handleBackgroundError,
+    mediaRef: backgroundMediaRef,
+  } = useBrokenImage(backgroundUrl);
+
+  const attachBackgroundVideo = useCallback(
+    (node: HTMLVideoElement | null): void => {
+      backgroundVideoRef.current = node;
+      backgroundMediaRef(node);
     },
-  });
+    [backgroundMediaRef],
+  );
 
-  const { data: products, isLoading: isProductsLoading } = useQuery({
-    queryKey: ["products", categorySlug],
-    queryFn: async () => {
-      if (!categoryData?.id) return [];
+  const annualSavingPercent = resolveToggleSavingPercent(products, annualDiscountPercent);
 
-      const { data, error } = await supabase
-        .from("products")
-        .select("*, categories(name, slug)")
-        .eq("category_id", categoryData.id)
-        .order("price", { ascending: true });
-      
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!categoryData?.id,
-  });
-
-  const isLoading = isCategoryLoading || isProductsLoading;
-
-
-  if (isLoading) {
-    return (
-      <div className="py-20 text-center text-slate-500 bg-slate-950">
-        <div className="animate-pulse flex flex-col items-center gap-4">
-           <div className="w-12 h-12 rounded-full bg-slate-800" />
-           <div className="h-4 w-48 bg-slate-800 rounded" />
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const video = backgroundVideoRef.current;
+    if (!video) return;
+    if (prefersReducedMotion) {
+      video.pause();
+    } else {
+      void video.play().catch(() => {});
+    }
+  }, [prefersReducedMotion, backgroundUrl]);
 
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-slate-950 relative overflow-hidden min-h-[600px] flex items-center">
-      {categoryData?.background_media_url ? (
-        <div className="absolute inset-0 z-0">
-          {categoryData.background_media_type === 'video' ? (
-            <video 
-              autoPlay 
-              loop 
-              muted 
+    <section
+      aria-labelledby={`category-heading-${categorySlug}`}
+      className="relative flex min-h-[600px] items-center overflow-hidden bg-slate-50 dark:bg-slate-950 px-6 py-20 lg:px-8 lg:py-32"
+    >
+      {backgroundUrl && !isBackgroundBroken ? (
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          {categoryData?.background_media_type === "video" ? (
+            <video
+              key={backgroundUrl}
+              ref={attachBackgroundVideo}
+              loop
+              muted
               playsInline
-              className="w-full h-full object-cover opacity-30"
+              className="h-full w-full object-cover opacity-30"
             >
-              <source src={categoryData.background_media_url} />
+              <source src={backgroundUrl} onError={handleBackgroundError} />
             </video>
           ) : (
-            <img 
-              src={categoryData.background_media_url} 
-              className="w-full h-full object-cover opacity-30"
-              alt={categoryData.name}
+            <img
+              src={backgroundUrl}
+              ref={backgroundMediaRef}
+              className="h-full w-full object-cover opacity-30"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onError={handleBackgroundError}
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/80 to-slate-950" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 to-white/95 dark:from-slate-950 dark:via-slate-950/80 dark:to-slate-950" />
         </div>
       ) : (
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_70%)] pointer-events-none" />
+        <div
+          className="pointer-events-none absolute top-0 left-1/2 h-full w-full -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.08),transparent_70%)]"
+          aria-hidden="true"
+        />
       )}
 
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 lg:mb-20 gap-8 text-center lg:text-left">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 text-indigo-400 text-[10px] lg:text-xs font-black tracking-widest uppercase mx-auto lg:mx-0">
-              <Zap className="w-3 h-3 fill-current" /> {categorySlug.replace('-', ' ')}
-            </div>
-            <h2 className="text-4xl lg:text-6xl font-black text-white tracking-tighter leading-[1.1] lg:leading-none">
-              {title.split(' ').slice(0, -1).join(' ')} <br className="hidden sm:block" />
-              <span className="text-indigo-500 italic">{title.split(' ').slice(-1)}</span>
+      <div className="relative z-10 mx-auto w-full max-w-7xl">
+        <Reveal
+          preset="rise"
+          className="mb-12 flex flex-col gap-6 text-center lg:mb-16 md:flex-row md:items-end md:justify-between md:text-left"
+        >
+          <div className="space-y-4 max-w-2xl">
+            <p className="mx-auto inline-flex items-center gap-2 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase md:mx-0">
+              <Zap
+                className="h-3 w-3 fill-current text-blue-600 dark:text-blue-400"
+                aria-hidden="true"
+              />{" "}
+              {(categoryData?.name ?? categorySlug).replace(/-/g, " ")}
+            </p>
+            <h2
+              id={`category-heading-${categorySlug}`}
+              className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-tight sm:whitespace-nowrap"
+            >
+              {lead ? `${lead} ` : null}
+              <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">
+                {emphasis}
+              </span>
             </h2>
-            <p className="text-slate-400 max-w-xl mx-auto lg:mx-0 text-base lg:text-lg font-medium leading-relaxed">{subtitle}</p>
+            <p className="mx-auto max-w-xl text-base leading-relaxed font-medium text-slate-700 dark:text-slate-300 md:mx-0 lg:text-lg">
+              {subtitle}
+            </p>
           </div>
 
-          <div className="bg-slate-900/50 border border-white/5 p-1 rounded-2xl flex mx-auto lg:mx-0 shrink-0">
-            <button 
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2.5 rounded-xl text-[10px] lg:text-xs font-black transition-all ${billingCycle === 'monthly' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-slate-400 hover:text-white'}`}
-            >
-              MONTHLY
-            </button>
-            <button 
-              onClick={() => setBillingCycle('annually')}
-              className={`px-6 py-2.5 rounded-xl text-[10px] lg:text-xs font-black transition-all ${billingCycle === 'annually' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-slate-400 hover:text-white'}`}
-            >
-              ANNUALLY <span className="ml-1 text-[8px] lg:text-[10px] text-indigo-300">-20%</span>
-            </button>
-          </div>
-        </div>
+          <BillingCycleToggle
+            value={billingCycle}
+            onChange={setBillingCycle}
+            annualSavingPercent={annualSavingPercent}
+            className="mx-auto md:mx-0"
+          />
+        </Reveal>
 
-        {products && products.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-            {products.map((product) => {
-              const displayPrice = billingCycle === 'annually' ? (product.price * 0.8).toFixed(0) : product.price;
-              
-              return (
-                <div
-                  key={product.id}
-                  className={`group relative flex flex-col p-8 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] border transition-all duration-500 hover:scale-[1.02] h-full ${
-                    product.is_featured
-                      ? "bg-slate-900 border-indigo-500/30 text-white shadow-[0_0_50px_rgba(99,102,241,0.1)]"
-                      : "bg-slate-900/40 border-white/5 text-slate-300"
-                  }`}
-                >
-                  {product.is_featured && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 lg:left-10 lg:translate-x-0 bg-indigo-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-xl whitespace-nowrap">
-                      Most Popular
-                    </div>
-                  )}
+        {isLoading && (
+          <>
+            <LoadingAnnouncement label="Loading plans in this category" />
+            <PlanGridSkeleton count={3} />
+          </>
+        )}
 
-                  <div className="mb-8 lg:mb-10 space-y-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h4 className="text-2xl lg:text-3xl font-black text-white tracking-tighter">{product.name}</h4>
-                      </div>
-                      <div className="p-3 bg-white/5 rounded-2xl shrink-0">
-                         <Cpu className="w-5 h-5 lg:w-6 lg:h-6 text-indigo-400" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl lg:text-5xl font-black text-white">
-                        {product.currency === 'INR' ? '₹' : ''}{displayPrice}
-                      </span>
-                      <span className="text-xs lg:text-sm font-bold text-slate-500 uppercase tracking-widest">
-                        /{billingCycle === 'monthly' ? 'mo' : 'yr'}
-                      </span>
-                    </div>
-                  </div>
+        {!isLoading && isError && (
+          <SectionError
+            message="We couldn't load this category just now. Retry, or jump straight into the GROWUPHOST store where every live plan is listed."
+            onRetry={() => {
+              void categoryQuery.refetch();
+              void productsQuery.refetch();
+            }}
+          />
+        )}
 
-                  <div className="space-y-4 mb-10 lg:mb-12 flex-grow">
-                    {(product.features as string[])?.map((feature, i) => (
-                      <div key={i} className="flex items-center gap-3 text-xs font-bold text-left">
-                        <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
-                          <Check className="w-3 h-3 text-indigo-400" />
-                        </div>
-                        <span className="group-hover:text-white transition-colors">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+        {!isLoading && !isError && products.length === 0 && (
+          <SectionEmpty
+            title="No plans published here yet"
+            message="This line-up is being finalised. Everything currently available is listed in the GROWUPHOST store, or our team can quote a custom build."
+          />
+        )}
 
-                  <Button
-                    asChild
-                    className={`w-full py-7 lg:py-8 rounded-2xl font-black text-sm uppercase tracking-widest transition-all ${
-                      product.is_featured
-                        ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20"
-                        : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
-                    }`}
-                  >
-                    <a href={product.whmcs_link || "#"}>
-                      Configure Plan <ArrowRight className="ml-2 w-4 h-4" />
-                    </a>
-                  </Button>
-
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="py-20 text-center border border-dashed border-white/10 rounded-3xl">
-            <p className="text-slate-500 font-bold uppercase tracking-widest">No plans available in this category.</p>
-          </div>
+        {!isLoading && !isError && products.length > 0 && (
+          <ul className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {products.map((product, index) => (
+              <li key={product.id} className="h-full">
+                <Reveal preset="pop" delay={index * 0.06} className="h-full">
+                  <PlanCard
+                    product={product}
+                    billingCycle={billingCycle}
+                    annualDiscountPercent={annualDiscountPercent}
+                    ctaLabel="Configure plan"
+                    showCategory={false}
+                    maxFeatures={9}
+                  />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </section>

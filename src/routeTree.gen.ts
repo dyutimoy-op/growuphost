@@ -18,12 +18,16 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DedicatedServersRouteImport } from './routes/dedicated-servers'
 import { Route as LicensesRouteImport } from './routes/licenses'
 import { Route as PackagesRouteImport } from './routes/packages'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as SharedHostingRouteImport } from './routes/shared-hosting'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TermsConditionsRouteImport } from './routes/terms-conditions'
 import { Route as VpsHostingRouteImport } from './routes/vps-hosting'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
 import { Route as LegalSlaRouteImport } from './routes/legal/sla'
 import { Route as LegalTermsRouteImport } from './routes/legal/terms'
+import { Route as MediaSplatRouteImport } from './routes/media.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -69,9 +73,24 @@ const PackagesRoute = PackagesRouteImport.update({
   path: '/packages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SharedHostingRoute = SharedHostingRouteImport.update({
   id: '/shared-hosting',
   path: '/shared-hosting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsConditionsRoute = TermsConditionsRouteImport.update({
+  id: '/terms-conditions',
+  path: '/terms-conditions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VpsHostingRoute = VpsHostingRouteImport.update({
@@ -99,6 +118,11 @@ const LegalTermsRoute = LegalTermsRouteImport.update({
   path: '/legal/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MediaSplatRoute = MediaSplatRouteImport.update({
+  id: '/media/$',
+  path: '/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -109,12 +133,16 @@ export interface FileRoutesByFullPath {
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
   '/packages': typeof PackagesRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/shared-hosting': typeof SharedHostingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-conditions': typeof TermsConditionsRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/sla': typeof LegalSlaRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/media/$': typeof MediaSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,12 +153,16 @@ export interface FileRoutesByTo {
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
   '/packages': typeof PackagesRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/shared-hosting': typeof SharedHostingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-conditions': typeof TermsConditionsRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/sla': typeof LegalSlaRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/media/$': typeof MediaSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,12 +175,16 @@ export interface FileRoutesById {
   '/dedicated-servers': typeof DedicatedServersRoute
   '/licenses': typeof LicensesRoute
   '/packages': typeof PackagesRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/shared-hosting': typeof SharedHostingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms-conditions': typeof TermsConditionsRoute
   '/vps-hosting': typeof VpsHostingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/sla': typeof LegalSlaRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/media/$': typeof MediaSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,12 +197,16 @@ export interface FileRouteTypes {
     | '/dedicated-servers'
     | '/licenses'
     | '/packages'
+    | '/privacy-policy'
     | '/shared-hosting'
+    | '/sitemap.xml'
+    | '/terms-conditions'
     | '/vps-hosting'
     | '/dashboard'
     | '/legal/privacy'
     | '/legal/sla'
     | '/legal/terms'
+    | '/media/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,12 +217,16 @@ export interface FileRouteTypes {
     | '/dedicated-servers'
     | '/licenses'
     | '/packages'
+    | '/privacy-policy'
     | '/shared-hosting'
+    | '/sitemap.xml'
+    | '/terms-conditions'
     | '/vps-hosting'
     | '/dashboard'
     | '/legal/privacy'
     | '/legal/sla'
     | '/legal/terms'
+    | '/media/$'
   id:
     | '__root__'
     | '/'
@@ -194,12 +238,16 @@ export interface FileRouteTypes {
     | '/dedicated-servers'
     | '/licenses'
     | '/packages'
+    | '/privacy-policy'
     | '/shared-hosting'
+    | '/sitemap.xml'
+    | '/terms-conditions'
     | '/vps-hosting'
     | '/_authenticated/dashboard'
     | '/legal/privacy'
     | '/legal/sla'
     | '/legal/terms'
+    | '/media/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -212,11 +260,15 @@ export interface RootRouteChildren {
   DedicatedServersRoute: typeof DedicatedServersRoute
   LicensesRoute: typeof LicensesRoute
   PackagesRoute: typeof PackagesRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   SharedHostingRoute: typeof SharedHostingRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsConditionsRoute: typeof TermsConditionsRoute
   VpsHostingRoute: typeof VpsHostingRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalSlaRoute: typeof LegalSlaRoute
   LegalTermsRoute: typeof LegalTermsRoute
+  MediaSplatRoute: typeof MediaSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -284,11 +336,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shared-hosting': {
       id: '/shared-hosting'
       path: '/shared-hosting'
       fullPath: '/shared-hosting'
       preLoaderRoute: typeof SharedHostingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-conditions': {
+      id: '/terms-conditions'
+      path: '/terms-conditions'
+      fullPath: '/terms-conditions'
+      preLoaderRoute: typeof TermsConditionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/vps-hosting': {
@@ -326,6 +399,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalTermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/media/$': {
+      id: '/media/$'
+      path: '/media/$'
+      fullPath: '/media/$'
+      preLoaderRoute: typeof MediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -350,11 +430,15 @@ const rootRouteChildren: RootRouteChildren = {
   DedicatedServersRoute: DedicatedServersRoute,
   LicensesRoute: LicensesRoute,
   PackagesRoute: PackagesRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   SharedHostingRoute: SharedHostingRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsConditionsRoute: TermsConditionsRoute,
   VpsHostingRoute: VpsHostingRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalSlaRoute: LegalSlaRoute,
   LegalTermsRoute: LegalTermsRoute,
+  MediaSplatRoute: MediaSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

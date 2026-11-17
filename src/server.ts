@@ -1,5 +1,7 @@
 import "./lib/error-capture";
 
+import serverEntry from "@tanstack/react-start/server-entry";
+
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
@@ -7,19 +9,9 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
-let serverEntryPromise: Promise<ServerEntry> | undefined;
+const handler = ((serverEntry as { default?: ServerEntry }).default ??
+  serverEntry) as unknown as ServerEntry;
 
-async function getServerEntry(): Promise<ServerEntry> {
-  if (!serverEntryPromise) {
-    serverEntryPromise = import("@tanstack/react-start/server-entry").then(
-      (m) => (m.default ?? m) as ServerEntry,
-    );
-  }
-  return serverEntryPromise;
-}
-
-// h3 swallows in-handler throws into a normal 500 Response with body
-// {"unhandled":true,"message":"HTTPError"} — try/catch alone never fires for those.
 async function normalizeCatastrophicSsrResponse(response: Response): Promise<Response> {
   if (response.status < 500) return response;
   const contentType = response.headers.get("content-type") ?? "";
@@ -44,12 +36,58 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+function applyCachingHeaders(request: Request, response: Response): Response {
+  if (request.method !== "GET" || response.status !== 200) return response;
+
+  try {
+    const url = new URL(request.url);
+    const path = url.pathname.toLowerCase();
+
+    if (
+      path.startsWith("/assets/") ||
+      path.startsWith("/growuphost/") ||
+      /\.(png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$/.test(path)
+    ) {
+      const headers = new Headers(response.headers);
+      headers.set("Cache-Control", "public, max-age=31536000, immutable");
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+
+    if (
+      !path.startsWith("/_authenticated") &&
+      !path.startsWith("/auth") &&
+      !path.startsWith("/api")
+    ) {
+      const headers = new Headers(response.headers);
+      if (!headers.has("Cache-Control")) {
+        headers.set(
+          "Cache-Control",
+          "public, max-age=60, s-maxage=300, stale-while-revalidate=86400",
+        );
+      }
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+  } catch {
+    // If URL parsing fails, pass through original response
+  }
+
+  return response;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
-      const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalized = await normalizeCatastrophicSsrResponse(response);
+      return applyCachingHeaders(request, normalized);
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {

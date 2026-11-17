@@ -13,16 +13,19 @@ Implement a robust media management system including a centralized gallery, enha
 ## Proposed Changes
 
 ### Database & Storage
+
 - Created `public.media_library` table to track filenames, URLs, types, and sizes.
 - Updated `uploadMedia` utility to automatically register every successful upload into the library.
 
 ### Admin Components
+
 - **MediaGallery**: A new modal component for browsing, searching, and selecting existing media.
 - **MediaUpload**: Improved with file size checks and better error handling.
 - **ProductModal**: Added "Gallery" button to select existing product images.
 - **MarketingModal**: Added "Gallery" button for popup images.
 
 ### Dashboard Integration
+
 - Added "Media Library" tab to the Admin Sidebar.
 - Added a "Launch Media Library" section in the dashboard for general asset management.
 - Implemented "Copy to Clipboard" when selecting an image from the library in the main Media tab.
@@ -30,6 +33,7 @@ Implement a robust media management system including a centralized gallery, enha
 ## Technical Details
 
 ### SQL Schema
+
 ```sql
 CREATE TABLE public.media_library (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -43,5 +47,6 @@ CREATE TABLE public.media_library (
 ```
 
 ### New Files
+
 - `src/components/admin/MediaGallery.tsx`: The main library UI component.
 - `src/lib/storage.ts`: Updated with library registration logic.

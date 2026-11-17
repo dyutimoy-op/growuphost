@@ -16,6 +16,52 @@ dist-ssr
 .nitro
 *.local
 
+# Environment / secrets
+#
+# `.env` is deliberately NOT listed here. It is already tracked (committed in
+# 3a90dbe) and holds only the Supabase project ref, URL and *publishable* key —
+# all three of which Vite inlines into the client bundle, so none is a secret;
+# see the reasoning at the top of .env.example. A `.env` line here would have no
+# effect on a tracked file anyway, and a rule that silently does nothing reads to
+# the next person as a rule that works.
+#
+# Everything else stays out. `.env.local`, `.env.production` and friends are where
+# a real secret would land, and the SERVICE-ROLE key must never reach a tracked
+# file at all — it bypasses row-level security entirely, so it belongs only in the
+# hosting provider's environment.
+.env.*
+!.env.example
+
+# Runtime data store
+#
+# `data/nav-links.json` holds the header/footer links the owner adds through the
+# admin panel (see src/lib/nav-links.server.ts). It is written by the running
+# server, so it is state, not source: tracking it would mean a `git pull` on the
+# server reverts links that were added since the last commit, and every deploy
+# would show up as a conflict on a file nobody edited by hand.
+#
+# The trade-off is that a fresh checkout has no file, which is why reads fall back
+# to DEFAULT_NAV_LINKS in src/config/nav-links.ts instead of failing. Links that
+# should ship with the code belong in that file, not in this directory.
+/data/
+
+# Competing lockfiles
+#
+# `bun.lock` is the one committed lockfile and the only one that may be tracked.
+# These three are not — a repo carrying two lockfiles has two disagreeing opinions
+# about the dependency tree, and whichever one CI happens to read wins silently.
+#
+# `package-lock.json` shows up here for a mundane reason worth writing down: bun is
+# not installed on every machine that touches this repo, so verification sometimes
+# runs through `npx`/`npm`, and npm writes a lockfile as a side effect. That file is
+# a local byproduct, never a source of truth. Without this rule a single
+# `git add -A` commits it, `bunfig.toml`'s 24-hour supply-chain guard
+# (`minimumReleaseAge`) stops applying to whoever installs from it, and the README's
+# "bun is the package manager" becomes false without anyone editing the README.
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

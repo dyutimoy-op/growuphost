@@ -1,52 +1,53 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { CategoryProductGrid } from "@/components/CategoryProductGrid";
-import { Toaster } from "sonner";
+
+import { CategoryLandingPage } from "@/components/sections/CategoryLandingPage";
+import { prefetchCategoryLanding } from "@/components/sections/use-category-products";
+import { buildPageHead } from "@/lib/seo/head";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo/jsonld";
+
+const PATH = "/dedicated-servers";
+const CATEGORY_SLUG = "dedicated-servers";
 
 export const Route = createFileRoute("/dedicated-servers")({
   component: DedicatedServersPage,
-  head: () => ({
-    title: "Bulletproof Dedicated Servers & Offshore Infrastructure | GROWUPHOST",
-    meta: [
-      {
-        name: "description",
-        content: "Get the best cheap bulletproof dedicated servers and offshore infrastructure in Mumbai. Pure bare-metal antiban performance with 100% dedicated hardware for mission-critical privacy.",
-      },
-      { property: "og:title", content: "Dedicated Servers Mumbai | Bare Metal Infrastructure" },
-      { property: "og:description", content: "Unmatched bare-metal performance for mission-critical enterprise workloads in Mumbai." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Dedicated Servers Mumbai | Bare Metal Infrastructure" },
-      { name: "twitter:description", content: "Pure bare-metal performance with 100% dedicated hardware in Mumbai." },
-    ],
-    links: [
-      { rel: "canonical", href: "https://growuphost.com/dedicated-servers" },
-    ],
-  }),
+
+  loader: async ({ context }) => {
+    await prefetchCategoryLanding(context.queryClient, CATEGORY_SLUG);
+  },
+  head: () =>
+    buildPageHead({
+      title: "Offshore Dedicated Servers Mumbai | Bare Metal | GROWUPHOST",
+      description:
+        "Bulletproof offshore dedicated servers in Mumbai. 100% dedicated bare-metal hardware, NVMe storage, and DDoS-protected bandwidth for mission-critical workloads.",
+      path: PATH,
+      ogTitle: "Dedicated Servers Mumbai | Bare Metal Infrastructure",
+      ogDescription:
+        "Unmatched bare-metal performance for mission-critical workloads, hosted in Mumbai.",
+      jsonLd: [
+        serviceJsonLd({
+          name: "Dedicated Servers",
+          serviceType: "Dedicated server hosting",
+          description:
+            "Single-tenant bare-metal servers in Tier 3 data centres, with dedicated hardware and DDoS-protected bandwidth.",
+          path: PATH,
+        }),
+        breadcrumbJsonLd([
+          { name: "Hosting Packages", path: "/packages" },
+          { name: "Dedicated Servers", path: PATH },
+        ]),
+      ],
+    }),
 });
 
 function DedicatedServersPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 selection:bg-indigo-500/30 selection:text-indigo-400">
-      <Toaster position="top-center" richColors />
-      <Navbar />
-      <main className="flex-grow">
-        <div className="pt-20 bg-slate-950 px-8">
-           <div className="max-w-7xl mx-auto py-20 text-center space-y-6">
-              <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter">Dedicated <span className="text-indigo-500">Hardware</span></h1>
-              <p className="text-slate-400 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-                Raw power with cheap bulletproof dedicated servers. Secure offshore antiban hardware for mission-critical enterprise workloads.
-              </p>
-           </div>
-        </div>
-        <CategoryProductGrid 
-          categorySlug="dedicated-servers" 
-          title="ENTERPRISE NODES" 
-          subtitle="High-availability hardware in Tier 3 data centers across the globe."
-        />
-      </main>
-      <Footer />
-    </div>
+    <CategoryLandingPage
+      categorySlug={CATEGORY_SLUG}
+      eyebrow="Single-Tenant Bare Metal"
+      title="Dedicated Hardware"
+      subtitle="Raw power with cheap bulletproof dedicated servers. Secure offshore antiban hardware for mission-critical enterprise workloads."
+      gridTitle="ENTERPRISE NODES"
+      gridSubtitle="High-availability hardware in Tier 3 data centers across the globe."
+    />
   );
 }
