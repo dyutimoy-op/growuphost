@@ -34,20 +34,8 @@ dist-ssr
 # should ship with the code belong in that file, not in this directory.
 /data/
 
-# Competing lockfiles
-#
-# `bun.lock` is the one committed lockfile and the only one that may be tracked.
-# These three are not — a repo carrying two lockfiles has two disagreeing opinions
-# about the dependency tree, and whichever one CI happens to read wins silently.
-#
-# `package-lock.json` shows up here for a mundane reason worth writing down: bun is
-# not installed on every machine that touches this repo, so verification sometimes
-# runs through `npx`/`npm`, and npm writes a lockfile as a side effect. That file is
-# a local byproduct, never a source of truth. Without this rule a single
-# `git add -A` commits it, `bunfig.toml`'s 24-hour supply-chain guard
-# (`minimumReleaseAge`) stops applying to whoever installs from it, and the README's
-# "bun is the package manager" becomes false without anyone editing the README.
-package-lock.json
+bun.lock
+bunfig.toml
 yarn.lock
 pnpm-lock.yaml
 
