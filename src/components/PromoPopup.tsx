@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { X, ArrowRight, Copy, Check, Sparkles, RefreshCw } from "lucide-react";
+import { X, ArrowRight, Copy, Check, Heart, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { toast } from "sonner";
 import { sanitizeUrl } from "@/config/whmcs";
@@ -11,7 +11,7 @@ import { useBrokenImage } from "@/hooks/use-broken-image";
 import { toMediaSrc } from "@/lib/media-url";
 
 const CTA_CLASS =
-  "w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#f6b82c] to-[#e89e17] hover:from-[#f9c64a] hover:to-[#f3a822] text-slate-950 rounded-full py-3.5 sm:py-4 px-8 text-sm sm:text-base font-black uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-amber-500/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400";
+  "w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#f6b82c] to-[#e89e17] hover:from-[#f9c64a] hover:to-[#f3a822] text-slate-950 rounded-full py-3.5 sm:py-4 px-8 text-sm sm:text-base font-bold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-amber-500/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -22,17 +22,42 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(", ");
 
+function getPromoEyebrow(title: string): string {
+  const lower = title.toLowerCase();
+  if (lower.includes("black friday")) return "BLACK FRIDAY SALE";
+  if (lower.includes("cyber monday")) return "CYBER MONDAY DEAL";
+  if (lower.includes("new year")) return "NEW YEAR SPECIAL";
+  if (lower.includes("initial")) return "SPECIAL PROMOTION";
+  if (lower.includes("summer")) return "SUMMER SALE";
+  return "EXCLUSIVE DEAL";
+}
+
 function formatPromoTitle(title: string) {
-  const regex = /^(.*?(?:\d+%\s*(?:OFF)?|Extra\s+\d+%\s*OFF|Save\s+\d+%))(.*)$/i;
-  const match = title.match(regex);
-  if (match && match[1]) {
+  // If title has pattern "Extra 10% OFF ...", highlight "Extra 10%" in gold and the rest in white
+  const extraPctRegex = /^(Extra\s+\d+%)\s*(.*)$/i;
+  const matchExtra = title.match(extraPctRegex);
+  if (matchExtra && matchExtra[1]) {
     return (
       <>
-        <span className="text-[#f6b82c] font-black">{match[1]} </span>
-        <span className="text-white font-black">{match[2]?.trim()}</span>
+        <span className="text-[#f6b82c] font-black">{matchExtra[1]} </span>
+        <span className="text-white font-black">{matchExtra[2]}</span>
       </>
     );
   }
+
+  // If title has pattern "50% OFF ...", highlight "50% OFF" in gold
+  const pctOffRegex = /^(\d+%\s*OFF|Save\s+\d+%|Up to\s+\d+%\s*OFF)\s*(.*)$/i;
+  const matchPct = title.match(pctOffRegex);
+  if (matchPct && matchPct[1]) {
+    return (
+      <>
+        <span className="text-[#f6b82c] font-black">{matchPct[1]} </span>
+        <span className="text-white font-black">{matchPct[2]}</span>
+      </>
+    );
+  }
+
+  // Fallback: first word in gold, remainder in white
   const parts = title.split(" ");
   if (parts.length > 1) {
     return (
@@ -50,12 +75,12 @@ function formatPromoDescription(desc: string) {
   if (lines.length > 1) {
     return (
       <>
-        <p className="text-white/90 text-sm font-semibold leading-relaxed">{lines[0]}</p>
-        <p className="text-white/60 text-xs leading-relaxed mt-1">{lines.slice(1).join(" ")}</p>
+        <p className="text-white/95 text-sm sm:text-base font-semibold leading-relaxed">{lines[0]}</p>
+        <p className="text-white/60 text-xs sm:text-sm leading-relaxed mt-1.5">{lines.slice(1).join(" ")}</p>
       </>
     );
   }
-  return <p className="text-white/80 text-xs sm:text-sm font-medium leading-relaxed">{desc}</p>;
+  return <p className="text-white/85 text-xs sm:text-sm font-medium leading-relaxed">{desc}</p>;
 }
 
 function PromoCta({
@@ -73,7 +98,7 @@ function PromoCta({
     return (
       <Link to={internal} onClick={onActivate} className={CTA_CLASS}>
         <span>{children}</span>
-        <ArrowRight className="w-4 h-4 text-slate-950" />
+        <ArrowRight className="w-4 h-4 text-slate-950 stroke-[2.5]" />
       </Link>
     );
   }
@@ -81,7 +106,7 @@ function PromoCta({
   return (
     <a href={href} onClick={onActivate} className={CTA_CLASS}>
       <span>{children}</span>
-      <ArrowRight className="w-4 h-4 text-slate-950" />
+      <ArrowRight className="w-4 h-4 text-slate-950 stroke-[2.5]" />
     </a>
   );
 }
@@ -267,17 +292,17 @@ export const PromoPopup = () => {
                   />
                 </div>
               ) : (
-                <div className="relative mb-3 flex items-center justify-center">
-                  <div className="absolute inset-0 w-16 h-16 bg-purple-500/40 blur-xl rounded-full" />
-                  <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-700/40 via-purple-600/20 to-amber-500/10 border border-purple-500/40 shadow-lg shadow-purple-900/40">
-                    <Sparkles className="h-7 w-7 text-amber-300 fill-amber-300/30" />
+                <div className="relative mb-3.5 flex items-center justify-center">
+                  <div className="absolute inset-0 w-20 h-20 -top-2 left-1/2 -translate-x-1/2 bg-purple-600/40 blur-2xl rounded-full pointer-events-none" />
+                  <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2a1745] via-[#1b0d30] to-[#110620] border border-purple-500/30 shadow-[0_8px_25px_rgba(168,85,247,0.35)]">
+                    <Heart className="h-7 w-7 text-purple-300 fill-purple-400/40 drop-shadow-[0_2px_8px_rgba(168,85,247,0.6)]" />
                   </div>
                 </div>
               )}
 
               {/* 2. Glass Eyebrow Pill */}
               <div className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1 text-[11px] font-black uppercase tracking-[0.2em] text-white/90 shadow-sm mb-3">
-                <span>EXCLUSIVE DEAL</span>
+                <span>{getPromoEyebrow(activePopup.title)}</span>
               </div>
 
               {/* 3. Main Heading with Golden Amber Accent */}
@@ -288,10 +313,10 @@ export const PromoPopup = () => {
                 {formatPromoTitle(activePopup.title)}
               </h2>
 
-              {/* 4. Sub-badge highlight pill (Same Renewal / Instant Activation) */}
+              {/* 4. Sub-badge highlight pill (Same Renewal) */}
               <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3.5 py-1 text-xs font-bold text-amber-300 mb-3.5">
                 <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
-                <span>Instant Activation & Same Renewal</span>
+                <span>Same Renewal</span>
               </div>
 
               {/* 5. Description text */}
