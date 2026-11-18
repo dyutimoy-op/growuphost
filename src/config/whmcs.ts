@@ -50,6 +50,10 @@ export const WHMCS_LINKS = {
 
   store: buildUrl("/cart.php"),
 
+  domainRegister: buildUrl("/cart.php", { a: "add", domain: "register" }),
+
+  domainTransfer: buildUrl("/cart.php", { a: "add", domain: "transfer" }),
+
   support: buildUrl("/submitticket.php"),
 
   tickets: buildUrl("/supporttickets.php"),

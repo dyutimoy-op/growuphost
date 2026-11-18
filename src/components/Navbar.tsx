@@ -296,50 +296,93 @@ export function Navbar() {
           </div>
 
           <div className="flex-1 hidden lg:flex justify-center">
-            <div className="flex items-center gap-8">
-              {headerLinks.map((link) => (
-                <NavLinkItem key={link.id} link={link} className={HEADER_LINK_CLASS} />
-              ))}
-              {topLevelCategories.map((category) => {
-                const subcategories = childrenOf(category.id);
+            <div className="flex items-center gap-6 xl:gap-8">
+              <Link to="/" className={HEADER_LINK_CLASS}>
+                Home
+              </Link>
 
-                return (
-                  <div key={category.id} className="relative group py-4">
-                    <Link
-                      to="/$categorySlug"
-                      params={{ categorySlug: slugSegment(category.slug) }}
-                      className={`text-[13px] font-bold uppercase tracking-[0.2em] text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative z-50 flex items-center gap-1 rounded-md ${FOCUS_RING}`}
-                    >
-                      {category.name}
-                      {subcategories.length > 0 && (
-                        <ChevronDown className="w-3 h-3 group-hover:rotate-180 transition-transform" />
-                      )}
-                    </Link>
+              {/* Hosting Dropdown */}
+              <div className="relative group py-4">
+                <button
+                  type="button"
+                  className={`${HEADER_LINK_CLASS} flex items-center gap-1 cursor-pointer`}
+                >
+                  <span>Hosting</span>
+                  <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200" />
+                </button>
 
-                    {subcategories.length > 0 && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-300 z-[100]">
-                        <div className="bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-4 min-w-[200px] shadow-2xl">
-                          <div className="grid gap-2">
-                            {subcategories.map((sub) => (
-                              <Link
-                                key={sub.id}
-                                to="/$categorySlug"
-                                params={{ categorySlug: slugSegment(sub.slug) }}
-                                className={`text-xs font-bold uppercase tracking-widest text-slate-700 hover:text-blue-600 hover:bg-blue-50 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5 p-2 rounded-xl transition-all ${FOCUS_RING}`}
-                              >
-                                {sub.name}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-[100]">
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-2.5 min-w-[260px] shadow-2xl backdrop-blur-xl">
+                    <div className="grid gap-1">
+                      <Link
+                        to="/shared-hosting"
+                        className="flex flex-col p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 transition-colors group/item"
+                      >
+                        <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">
+                          Shared Web Hosting
+                        </span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                          cPanel + NVMe SSD with LiteSpeed 20x
+                        </span>
+                      </Link>
+
+                      <Link
+                        to="/vps-hosting"
+                        className="flex flex-col p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 transition-colors group/item"
+                      >
+                        <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">
+                          Cloud VPS Hosting
+                        </span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                          Dedicated vCPU & KVM virtualization
+                        </span>
+                      </Link>
+
+                      <Link
+                        to="/dedicated-servers"
+                        className="flex flex-col p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 transition-colors group/item"
+                      >
+                        <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">
+                          Dedicated Servers
+                        </span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                          Enterprise bare-metal performance
+                        </span>
+                      </Link>
+
+                      {topLevelCategories.map((cat) => (
+                        <Link
+                          key={cat.id}
+                          to="/$categorySlug"
+                          params={{ categorySlug: slugSegment(cat.slug) }}
+                          className="flex flex-col p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-white/5 transition-colors group/item"
+                        >
+                          <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400">
+                            {cat.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                );
-              })}
+                </div>
+              </div>
+
+              <a href="/#domain-search" className={HEADER_LINK_CLASS}>
+                Domains
+              </a>
+
               <Link to="/packages" className={HEADER_LINK_CLASS}>
                 Packages
               </Link>
+
+              {headerLinks.map((link) => (
+                <NavLinkItem key={link.id} link={link} className={HEADER_LINK_CLASS} />
+              ))}
+
+              <Link to="/about" className={HEADER_LINK_CLASS}>
+                About
+              </Link>
+
               <Link to="/contact" className={HEADER_LINK_CLASS}>
                 Contact
               </Link>
@@ -406,9 +449,56 @@ export function Navbar() {
             <div className="space-y-2">
               <div className="text-[11px] font-black uppercase tracking-[0.25em] text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
                 <div className="w-3 h-[2px] bg-blue-600 dark:bg-blue-400" />
-                Infrastructure
+                Navigation
               </div>
               <div className="grid gap-1">
+                <Link to="/" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                  Home
+                  <ChevronRight className="w-5 h-5 text-blue-500/50" />
+                </Link>
+
+                <div className="pt-2 pb-1">
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-2">
+                    Hosting Solutions
+                  </div>
+                  <div className="grid gap-1 pl-2.5 border-l-2 border-blue-500/20">
+                    <Link to="/shared-hosting" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                      Shared Web Hosting
+                      <ChevronRight className="w-4 h-4 text-blue-500/50" />
+                    </Link>
+                    <Link to="/vps-hosting" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                      Cloud VPS Hosting
+                      <ChevronRight className="w-4 h-4 text-blue-500/50" />
+                    </Link>
+                    <Link to="/dedicated-servers" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                      Dedicated Servers
+                      <ChevronRight className="w-4 h-4 text-blue-500/50" />
+                    </Link>
+                    {topLevelCategories.map((category) => (
+                      <Link
+                        key={category.id}
+                        to="/$categorySlug"
+                        params={{ categorySlug: slugSegment(category.slug) }}
+                        className={MOBILE_LINK_CLASS}
+                        onClick={closeMenu}
+                      >
+                        {category.name}
+                        <ChevronRight className="w-4 h-4 text-blue-500/50" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <a href="/#domain-search" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                  Domains & Search
+                  <ChevronRight className="w-5 h-5 text-blue-500/50" />
+                </a>
+
+                <Link to="/packages" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                  Packages & Pricing
+                  <ChevronRight className="w-5 h-5 text-blue-500/50" />
+                </Link>
+
                 {headerLinks.map((link) => (
                   <NavLinkItem
                     key={link.id}
@@ -420,24 +510,14 @@ export function Navbar() {
                     <ChevronRight className="w-5 h-5 text-blue-500/50" aria-hidden="true" />
                   </NavLinkItem>
                 ))}
-                {topLevelCategories.map((category) => (
-                  <Link
-                    key={category.id}
-                    to="/$categorySlug"
-                    params={{ categorySlug: slugSegment(category.slug) }}
-                    className={MOBILE_LINK_CLASS}
-                    onClick={closeMenu}
-                  >
-                    {category.name}
-                    <ChevronRight className="w-5 h-5 text-blue-500/50" />
-                  </Link>
-                ))}
-                <Link to="/packages" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
-                  Packages
+
+                <Link to="/about" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
+                  About Us
                   <ChevronRight className="w-5 h-5 text-blue-500/50" />
                 </Link>
+
                 <Link to="/contact" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
-                  Contact
+                  Contact Support
                   <ChevronRight className="w-5 h-5 text-blue-500/50" />
                 </Link>
               </div>
