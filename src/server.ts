@@ -1,16 +1,11 @@
 import "./lib/error-capture";
 
-import serverEntry from "@tanstack/react-start/server-entry";
+import { createStartHandler, defaultStreamHandler } from "@tanstack/react-start/server";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
-type ServerEntry = {
-  fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
-};
-
-const handler = ((serverEntry as { default?: ServerEntry }).default ??
-  serverEntry) as unknown as ServerEntry;
+const startHandler = createStartHandler(defaultStreamHandler);
 
 async function normalizeCatastrophicSsrResponse(response: Response): Promise<Response> {
   if (response.status < 500) return response;
@@ -83,9 +78,9 @@ function applyCachingHeaders(request: Request, response: Response): Response {
 }
 
 export default {
-  async fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request) {
     try {
-      const response = await handler.fetch(request, env, ctx);
+      const response = await startHandler(request);
       const normalized = await normalizeCatastrophicSsrResponse(response);
       return applyCachingHeaders(request, normalized);
     } catch (error) {
