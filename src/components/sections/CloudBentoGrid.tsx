@@ -108,7 +108,7 @@ export function CloudBentoGrid() {
     <section
       id="cloud-bento"
       aria-labelledby="bento-heading"
-      className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 px-4 py-20 sm:px-6 lg:px-8 lg:py-28 border-t border-slate-200 dark:border-white/5"
+      className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 px-4 py-12 sm:px-6 lg:px-8 lg:py-28 border-t border-slate-200 dark:border-white/5"
     >
       <div
         className="pointer-events-none absolute top-1/3 left-10 h-[450px] w-[450px] rounded-full bg-blue-600/5 dark:bg-blue-600/10 blur-[150px]"
@@ -120,7 +120,7 @@ export function CloudBentoGrid() {
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
           <Reveal preset="fade" duration={0.4}>
             <span className="inline-flex items-center gap-2 rounded-full border border-blue-300 dark:border-blue-500/30 bg-blue-100/60 dark:bg-blue-500/10 px-4 py-1.5 text-xs font-black tracking-widest text-blue-800 dark:text-blue-300 uppercase">
               <Sparkles className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
@@ -131,7 +131,7 @@ export function CloudBentoGrid() {
           <Reveal preset="rise" delay={0.06} duration={0.4}>
             <h2
               id="bento-heading"
-              className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08]"
+              className="mt-3 sm:mt-4 text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08]"
             >
               The Next-Gen{" "}
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">

@@ -96,7 +96,7 @@ export function FAQ() {
   return (
     <section
       aria-labelledby="faq-heading"
-      className="relative bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 py-20 lg:px-8 lg:py-28 border-t border-slate-200 dark:border-white/5"
+      className="relative bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 py-12 sm:py-20 lg:px-8 lg:py-28 border-t border-slate-200 dark:border-white/5"
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: FAQ_JSON_LD }} />
 
@@ -105,14 +105,14 @@ export function FAQ() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 xl:gap-20">
+      <div className="relative mx-auto grid max-w-7xl gap-8 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 xl:gap-20">
         <Reveal preset="left" duration={0.4} className="lg:sticky lg:top-32 lg:self-start">
-          <p className="mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
+          <p className="mb-2 sm:mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
             Frequently Asked Questions
           </p>
           <h2
             id="faq-heading"
-            className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
+            className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
           >
             Questions,{" "}
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">

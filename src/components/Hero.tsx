@@ -88,7 +88,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative z-10 overflow-hidden bg-slate-50 dark:bg-slate-950 pt-44 pb-16 sm:pt-48 sm:pb-24 lg:pt-52 lg:pb-28"
+      className="relative z-10 overflow-hidden bg-slate-50 dark:bg-slate-950 pt-28 pb-12 sm:pt-40 sm:pb-20 lg:pt-48 lg:pb-28"
       aria-labelledby="hero-heading"
     >
       <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
@@ -124,7 +124,7 @@ export function Hero() {
 
             <motion.h1
               id="hero-heading"
-              className="mt-6 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08]"
+              className="mt-4 sm:mt-6 text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.08]"
               {...entrance(animated, 1, { opacity: 0, y: 12 })}
             >
               {lead}{" "}
@@ -139,23 +139,23 @@ export function Hero() {
             </motion.h1>
 
             <motion.p
-              className="mt-5 max-w-2xl text-base sm:text-lg font-medium text-slate-800 dark:text-slate-300 leading-relaxed"
+              className="mt-3 sm:mt-5 max-w-2xl text-sm sm:text-base lg:text-lg font-medium text-slate-800 dark:text-slate-300 leading-relaxed"
               {...entrance(animated, 2, { opacity: 0, y: 12 })}
             >
               {subheadline}
             </motion.p>
 
             <motion.div
-              className="mt-6 flex flex-wrap gap-2.5"
+              className="mt-5 sm:mt-6 flex flex-wrap gap-2 sm:gap-2.5"
               {...entrance(animated, 3, { opacity: 0, y: 12 })}
             >
               {TRUST_CHIPS.map((chip) => (
                 <span
                   key={chip.label}
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white text-slate-900 shadow-sm dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-300 px-3.5 py-1.5 text-xs font-bold tracking-wide"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 rounded-lg sm:rounded-xl border border-slate-300 bg-white text-slate-900 shadow-sm dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-300 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[11px] sm:text-xs font-bold tracking-wide"
                 >
                   <chip.icon
-                    className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0"
+                    className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-blue-600 dark:text-blue-400 shrink-0"
                     aria-hidden="true"
                   />
                   {chip.label}
@@ -164,12 +164,12 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto"
+              className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto"
               {...entrance(animated, 4, { opacity: 0, y: 12 })}
             >
               <Button
                 size="lg"
-                className={`h-14 rounded-2xl px-8 text-sm font-black tracking-wide ${CTA_PRIMARY}`}
+                className={`h-12 sm:h-14 rounded-xl sm:rounded-2xl px-6 sm:px-8 text-xs sm:text-sm font-black tracking-wide ${CTA_PRIMARY}`}
                 asChild
               >
                 <a href={primaryCtaUrl} className="group">
@@ -183,7 +183,7 @@ export function Hero() {
 
               <Button
                 size="lg"
-                className={`h-14 rounded-2xl px-7 text-sm font-black tracking-wide ${CTA_SECONDARY}`}
+                className={`h-12 sm:h-14 rounded-xl sm:rounded-2xl px-5 sm:px-7 text-xs sm:text-sm font-black tracking-wide ${CTA_SECONDARY}`}
                 asChild
               >
                 <Link to="/packages">
@@ -192,12 +192,12 @@ export function Hero() {
                 </Link>
               </Button>
 
-              <div className="flex items-center gap-4 pt-2 sm:pt-0 sm:pl-4 sm:border-l sm:border-slate-300 dark:sm:border-white/10">
+              <div className="flex items-center gap-3 sm:gap-4 pt-1 sm:pt-0 sm:pl-4 sm:border-l sm:border-slate-300 dark:sm:border-white/10">
                 <div>
-                  <span className="block text-2xl font-black text-slate-950 dark:text-white tracking-tight tabular-nums">
+                  <span className="block text-xl sm:text-2xl font-black text-slate-950 dark:text-white tracking-tight tabular-nums">
                     {PROOF_STAT.value}
                   </span>
-                  <span className="block text-[11px] font-bold tracking-widest text-slate-600 dark:text-slate-400 uppercase">
+                  <span className="block text-[10px] sm:text-[11px] font-bold tracking-widest text-slate-600 dark:text-slate-400 uppercase">
                     {PROOF_STAT.label}
                   </span>
                 </div>
@@ -207,7 +207,7 @@ export function Hero() {
 
           <div className="lg:col-span-5 relative">
             <motion.div
-              className="relative rounded-3xl border border-blue-500/20 bg-white dark:bg-slate-900/80 p-6 sm:p-8 backdrop-blur-2xl shadow-xl dark:shadow-[0_20px_60px_-15px_rgba(37,99,235,0.25)]"
+              className="relative rounded-2xl sm:rounded-3xl border border-blue-500/20 bg-white dark:bg-slate-900/80 p-4 sm:p-8 backdrop-blur-2xl shadow-xl dark:shadow-[0_20px_60px_-15px_rgba(37,99,235,0.25)]"
               {...entrance(animated, 2, { opacity: 0, scale: 0.98 })}
             >
               <div

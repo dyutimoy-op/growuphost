@@ -55,7 +55,7 @@ export function PlanCard({
   return (
     <article
       className={[
-        "group relative flex h-full flex-col rounded-[2rem] border-2 p-8 lg:rounded-[2.5rem] lg:p-10",
+        "group relative flex h-full flex-col rounded-2xl sm:rounded-[2rem] border-2 p-5 sm:p-8 lg:rounded-[2.5rem] lg:p-10",
         "transition-all duration-300 hover:-translate-y-1.5",
         isFeatured
           ? "border-blue-600 bg-white text-slate-950 shadow-xl dark:border-blue-500 dark:bg-slate-900/90 dark:text-white dark:shadow-[0_0_50px_-10px_rgba(37,99,235,0.4)]"
@@ -69,20 +69,20 @@ export function PlanCard({
         </div>
       )}
 
-      <div className="space-y-6">
-        <div className="flex items-start justify-between gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex items-start justify-between gap-3 sm:gap-4">
           <div className="min-w-0">
             {showCategory && (
-              <div className="mb-2 text-xs font-black tracking-[0.2em] text-blue-600 dark:text-blue-400 uppercase">
+              <div className="mb-1.5 sm:mb-2 text-[11px] sm:text-xs font-black tracking-[0.2em] text-blue-600 dark:text-blue-400 uppercase">
                 {planCategoryLabel(product)}
               </div>
             )}
-            <h3 className="text-2xl font-black tracking-tight text-slate-950 dark:text-white lg:text-3xl">
+            <h3 className="text-xl sm:text-2xl font-black tracking-tight text-slate-950 dark:text-white lg:text-3xl">
               {product.name}
             </h3>
           </div>
           <div
-            className={`shrink-0 rounded-2xl p-3 transition-colors ${
+            className={`shrink-0 rounded-xl sm:rounded-2xl p-2.5 sm:p-3 transition-colors ${
               isFeatured
                 ? "bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
                 : "bg-slate-100 text-slate-700 group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-white/5 dark:text-blue-400 dark:group-hover:bg-blue-500/10"
@@ -94,7 +94,7 @@ export function PlanCard({
 
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <span className="text-4xl font-black text-slate-950 dark:text-white lg:text-5xl">
+            <span className="text-3xl sm:text-4xl font-black text-slate-950 dark:text-white lg:text-5xl">
               {pricing.price.primary}
             </span>
             <span className="text-xs font-bold tracking-widest text-slate-600 dark:text-slate-400 uppercase lg:text-sm">

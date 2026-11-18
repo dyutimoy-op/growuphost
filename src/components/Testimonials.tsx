@@ -133,7 +133,7 @@ export function Testimonials() {
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="relative overflow-hidden bg-slate-950 py-20 lg:py-28"
+      className="relative overflow-hidden bg-slate-950 py-12 sm:py-20 lg:py-28"
     >
       <div
         className="pointer-events-none absolute top-0 right-0 h-[500px] w-[500px] translate-x-1/2 -translate-y-1/3 rounded-full bg-blue-600/10 blur-[130px]"
@@ -141,13 +141,13 @@ export function Testimonials() {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal preset="fade" className="mb-14 max-w-3xl lg:mb-16">
-          <p className="mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
+        <Reveal preset="fade" className="mb-8 sm:mb-14 max-w-3xl lg:mb-16">
+          <p className="mb-2 sm:mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
             Client Success
           </p>
           <h2
             id="testimonials-heading"
-            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
+            className="text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
           >
             Trusted by{" "}
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">
@@ -217,7 +217,7 @@ export function Testimonials() {
         {!isPending && !isError && featured && (
           <div className="space-y-10">
             <Reveal preset="scale" amount={0.25}>
-              <figure className="relative overflow-hidden rounded-[2.5rem] border border-blue-500/20 bg-white shadow-xl dark:bg-slate-900/60 p-8 backdrop-blur-xl lg:p-14">
+              <figure className="relative overflow-hidden rounded-2xl sm:rounded-[2.5rem] border border-blue-500/20 bg-white shadow-xl dark:bg-slate-900/60 p-5 sm:p-8 lg:p-14 backdrop-blur-xl">
                 <Quote
                   className="absolute top-8 right-8 h-16 w-16 text-blue-500/15 lg:h-24 lg:w-24"
                   aria-hidden="true"

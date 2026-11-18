@@ -146,17 +146,17 @@ export function Footer() {
   return (
     <footer
       style={{ backgroundColor: "#020617", color: "#ffffff" }}
-      className="site-footer bg-[#020617] text-white border-t border-slate-800/80 pt-20 lg:pt-28 pb-12 px-6 lg:px-8 relative overflow-hidden"
+      className="site-footer bg-[#020617] text-white border-t border-slate-800/80 pt-12 sm:pt-20 lg:pt-28 pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 mb-16">
-          <div className="lg:col-span-4 space-y-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-10 mb-10 sm:mb-16">
+          <div className="lg:col-span-4 space-y-6 sm:space-y-8">
             <Link
               to="/"
-              className={`text-3xl font-black italic tracking-tighter text-white uppercase inline-flex items-center gap-3 ${FOCUS_RING}`}
+              className={`text-2xl sm:text-3xl font-black italic tracking-tighter text-white uppercase inline-flex items-center gap-3 ${FOCUS_RING}`}
             >
               <BrandMark brand={brand} surface="footer" />
               {brand.showText && <span className="text-white">{companyName}</span>}

@@ -158,32 +158,32 @@ function AdminLoginPage() {
     <div className="min-h-screen flex flex-col bg-slate-950 selection:bg-blue-500/30 selection:text-blue-400">
       <main
         id="main-content"
-        className="flex-grow flex items-center justify-center p-6 relative overflow-hidden"
+        className="flex-grow flex items-center justify-center p-4 sm:p-6 relative overflow-hidden"
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.15),transparent_70%)] pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10 space-y-6">
-          <Card className="w-full border border-white/5 bg-slate-900/50 backdrop-blur-xl rounded-[2rem] overflow-hidden shadow-2xl motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in motion-safe:duration-500">
-            <CardHeader className="p-10 pb-6 text-center space-y-4">
-              <div className="w-16 h-16 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center mx-auto mb-2">
-                <ShieldCheck className="w-8 h-8 text-blue-400" />
+          <Card className="w-full border border-white/5 bg-slate-900/50 backdrop-blur-xl rounded-2xl sm:rounded-[2rem] overflow-hidden shadow-2xl motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in motion-safe:duration-500">
+            <CardHeader className="p-6 sm:p-10 pb-4 sm:pb-6 text-center space-y-3 sm:space-y-4">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
               </div>
-              <div className="space-y-3">
-                <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-black uppercase tracking-[0.2em] text-blue-300">
+              <div className="space-y-2 sm:space-y-3">
+                <span className="inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-blue-300">
                   Staff Access Only
                 </span>
 
-                <h1 className="text-3xl leading-none font-black tracking-tighter text-white italic lg:text-4xl">
+                <h1 className="text-2xl sm:text-3xl leading-none font-black tracking-tighter text-white italic lg:text-4xl">
                   ADMIN CONTROL PANEL
                 </h1>
-                <CardDescription className="text-slate-400 font-medium">
+                <CardDescription className="text-slate-400 text-xs sm:text-sm font-medium">
                   Internal sign-in for GROWUPHOST content administrators. This is not a customer
                   login.
                 </CardDescription>
               </div>
             </CardHeader>
 
-            <CardContent className="px-10 pb-10 pt-2">
+            <CardContent className="px-6 sm:px-10 pb-8 sm:pb-10 pt-2">
               {notice && (
                 <div
                   role="alert"

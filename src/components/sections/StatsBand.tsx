@@ -87,7 +87,7 @@ export function StatsBand() {
   return (
     <section
       aria-labelledby="stats-heading"
-      className="relative overflow-hidden bg-slate-950 py-20 lg:py-28 border-y border-white/5"
+      className="relative overflow-hidden bg-slate-950 py-12 sm:py-20 lg:py-28 border-y border-white/5"
     >
       <div
         className="pointer-events-none absolute inset-x-0 top-1/2 h-[420px] -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.12),transparent_65%)]"
@@ -95,13 +95,13 @@ export function StatsBand() {
       />
 
       <div ref={ref} className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Reveal preset="fade" duration={0.4} amount={0.3} className="mb-12 max-w-2xl lg:mb-16">
-          <p className="mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
+        <Reveal preset="fade" duration={0.4} amount={0.3} className="mb-8 sm:mb-12 max-w-2xl lg:mb-16">
+          <p className="mb-2 sm:mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
             Platform Metrics
           </p>
           <h2
             id="stats-heading"
-            className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
+            className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
           >
             Built by engineers who{" "}
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">
@@ -144,7 +144,7 @@ export function StatsBand() {
                     {stat.caption}
                   </span>
                 </dt>
-                <dd className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">
+                <dd className="text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">
                   <span className="inline-grid">
                     <span className="invisible col-start-1 row-start-1" aria-hidden="true">
                       {prefix}

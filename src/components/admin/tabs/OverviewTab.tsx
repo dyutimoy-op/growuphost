@@ -296,10 +296,10 @@ export function OverviewTab({ onNavigate }: OverviewTabProps) {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div>
-        <h2 className="text-3xl font-black tracking-tighter text-slate-950 dark:text-white">
+        <h2 className="text-2xl sm:text-3xl font-black tracking-tighter text-slate-950 dark:text-white">
           Overview
         </h2>
-        <p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <p className="mt-1 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
           {isLoading
             ? "Loading counts…"
             : "Catalogue health and shape, derived from your own rows."}
@@ -315,7 +315,7 @@ export function OverviewTab({ onNavigate }: OverviewTabProps) {
         />
       ) : null}
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
           <button
             key={card.title}
@@ -323,18 +323,18 @@ export function OverviewTab({ onNavigate }: OverviewTabProps) {
             data-neutral-btn="true"
             onClick={() => onNavigate(card.tab)}
             className={cn(
-              "cursor-pointer rounded-[2rem] border-2 border-slate-300 dark:border-white/20 bg-white dark:bg-slate-900/50 p-6 text-left shadow-sm",
+              "cursor-pointer rounded-2xl sm:rounded-[2rem] border-2 border-slate-300 dark:border-white/20 bg-white dark:bg-slate-900/50 p-4 sm:p-6 text-left shadow-sm",
               "transition-colors duration-200 hover:border-slate-300 dark:hover:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-800/50",
               "focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 focus-visible:outline-none",
             )}
           >
             <div className="flex items-start justify-between">
-              <div className={cn("rounded-2xl p-3", card.bg)}>
-                <card.icon className={cn("h-6 w-6", card.color)} aria-hidden="true" />
+              <div className={cn("rounded-xl sm:rounded-2xl p-2.5 sm:p-3", card.bg)}>
+                <card.icon className={cn("h-5 w-5 sm:h-6 sm:w-6", card.color)} aria-hidden="true" />
               </div>
-              <div className="text-3xl font-black text-slate-950 dark:text-white">{card.value}</div>
+              <div className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white">{card.value}</div>
             </div>
-            <div className="mt-4 text-xs font-bold tracking-widest text-slate-600 dark:text-slate-300 uppercase">
+            <div className="mt-3 sm:mt-4 text-[10px] sm:text-xs font-bold tracking-widest text-slate-600 dark:text-slate-300 uppercase">
               {card.title}
             </div>
           </button>
@@ -593,11 +593,11 @@ function DerivedStat({
   tone?: "neutral" | "warn" | "ok";
 }) {
   return (
-    <div className="rounded-[2rem] border-2 border-slate-300 dark:border-white/20 bg-white dark:bg-slate-900/50 p-6 shadow-sm">
-      <div className="flex items-center gap-3">
+    <div className="rounded-2xl sm:rounded-[2rem] border-2 border-slate-300 dark:border-white/20 bg-white dark:bg-slate-900/50 p-4 sm:p-6 shadow-sm">
+      <div className="flex items-center gap-2 sm:gap-3">
         <Icon
           className={cn(
-            "h-5 w-5 shrink-0",
+            "h-4 w-4 sm:h-5 sm:w-5 shrink-0",
             tone === "warn"
               ? "text-red-500 dark:text-red-400"
               : tone === "ok"
@@ -606,13 +606,13 @@ function DerivedStat({
           )}
           aria-hidden="true"
         />
-        <span className="text-xs font-bold tracking-widest text-slate-600 dark:text-slate-300 uppercase">
+        <span className="text-[11px] sm:text-xs font-bold tracking-widest text-slate-600 dark:text-slate-300 uppercase">
           {label}
         </span>
       </div>
       <div
         className={cn(
-          "mt-3 text-2xl font-black",
+          "mt-2 sm:mt-3 text-xl sm:text-2xl font-black",
           tone === "warn" ? "text-red-600 dark:text-red-400" : "text-slate-950 dark:text-white",
         )}
       >

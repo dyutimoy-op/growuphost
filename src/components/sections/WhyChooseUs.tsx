@@ -68,7 +68,7 @@ export function WhyChooseUs() {
   return (
     <section
       aria-labelledby="why-heading"
-      className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 py-20 lg:px-8 lg:py-28"
+      className="relative overflow-hidden bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 py-12 sm:py-20 lg:px-8 lg:py-28"
     >
       <div
         className="pointer-events-none absolute top-0 right-0 h-[520px] w-[520px] translate-x-1/3 -translate-y-1/3 rounded-full bg-blue-600/10 blur-[140px]"
@@ -80,13 +80,13 @@ export function WhyChooseUs() {
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <Reveal preset="left" duration={0.4} className="mb-12 max-w-2xl lg:mb-16">
-          <p className="mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
+        <Reveal preset="left" duration={0.4} className="mb-8 sm:mb-12 max-w-2xl lg:mb-16">
+          <p className="mb-2 sm:mb-3 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase">
             Why Choose GROWUPHOST
           </p>
           <h2
             id="why-heading"
-            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
+            className="text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
           >
             Everything included.{" "}
             <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">

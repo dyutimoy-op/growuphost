@@ -17,11 +17,11 @@ export function CTABand() {
   return (
     <section
       aria-labelledby="cta-heading"
-      className="relative bg-slate-950 px-6 pt-10 pb-24 lg:px-8 lg:pt-16 lg:pb-32"
+      className="relative bg-slate-950 px-4 sm:px-6 pt-8 pb-16 lg:px-8 lg:pt-16 lg:pb-32"
     >
       <div className="mx-auto max-w-7xl">
         <Reveal preset="scale" duration={0.4} amount={0.3}>
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-blue-500/20 bg-white dark:bg-slate-900 px-6 py-16 text-center sm:px-8 lg:rounded-[3rem] lg:px-20 lg:py-24 shadow-xl dark:shadow-[0_20px_60px_-15px_rgba(37,99,235,0.3)]">
+          <div className="relative overflow-hidden rounded-2xl sm:rounded-[2.5rem] border border-blue-500/20 bg-white dark:bg-slate-900 px-4 py-10 sm:px-8 sm:py-16 text-center lg:rounded-[3rem] lg:px-20 lg:py-24 shadow-xl dark:shadow-[0_20px_60px_-15px_rgba(37,99,235,0.3)]">
             <div
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,0.08),transparent_60%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,0.35),transparent_60%)]"
               aria-hidden="true"
@@ -48,7 +48,7 @@ export function CTABand() {
 
                 <h2
                   id="cta-heading"
-                  className="mx-auto mt-6 max-w-3xl text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
+                  className="mx-auto mt-4 sm:mt-6 max-w-3xl text-2xl sm:text-4xl lg:text-6xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-[1.05]"
                 >
                   Supercharge your website with{" "}
                   <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">

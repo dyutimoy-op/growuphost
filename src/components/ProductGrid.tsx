@@ -35,7 +35,7 @@ export function ProductGrid() {
     <section
       id="plans"
       aria-labelledby="plans-heading"
-      className="relative overflow-hidden bg-slate-950 px-6 py-20 lg:px-8 lg:py-32"
+      className="relative overflow-hidden bg-slate-950 px-4 sm:px-6 py-12 sm:py-20 lg:px-8 lg:py-32"
     >
       <div
         className="pointer-events-none absolute top-0 left-1/2 h-full w-full -translate-x-1/2 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.06),transparent_70%)]"
@@ -45,9 +45,9 @@ export function ProductGrid() {
       <div className="relative mx-auto max-w-7xl">
         <Reveal
           preset="rise"
-          className="mb-12 flex flex-col gap-6 text-center lg:mb-16 md:flex-row md:items-end md:justify-between md:text-left"
+          className="mb-8 sm:mb-12 flex flex-col gap-6 text-center lg:mb-16 md:flex-row md:items-end md:justify-between md:text-left"
         >
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <p className="mx-auto inline-flex items-center gap-2 text-xs font-black tracking-[0.25em] text-blue-600 dark:text-blue-400 uppercase md:mx-0">
               <Zap
                 className="h-3.5 w-3.5 fill-current text-blue-600 dark:text-blue-400"
@@ -57,7 +57,7 @@ export function ProductGrid() {
             </p>
             <h2
               id="plans-heading"
-              className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-tight"
+              className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-950 dark:text-white uppercase leading-tight"
             >
               Plans built for every{" "}
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">

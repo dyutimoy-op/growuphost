@@ -86,7 +86,7 @@ export function CategoryProductGrid({ categorySlug, title, subtitle }: ProductGr
   return (
     <section
       aria-labelledby={`category-heading-${categorySlug}`}
-      className="relative flex min-h-[600px] items-center overflow-hidden bg-slate-50 dark:bg-slate-950 px-6 py-20 lg:px-8 lg:py-32"
+      className="relative flex min-h-0 sm:min-h-[500px] items-center overflow-hidden bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 py-10 sm:py-20 lg:px-8 lg:py-32"
     >
       {backgroundUrl && !isBackgroundBroken ? (
         <div className="absolute inset-0 z-0" aria-hidden="true">

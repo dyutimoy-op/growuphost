@@ -115,7 +115,7 @@ const FOCUS_RING =
 
 const HEADER_LINK_CLASS = `text-[13px] font-bold uppercase tracking-[0.18em] text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative z-50 py-4 rounded-md ${FOCUS_RING}`;
 
-const MOBILE_LINK_CLASS = `flex items-center justify-between text-3xl font-black text-slate-950 dark:text-white py-4 active:text-blue-600 dark:active:text-blue-400 transition-colors rounded-2xl ${FOCUS_RING}`;
+const MOBILE_LINK_CLASS = `flex items-center justify-between text-base sm:text-lg font-extrabold text-slate-900 dark:text-white py-2.5 sm:py-3 active:text-blue-600 dark:active:text-blue-400 transition-colors rounded-xl ${FOCUS_RING}`;
 
 const TOP_BAR_LINK_CLASS = `flex items-center gap-2 hover:text-blue-200 transition-colors shrink-0 rounded-full ${FOCUS_RING} focus-visible:ring-offset-blue-600`;
 
@@ -346,9 +346,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-4 lg:gap-4 ml-auto relative z-50">
-            <ThemeToggle variant="navbar" />
-
+          <div className="flex items-center gap-2 sm:gap-3 ml-auto relative z-50">
             <div className="hidden lg:flex items-center gap-3">
               <SmartLink
                 href={clientAreaUrl}
@@ -367,25 +365,21 @@ export function Navbar() {
               </SmartLink>
             </div>
 
-            <div
-              className={`lg:hidden w-[104px] sm:w-[128px] shrink-0 flex justify-end transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none ${
-                isPastHero && !isMenuOpen
-                  ? "opacity-100 translate-y-0 visible"
-                  : "opacity-0 -translate-y-1.5 invisible pointer-events-none"
-              }`}
-            >
+            {isPastHero && !isMenuOpen && (
               <SmartLink
                 href={registerUrl}
-                className={`inline-flex items-center justify-center gap-1.5 min-h-11 min-w-11 px-3 sm:px-4 rounded-xl text-xs font-black uppercase tracking-widest whitespace-nowrap ${CTA_PRIMARY}`}
+                className={`lg:hidden inline-flex items-center justify-center gap-1 h-9 px-3 rounded-lg text-[11px] font-black uppercase tracking-wider whitespace-nowrap ${CTA_PRIMARY}`}
               >
                 Get Started
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3 h-3" />
               </SmartLink>
-            </div>
+            )}
+
+            <ThemeToggle variant="navbar" />
 
             <button
               type="button"
-              className={`lg:hidden p-2.5 min-h-11 min-w-11 flex items-center justify-center text-white hover:bg-white/5 rounded-lg relative z-50 ${FOCUS_RING}`}
+              className={`lg:hidden p-2 min-h-10 min-w-10 flex items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl relative z-50 transition-colors ${FOCUS_RING}`}
               onClick={() => setIsMenuOpen((open) => !open)}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
@@ -401,20 +395,20 @@ export function Navbar() {
         id="mobile-menu"
         aria-hidden={!isMenuOpen}
         aria-label="Mobile navigation"
-        className={`lg:hidden fixed inset-0 top-0 bg-slate-950/98 backdrop-blur-2xl z-40 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+        className={`lg:hidden fixed inset-0 top-0 bg-white/98 dark:bg-slate-950/98 backdrop-blur-2xl z-40 transition-all duration-300 ease-out ${
           isMenuOpen
             ? "translate-x-0 opacity-100 visible pointer-events-auto"
             : "translate-x-full opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="flex flex-col h-full pt-24 px-8 pb-12 overflow-y-auto">
-          <div className="flex-1 space-y-12">
-            <div className="space-y-4">
-              <div className="text-xs font-black uppercase tracking-[0.4em] text-blue-500 mb-6 flex items-center gap-2">
-                <div className="w-4 h-[1px] bg-blue-500" />
+        <div className="flex flex-col h-full pt-20 px-5 sm:px-8 pb-8 overflow-y-auto">
+          <div className="flex-1 space-y-6 sm:space-y-8">
+            <div className="space-y-2">
+              <div className="text-[11px] font-black uppercase tracking-[0.25em] text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+                <div className="w-3 h-[2px] bg-blue-600 dark:bg-blue-400" />
                 Infrastructure
               </div>
-              <div className="grid gap-2">
+              <div className="grid gap-1">
                 {headerLinks.map((link) => (
                   <NavLinkItem
                     key={link.id}
@@ -423,7 +417,7 @@ export function Navbar() {
                     onNavigate={closeMenu}
                   >
                     {link.label}
-                    <ChevronRight className="w-8 h-8 text-blue-500/50" aria-hidden="true" />
+                    <ChevronRight className="w-5 h-5 text-blue-500/50" aria-hidden="true" />
                   </NavLinkItem>
                 ))}
                 {topLevelCategories.map((category) => (
@@ -431,61 +425,61 @@ export function Navbar() {
                     key={category.id}
                     to="/$categorySlug"
                     params={{ categorySlug: slugSegment(category.slug) }}
-                    className={`flex items-center justify-between text-3xl font-black text-white py-4 active:text-blue-400 transition-colors rounded-2xl ${FOCUS_RING}`}
+                    className={MOBILE_LINK_CLASS}
                     onClick={closeMenu}
                   >
                     {category.name}
-                    <ChevronRight className="w-8 h-8 text-blue-500/50" />
+                    <ChevronRight className="w-5 h-5 text-blue-500/50" />
                   </Link>
                 ))}
                 <Link to="/packages" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
                   Packages
-                  <ChevronRight className="w-8 h-8 text-blue-500/50" />
+                  <ChevronRight className="w-5 h-5 text-blue-500/50" />
                 </Link>
                 <Link to="/contact" className={MOBILE_LINK_CLASS} onClick={closeMenu}>
                   Contact
-                  <ChevronRight className="w-8 h-8 text-blue-500/50" />
+                  <ChevronRight className="w-5 h-5 text-blue-500/50" />
                 </Link>
               </div>
             </div>
 
-            <div className="space-y-4 pt-10 border-t border-white/5">
-              <div className="text-xs font-black uppercase tracking-[0.4em] text-blue-500 mb-6 flex items-center gap-2">
-                <div className="w-4 h-[1px] bg-blue-500" />
+            <div className="space-y-3 pt-6 border-t border-slate-200 dark:border-white/10">
+              <div className="text-[11px] font-black uppercase tracking-[0.25em] text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+                <div className="w-3 h-[2px] bg-blue-600 dark:bg-blue-400" />
                 Your Account
               </div>
 
               <SmartLink
                 href={registerUrl}
                 onNavigate={closeMenu}
-                className={`w-full flex items-center justify-center gap-3 min-h-11 py-6 rounded-2xl text-base font-black uppercase tracking-widest ${CTA_PRIMARY}`}
+                className={`w-full flex items-center justify-center gap-2 h-11 rounded-xl text-xs font-black uppercase tracking-widest ${CTA_PRIMARY}`}
               >
                 Get Started
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </SmartLink>
 
               <SmartLink
                 href={clientAreaUrl}
                 onNavigate={closeMenu}
-                className={`w-full flex items-center justify-center gap-3 min-h-11 py-6 rounded-2xl text-base font-black uppercase tracking-widest ${CTA_SECONDARY}`}
+                className={`w-full flex items-center justify-center gap-2 h-11 rounded-xl text-xs font-black uppercase tracking-widest ${CTA_SECONDARY}`}
               >
-                <LogIn className="w-4 h-4" />
+                <LogIn className="w-3.5 h-3.5" />
                 Client Area
               </SmartLink>
 
               <a
                 href={WHMCS_LINKS.support}
                 onClick={closeMenu}
-                className={`w-full flex items-center justify-center gap-3 text-slate-400 hover:text-white py-4 rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-colors ${FOCUS_RING}`}
+                className={`w-full flex items-center justify-center gap-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors ${FOCUS_RING}`}
               >
-                <LifeBuoy className="w-4 h-4" />
+                <LifeBuoy className="w-3.5 h-3.5 text-blue-500" />
                 Open a Support Ticket
               </a>
             </div>
           </div>
 
-          <div className="pt-12 text-center">
-            <div className="text-xs font-black text-slate-400 uppercase tracking-widest">
+          <div className="pt-6 border-t border-slate-200 dark:border-white/10 text-center">
+            <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
               © {CURRENT_YEAR} {companyName}
             </div>
           </div>

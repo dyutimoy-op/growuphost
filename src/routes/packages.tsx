@@ -114,38 +114,38 @@ function PackagesPage() {
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-slate-50 dark:bg-slate-950 text-slate-950 dark:text-white selection:bg-blue-500/30 selection:text-blue-400">
       <Navbar />
 
-      <main id="main-content" className="flex-grow pt-56 sm:pt-64 lg:pt-72">
+      <main id="main-content" className="flex-grow pt-28 sm:pt-40 lg:pt-56">
         <section
           aria-labelledby="packages-heading"
-          className="relative mx-auto mb-16 max-w-7xl px-6 lg:mb-24 lg:px-8"
+          className="relative mx-auto mb-12 sm:mb-16 max-w-7xl px-4 sm:px-6 lg:mb-24 lg:px-8"
         >
           <div
             className="pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-blue-600/10 blur-[140px]"
             aria-hidden="true"
           />
 
-          <Reveal preset="rise" className="relative mb-14 space-y-6 text-center lg:mb-20">
-            <div className="flex justify-center mb-6">
-              <p className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-500/10 px-5 py-2 text-xs font-black uppercase tracking-[0.25em] text-blue-700 dark:text-blue-300 shadow-xs">
+          <Reveal preset="rise" className="relative mb-10 sm:mb-14 space-y-4 sm:space-y-6 text-center lg:mb-20">
+            <div className="flex justify-center mb-3 sm:mb-6">
+              <p className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-500/10 px-4 sm:px-5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-black uppercase tracking-[0.25em] text-blue-700 dark:text-blue-300 shadow-xs">
                 Full catalogue
               </p>
             </div>
             <h1
               id="packages-heading"
-              className="text-4xl leading-[1.05] font-black tracking-tight text-slate-950 dark:text-white uppercase sm:text-6xl lg:text-7xl"
+              className="text-2xl leading-[1.05] font-black tracking-tight text-slate-950 dark:text-white uppercase sm:text-5xl lg:text-7xl"
             >
               Our{" "}
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">
                 packages
               </span>
             </h1>
-            <p className="mx-auto max-w-2xl text-base sm:text-lg lg:text-xl leading-relaxed font-medium text-slate-700 dark:text-slate-300">
+            <p className="mx-auto max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed font-medium text-slate-700 dark:text-slate-300">
               Every live plan, in one place — from personal projects to enterprise-grade offshore
               infrastructure. Pick your term below and your cart opens on exactly that term.
             </p>
           </Reveal>
 
-          <div className="relative mb-12 flex flex-col items-center justify-between gap-6 rounded-[2rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 p-6 shadow-sm dark:shadow-none backdrop-blur-md lg:flex-row lg:rounded-[2.5rem] lg:px-8">
+          <div className="relative mb-8 sm:mb-12 flex flex-col items-center justify-between gap-4 sm:gap-6 rounded-2xl sm:rounded-[2rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 p-4 sm:p-6 shadow-sm dark:shadow-none backdrop-blur-md lg:flex-row lg:rounded-[2.5rem] lg:px-8">
             <div className="relative w-full lg:max-w-md">
               <label htmlFor="package-search" className="sr-only">
                 Search packages

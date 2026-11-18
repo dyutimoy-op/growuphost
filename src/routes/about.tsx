@@ -35,20 +35,20 @@ function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-950 dark:text-white selection:bg-blue-500/30 selection:text-blue-400">
       <Navbar />
-      <main id="main-content" className="flex-grow pt-56 sm:pt-64 lg:pt-72">
-        <section className="py-16 sm:py-24 px-6 sm:px-8 max-w-7xl mx-auto">
-          <div className="space-y-6 mb-20 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-8 motion-safe:duration-700">
+      <main id="main-content" className="flex-grow pt-28 sm:pt-40 lg:pt-56">
+        <section className="py-10 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto">
+          <div className="space-y-4 sm:space-y-6 mb-12 sm:mb-20 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-8 motion-safe:duration-700">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-500/10 px-4 py-1.5 text-blue-700 dark:text-blue-300 text-xs font-black tracking-widest uppercase">
               <Info className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Our Story
             </div>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-950 dark:text-white tracking-tight leading-[1.05] uppercase">
+            <h1 className="text-2xl sm:text-5xl md:text-7xl font-black text-slate-950 dark:text-white tracking-tight leading-[1.05] uppercase">
               REDEFINING THE <br />
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-blue-500 bg-clip-text text-transparent italic">
                 FUTURE
               </span>{" "}
               OF HOSTING.
             </h1>
-            <p className="text-lg sm:text-xl text-slate-700 dark:text-slate-300 max-w-3xl leading-relaxed font-medium">
+            <p className="text-sm sm:text-lg lg:text-xl text-slate-700 dark:text-slate-300 max-w-3xl leading-relaxed font-medium">
               GROWUPHOST was founded with a single mission: to provide the most reliable,
               high-performance infrastructure for developers and enterprises worldwide.
             </p>
