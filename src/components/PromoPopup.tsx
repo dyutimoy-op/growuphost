@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { X, ExternalLink, ArrowRight, Tag, Copy, Check } from "lucide-react";
+import { X, ArrowRight, Copy, Check, Sparkles, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { toast } from "sonner";
 import { sanitizeUrl } from "@/config/whmcs";
@@ -11,7 +11,7 @@ import { useBrokenImage } from "@/hooks/use-broken-image";
 import { toMediaSrc } from "@/lib/media-url";
 
 const CTA_CLASS =
-  "w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-5 text-lg font-black transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-blue-600/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900";
+  "w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#f6b82c] to-[#e89e17] hover:from-[#f9c64a] hover:to-[#f3a822] text-slate-950 rounded-full py-3.5 sm:py-4 px-8 text-sm sm:text-base font-black uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-amber-500/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -21,6 +21,42 @@ const FOCUSABLE_SELECTOR = [
   "textarea:not([disabled])",
   '[tabindex]:not([tabindex="-1"])',
 ].join(", ");
+
+function formatPromoTitle(title: string) {
+  const regex = /^(.*?(?:\d+%\s*(?:OFF)?|Extra\s+\d+%\s*OFF|Save\s+\d+%))(.*)$/i;
+  const match = title.match(regex);
+  if (match && match[1]) {
+    return (
+      <>
+        <span className="text-[#f6b82c] font-black">{match[1]} </span>
+        <span className="text-white font-black">{match[2]?.trim()}</span>
+      </>
+    );
+  }
+  const parts = title.split(" ");
+  if (parts.length > 1) {
+    return (
+      <>
+        <span className="text-[#f6b82c] font-black">{parts[0]} </span>
+        <span className="text-white font-black">{parts.slice(1).join(" ")}</span>
+      </>
+    );
+  }
+  return <span className="text-white font-black">{title}</span>;
+}
+
+function formatPromoDescription(desc: string) {
+  const lines = desc.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  if (lines.length > 1) {
+    return (
+      <>
+        <p className="text-white/90 text-sm font-semibold leading-relaxed">{lines[0]}</p>
+        <p className="text-white/60 text-xs leading-relaxed mt-1">{lines.slice(1).join(" ")}</p>
+      </>
+    );
+  }
+  return <p className="text-white/80 text-xs sm:text-sm font-medium leading-relaxed">{desc}</p>;
+}
 
 function PromoCta({
   href,
@@ -36,16 +72,16 @@ function PromoCta({
   if (internal) {
     return (
       <Link to={internal} onClick={onActivate} className={CTA_CLASS}>
-        {children}
-        <ArrowRight className="w-5 h-5" />
+        <span>{children}</span>
+        <ArrowRight className="w-4 h-4 text-slate-950" />
       </Link>
     );
   }
 
   return (
     <a href={href} onClick={onActivate} className={CTA_CLASS}>
-      {children}
-      <ExternalLink className="w-5 h-5" />
+      <span>{children}</span>
+      <ArrowRight className="w-4 h-4 text-slate-950" />
     </a>
   );
 }
@@ -83,7 +119,7 @@ export const PromoPopup = () => {
     if (activePopup && !dismissed) {
       const timer = setTimeout(() => {
         setIsOpen(true);
-      }, 2000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
     return undefined;
@@ -142,13 +178,11 @@ export const PromoPopup = () => {
     window.addEventListener("keydown", handleTab);
     return () => {
       window.removeEventListener("keydown", handleTab);
-
       if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
     };
   }, [isOpen]);
 
   const promoImageSrc = toMediaSrc(activePopup?.image_url);
-
   const promoImage = useBrokenImage(promoImageSrc);
 
   const [copied, setCopied] = useState(false);
@@ -165,6 +199,7 @@ export const PromoPopup = () => {
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
+      toast.success(`Coupon code ${code} copied!`);
       if (copyResetTimer.current !== null) clearTimeout(copyResetTimer.current);
       copyResetTimer.current = setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -176,7 +211,7 @@ export const PromoPopup = () => {
 
   const cardMotion = prefersReducedMotion
     ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
-    : { initial: { scale: 0.9, y: 20 }, animate: { scale: 1, y: 0 }, exit: { scale: 0.9, y: 20 } };
+    : { initial: { scale: 0.92, y: 16 }, animate: { scale: 1, y: 0 }, exit: { scale: 0.92, y: 16 } };
 
   return (
     <AnimatePresence>
@@ -185,7 +220,7 @@ export const PromoPopup = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
         >
           <motion.div
             {...cardMotion}
@@ -194,89 +229,121 @@ export const PromoPopup = () => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="promo-popup-title"
-            className="relative w-full max-w-lg bg-slate-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl focus:outline-none"
+            className="relative w-full max-w-[420px] rounded-[2.5rem] border border-purple-500/30 bg-gradient-to-b from-[#1c1134] via-[#140b28] to-[#0d061a] p-6 sm:p-8 text-center shadow-[0_25px_70px_rgba(0,0,0,0.9)] overflow-hidden focus:outline-none"
           >
+            {/* Ambient Purple/Amber glow in background */}
+            <div
+              className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 w-72 h-44 bg-purple-600/30 blur-3xl rounded-full"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 w-48 h-48 bg-amber-500/10 blur-3xl rounded-full"
+              aria-hidden="true"
+            />
+
+            {/* Circular Close Button */}
             <button
               type="button"
               onClick={() => handleClose()}
               aria-label="Close promotion"
-              className="absolute top-4 right-4 p-2 rounded-full bg-black/20 text-white/70 hover:text-white hover:bg-black/40 transition-colors z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="absolute top-4 right-4 h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-all cursor-pointer z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            {promoImageSrc && !promoImage.isBroken && (
-              <div className="relative h-64 w-full">
-                <img
-                  src={promoImageSrc}
-                  ref={promoImage.mediaRef}
-                  alt={activePopup.title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  onError={promoImage.handleError}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
-              </div>
-            )}
-
-            <div className="p-8 space-y-6 text-center">
-              <div className="space-y-2">
-                <h2
-                  id="promo-popup-title"
-                  className="text-3xl font-black text-white tracking-tight"
-                >
-                  {activePopup.title}
-                </h2>
-                {activePopup.description && (
-                  <p className="text-slate-400 font-medium leading-relaxed">
-                    {activePopup.description}
-                  </p>
-                )}
-              </div>
-
-              {activePopup.coupon_code && (
-                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
-                  <Tag className="w-5 h-5 shrink-0 text-blue-400" aria-hidden="true" />
-
-                  <span className="select-all text-lg font-black text-blue-400 tracking-wider">
-                    {activePopup.coupon_code}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => void handleCopyCoupon(activePopup.coupon_code ?? "")}
-                    className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-blue-400/30 bg-blue-500/10 px-3 text-xs font-black tracking-widest text-blue-200 uppercase transition-colors hover:bg-blue-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-                  >
-                    {copied ? (
-                      <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    ) : (
-                      <Copy className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    )}
-                    Copy code
-                  </button>
-
-                  <span role="status" className="sr-only">
-                    {copied ? "Coupon code copied" : ""}
-                  </span>
+            <div className="relative z-10 flex flex-col items-center">
+              {/* 1. Centered floating visual / icon */}
+              {promoImageSrc && !promoImage.isBroken ? (
+                <div className="relative mb-3 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-purple-500/30 blur-xl rounded-full" />
+                  <img
+                    src={promoImageSrc}
+                    ref={promoImage.mediaRef}
+                    alt=""
+                    className="relative max-h-24 max-w-36 object-contain drop-shadow-[0_8px_20px_rgba(168,85,247,0.4)]"
+                    loading="lazy"
+                    decoding="async"
+                    onError={promoImage.handleError}
+                  />
+                </div>
+              ) : (
+                <div className="relative mb-3 flex items-center justify-center">
+                  <div className="absolute inset-0 w-16 h-16 bg-purple-500/40 blur-xl rounded-full" />
+                  <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-700/40 via-purple-600/20 to-amber-500/10 border border-purple-500/40 shadow-lg shadow-purple-900/40">
+                    <Sparkles className="h-7 w-7 text-amber-300 fill-amber-300/30" />
+                  </div>
                 </div>
               )}
 
-              <div className="flex flex-col gap-3">
+              {/* 2. Glass Eyebrow Pill */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1 text-[11px] font-black uppercase tracking-[0.2em] text-white/90 shadow-sm mb-3">
+                <span>EXCLUSIVE DEAL</span>
+              </div>
+
+              {/* 3. Main Heading with Golden Amber Accent */}
+              <h2
+                id="promo-popup-title"
+                className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight mb-3"
+              >
+                {formatPromoTitle(activePopup.title)}
+              </h2>
+
+              {/* 4. Sub-badge highlight pill (Same Renewal / Instant Activation) */}
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3.5 py-1 text-xs font-bold text-amber-300 mb-3.5">
+                <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+                <span>Instant Activation & Same Renewal</span>
+              </div>
+
+              {/* 5. Description text */}
+              {activePopup.description && (
+                <div className="space-y-1 mb-4 text-center max-w-xs">
+                  {formatPromoDescription(activePopup.description)}
+                </div>
+              )}
+
+              {/* 6. Dashed Golden Coupon Box */}
+              {activePopup.coupon_code && (
+                <div className="w-full flex justify-center mb-5">
+                  <button
+                    type="button"
+                    onClick={() => void handleCopyCoupon(activePopup.coupon_code ?? "")}
+                    className="group inline-flex items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-amber-400/80 bg-amber-400/5 hover:bg-amber-400/10 px-6 py-3 transition-all duration-200 active:scale-95 cursor-pointer shadow-sm"
+                    title="Click to copy coupon code"
+                  >
+                    <span className="font-mono text-xl font-black tracking-widest text-amber-300 select-all">
+                      {activePopup.coupon_code}
+                    </span>
+                    <span className="flex items-center text-amber-400 group-hover:text-amber-300 transition-colors">
+                      {copied ? (
+                        <Check className="h-5 w-5 text-emerald-400" aria-hidden="true" />
+                      ) : (
+                        <Copy className="h-5 w-5" aria-hidden="true" />
+                      )}
+                    </span>
+                  </button>
+                </div>
+              )}
+
+              {/* 7. Golden Amber CTA Button */}
+              <div className="w-full flex flex-col items-center gap-3">
                 {ctaUrl ? (
                   <PromoCta href={ctaUrl} onActivate={() => handleClose(true)}>
-                    {activePopup.cta_text || "Claim Offer"}
+                    {activePopup.cta_text || "Grab This Deal"}
                   </PromoCta>
                 ) : (
                   <button type="button" onClick={() => handleClose(true)} className={CTA_CLASS}>
-                    {activePopup.cta_text || "Got it"}
+                    <span>{activePopup.cta_text || "Grab This Deal"}</span>
+                    <ArrowRight className="w-4 h-4 text-slate-950" />
                   </button>
                 )}
+
+                {/* 8. "Maybe later" Link */}
                 <button
                   type="button"
                   onClick={() => handleClose(true)}
-                  className="text-sm font-bold text-slate-400 hover:text-slate-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-md"
+                  className="text-xs font-semibold text-white/60 hover:text-white underline underline-offset-4 transition-colors cursor-pointer focus-visible:outline-none pt-1"
                 >
-                  Don't show this again
+                  Maybe later
                 </button>
               </div>
             </div>
